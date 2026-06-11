@@ -232,7 +232,7 @@ document.querySelectorAll('.image-placeholder').forEach((placeholder) => {
 
 document.querySelectorAll('.kakao-link').forEach((link) => {
   link.addEventListener('click', () => {
-    console.log('카카오톡 채널 실제 URL 연결 필요');
+    console.log('카카오톡 채널로 이동합니다.');
   });
 });
 

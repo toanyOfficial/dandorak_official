@@ -183,8 +183,7 @@ h3 { margin-bottom: 10px; font-size: 1.28rem; letter-spacing: -0.035em; }
 .btn:focus-visible,
 .nav-link:focus-visible,
 .menu-toggle:focus-visible,
-.mobile-cta-bar a:focus-visible,
-.floating-kakao:focus-visible {
+.floating-action:focus-visible {
   outline: 3px solid rgba(216, 111, 38, 0.48);
   outline-offset: 3px;
 }
@@ -306,19 +305,43 @@ details p { margin: 14px 0 0; color: var(--muted); line-height: 1.65; }
 .final-card h2 { font-size: clamp(2.35rem, 5vw, 4.6rem); }
 .footer-info { justify-content: center; margin-bottom: 0; }
 
-.floating-kakao {
+.floating-action-stack {
   position: fixed;
   right: 24px;
   bottom: 24px;
   z-index: 990;
-  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+.floating-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 118px;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 999px;
-  color: #1f160d;
-  background: #fee500;
+  color: #fff;
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
   font-weight: 950;
   box-shadow: 0 18px 36px rgba(0,0,0,0.18);
 }
-.mobile-cta-bar { display: none; }
+.floating-action-chat {
+  color: #1f160d;
+  background: #fee500;
+}
+.floating-action-phone {
+  align-self: flex-end;
+  min-width: 56px;
+  width: 56px;
+  min-height: 56px;
+  padding: 0;
+  font-size: 1.45rem;
+  background: var(--brown);
+}
 
 @media (min-width: 768px) {
   body { height: 100%; overflow: hidden; }
@@ -408,30 +431,21 @@ details p { margin: 14px 0 0; color: var(--muted); line-height: 1.65; }
   details,
   .final-card { border-radius: 22px; }
   .footer-info { justify-content: flex-start; }
-  .floating-kakao { display: none; }
-  .mobile-cta-bar {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1001;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    min-height: var(--mobile-cta-height);
-    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-    background: rgba(255,255,255,0.94);
-    border-top: 1px solid var(--line);
-    backdrop-filter: blur(16px);
+  .floating-action-stack {
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    gap: 8px;
   }
-  .mobile-cta-bar a {
-    display: grid;
-    place-items: center;
+  .floating-action {
+    min-width: 98px;
+    min-height: 44px;
+    padding: 0 12px;
+    font-size: 0.9rem;
+  }
+  .floating-action-phone {
+    min-width: 50px;
+    width: 50px;
     min-height: 50px;
-    border-radius: 999px;
-    color: #fff;
-    background: var(--brown);
-    font-weight: 950;
+    font-size: 1.3rem;
   }
-  .mobile-cta-bar a:last-child { color: #1f160d; background: #fee500; }
 }
