@@ -256,7 +256,8 @@ const header = document.querySelector('.floating-nav');
 const scrollContainer = document.querySelector('.landing-scroll-container');
 const sections = document.querySelectorAll('[data-observe-section]');
 
-const isSnapViewport = () => window.matchMedia('(min-width: 768px)').matches;
+const isSnapViewport = () => true;
+const usesSnapCorrection = () => window.matchMedia('(min-width: 768px)').matches;
 
 const syncHeaderHeight = () => {
   if (!header) return;
@@ -324,7 +325,7 @@ const findNearestSection = () => {
 };
 
 const snapToNearestSection = () => {
-  if (!isSnapViewport() || !scrollContainer || isAutoSnapping) return;
+  if (!usesSnapCorrection() || !scrollContainer || isAutoSnapping) return;
   const nearestSection = findNearestSection();
   if (!nearestSection) return;
 
@@ -340,14 +341,14 @@ const snapToNearestSection = () => {
 
 if (scrollContainer) {
   scrollContainer.addEventListener('scroll', () => {
-    if (!isSnapViewport()) return;
+    if (!usesSnapCorrection()) return;
     window.clearTimeout(snapTimer);
     snapTimer = window.setTimeout(snapToNearestSection, 140);
   }, { passive: true });
 }
 
 if ('IntersectionObserver' in window && sections.length) {
-  const getObserverRoot = () => window.matchMedia('(max-width: 767px)').matches ? null : scrollContainer;
+  const getObserverRoot = () => scrollContainer;
   let observer;
 
   const createObserver = () => {
