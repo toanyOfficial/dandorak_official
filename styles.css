@@ -158,6 +158,8 @@ h3 { margin-bottom: 10px; font-size: 1.28rem; letter-spacing: -0.035em; }
 .btn-primary { color: #fff; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); }
 .btn-secondary { color: var(--brown); background: #fff; border: 1px solid var(--line); }
 
+.hero-image-slot { width: 100%; }
+
 .image-placeholder {
   position: relative;
   overflow: hidden;
@@ -212,6 +214,21 @@ h3 { margin-bottom: 10px; font-size: 1.28rem; letter-spacing: -0.035em; }
 }
 .product-premium { background: linear-gradient(135deg, #e5a45c, #8e572c 52%, #3e281a); }
 .product-table { background: linear-gradient(135deg, #f0bf71, #9d6c38 52%, #4d321d); }
+.placeholder-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+.image-placeholder.has-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.45));
+}
 .placeholder-label {
   border-radius: 999px;
   padding: 7px 11px;

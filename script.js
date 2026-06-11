@@ -1,17 +1,82 @@
-const imageGuides = {
-  hero: '[Hero 대표 이미지 가이드] 보양도시락 또는 가장 고급스러운 도시락 대표컷 1장 필요. 음식 전체 구성이 보이고, 밝고 깔끔한 배경이며, 기업행사 랜딩페이지 첫 화면에 사용할 수 있을 만큼 신뢰감 있는 사진. 과도한 감성컷보다 실제 납품 가능한 상품처럼 보여야 함.',
-  wellness: '[보양도시락 이미지 가이드] 보양도시락 대표사진 필요. 고급스럽고 든든한 한식 도시락 느낌. 메인 반찬과 전체 구성이 잘 보여야 하며, 랜딩페이지에서 가장 신뢰감 있게 보일 사진을 사용.',
-  premium: '[프리미엄 도시락 이미지 가이드] 프리미엄 도시락 대표사진 필요. 기업행사와 세미나에 어울리는 깔끔하고 균형 잡힌 구성. 너무 화려하기보다 정돈되고 믿음직한 느낌.',
-  table: '[한상도시락 이미지 가이드] 한상도시락 대표사진 필요. 실속 있지만 빈약해 보이지 않아야 함. 단체 주문용으로 안정적인 구성이 보이는 사진 사용.',
-  academy: '[학회 납품 사진 가이드] 대한노인여성의학회 춘계 세미나 관련 납품 사진 또는 행사장 납품 사진 필요. 학회/세미나 납품 신뢰를 보여줄 수 있는 사진.',
-  hospital: '[병원 납품 사진 가이드] 건국대학교병원 또는 병원 세미나 납품 사례 사진 필요. 병원 행사에 납품 가능한 신뢰감이 느껴지는 사진.',
-  coex: '[코엑스 납품 사진 가이드] 코엑스 행사장, 전시장, 대량 납품 전 정렬 사진 등 전시회 납품 경험을 보여줄 수 있는 사진.',
-  setec: '[세텍 납품 사진 가이드] 세텍 행사 또는 전시장 납품 사례 사진 필요. 행사장 납품 분위기가 느껴지는 사진.',
-  kintex: '[킨텍스 납품 사진 가이드] 킨텍스 행사 또는 대규모 전시장 납품 사례 사진 필요. 규모감이 느껴지는 사진.',
-  otherCases: '[기타 납품 사례 사진 가이드] 기업행사, 학교, 병원, 학회 등 다양한 납품 경험을 보여줄 수 있는 사진. 실제 납품 박스, 진열, 행사장 입구 사진 가능.',
-  deliveryTime: '[정시납품 이미지 가이드] 배송 차량, 납품 현장, 행사장 도착 사진 등 시간 맞춤 배송을 보여줄 수 있는 사진 필요.',
-  inspection: '[검수 시스템 이미지 가이드] 도시락 수량 확인, 구성품 확인, 포장 완료 전 검수하는 장면 필요. 작업자가 나와도 되지만 깔끔하고 신뢰감 있어야 함.',
-  largeDelivery: '[대량 납품 이미지 가이드] 20개, 50개, 100개 이상 도시락이 정렬된 사진 필요. 규모감과 정돈된 느낌이 중요함.',
+const landingImages = {
+  heroMainImage: {
+    label: 'Hero 대표 이미지',
+    alt: '학회 세미나 기업행사 단체도시락 대표 이미지',
+    guide: '[Hero 대표 이미지 가이드] 보양도시락 또는 가장 고급스러운 도시락 대표컷 1장 필요. 음식 전체 구성이 보이고, 밝고 깔끔한 배경이며, 기업행사 랜딩페이지 첫 화면에 사용할 수 있을 만큼 신뢰감 있는 사진. 과도한 감성컷보다 실제 납품 가능한 상품처럼 보여야 함.',
+    src: '',
+  },
+  boyangLunchboxImage: {
+    label: '보양도시락 대표 이미지',
+    alt: '보양도시락 대표 사진',
+    guide: '[보양도시락 이미지 가이드] 보양도시락 대표사진 필요. 고급스럽고 든든한 한식 도시락 느낌. 메인 반찬과 전체 구성이 잘 보여야 하며, 랜딩페이지에서 가장 신뢰감 있게 보일 사진을 사용.',
+    src: '',
+  },
+  premiumLunchboxImage: {
+    label: '프리미엄 도시락 대표 이미지',
+    alt: '프리미엄 도시락 대표 사진',
+    guide: '[프리미엄 도시락 이미지 가이드] 프리미엄 도시락 대표사진 필요. 기업행사와 세미나에 어울리는 깔끔하고 균형 잡힌 구성. 너무 화려하기보다 정돈되고 믿음직한 느낌.',
+    src: '',
+  },
+  hansangLunchboxImage: {
+    label: '한상도시락 대표 이미지',
+    alt: '한상도시락 대표 사진',
+    guide: '[한상도시락 이미지 가이드] 한상도시락 대표사진 필요. 실속 있지만 빈약해 보이지 않아야 함. 단체 주문용으로 안정적인 구성이 보이는 사진 사용.',
+    src: '',
+  },
+  seniorWomenMedicalSeminarImage: {
+    label: '대한노인여성의학회 납품 이미지',
+    alt: '대한노인여성의학회 춘계 세미나 납품 사진',
+    guide: '[학회 납품 사진 가이드] 대한노인여성의학회 춘계 세미나 관련 납품 사진 또는 행사장 납품 사진 필요. 학회/세미나 납품 신뢰를 보여줄 수 있는 사진.',
+    src: '',
+  },
+  konkukHospitalImage: {
+    label: '건국대학교병원 납품 이미지',
+    alt: '건국대학교병원 납품 사례 사진',
+    guide: '[병원 납품 사진 가이드] 건국대학교병원 또는 병원 세미나 납품 사례 사진 필요. 병원 행사에 납품 가능한 신뢰감이 느껴지는 사진.',
+    src: '',
+  },
+  coexDeliveryImage: {
+    label: '코엑스 납품 이미지',
+    alt: '코엑스 행사 납품 사례 사진',
+    guide: '[코엑스 납품 사진 가이드] 코엑스 행사장, 전시장, 대량 납품 전 정렬 사진 등 전시회 납품 경험을 보여줄 수 있는 사진.',
+    src: '',
+  },
+  setecDeliveryImage: {
+    label: '세텍 납품 이미지',
+    alt: '세텍 행사 납품 사례 사진',
+    guide: '[세텍 납품 사진 가이드] 세텍 행사 또는 전시장 납품 사례 사진 필요. 행사장 납품 분위기가 느껴지는 사진.',
+    src: '',
+  },
+  kintexDeliveryImage: {
+    label: '킨텍스 납품 이미지',
+    alt: '킨텍스 행사 납품 사례 사진',
+    guide: '[킨텍스 납품 사진 가이드] 킨텍스 행사 또는 대규모 전시장 납품 사례 사진 필요. 규모감이 느껴지는 사진.',
+    src: '',
+  },
+  generalCorporateDeliveryImage: {
+    label: '기타 납품 사례 이미지',
+    alt: '기업행사 학회 병원 학교 납품 사례 사진',
+    guide: '[기타 납품 사례 사진 가이드] 기업행사, 학교, 병원, 학회 등 다양한 납품 경험을 보여줄 수 있는 사진. 실제 납품 박스, 진열, 행사장 입구 사진 가능.',
+    src: '',
+  },
+  punctualDeliveryImage: {
+    label: '정시납품 이미지',
+    alt: '행사 시간에 맞춘 정시납품 사진',
+    guide: '[정시납품 이미지 가이드] 배송 차량, 납품 현장, 행사장 도착 사진 등 시간 맞춤 배송을 보여줄 수 있는 사진 필요.',
+    src: '',
+  },
+  inspectionSystemImage: {
+    label: '검수 시스템 이미지',
+    alt: '도시락 출고 전 검수 시스템 사진',
+    guide: '[검수 시스템 이미지 가이드] 도시락 수량 확인, 구성품 확인, 포장 완료 전 검수하는 장면 필요. 작업자가 나와도 되지만 깔끔하고 신뢰감 있어야 함.',
+    src: '',
+  },
+  bulkDeliveryImage: {
+    label: '대량납품 이미지',
+    alt: '대량 도시락 납품 준비 사진',
+    guide: '[대량 납품 이미지 가이드] 20개, 50개, 100개 이상 도시락이 정렬된 사진 필요. 규모감과 정돈된 느낌이 중요함.',
+    src: '',
+  },
 };
 
 const productItems = [
@@ -21,8 +86,7 @@ const productItems = [
     price: '25,000원~',
     recommend: '학회 · 병원 세미나 · VIP 행사',
     imageClass: 'product-wellness',
-    imageLabel: '보양도시락 이미지',
-    guide: imageGuides.wellness,
+    image: landingImages.boyangLunchboxImage,
   },
   {
     title: '프리미엄 도시락',
@@ -30,8 +94,7 @@ const productItems = [
     price: '15,000원~20,000원대',
     recommend: '기업교육 · 컨퍼런스 · 간담회',
     imageClass: 'product-premium',
-    imageLabel: '프리미엄 도시락 이미지',
-    guide: imageGuides.premium,
+    image: landingImages.premiumLunchboxImage,
   },
   {
     title: '한상도시락',
@@ -39,8 +102,7 @@ const productItems = [
     price: '10,000원~15,000원대',
     recommend: '학교행사 · 워크숍 · 설명회',
     imageClass: 'product-table',
-    imageLabel: '한상도시락 이미지',
-    guide: imageGuides.table,
+    image: landingImages.hansangLunchboxImage,
   },
 ];
 
@@ -54,32 +116,29 @@ const orderInfoItems = [
 ];
 
 const deliveryCases = [
-  ['대한노인여성의학회 춘계 세미나', '납품사례 이미지', imageGuides.academy],
-  ['건국대학교병원 납품', '납품사례 이미지', imageGuides.hospital],
-  ['코엑스 행사 납품', '납품사례 이미지', imageGuides.coex],
-  ['세텍 행사 납품', '납품사례 이미지', imageGuides.setec],
-  ['킨텍스 행사 납품', '납품사례 이미지', imageGuides.kintex],
-  ['기업행사·학회·병원·학교 납품 사례', '납품사례 이미지', imageGuides.otherCases],
+  { title: '대한노인여성의학회 춘계 세미나', image: landingImages.seniorWomenMedicalSeminarImage },
+  { title: '건국대학교병원 납품', image: landingImages.konkukHospitalImage },
+  { title: '코엑스 행사 납품', image: landingImages.coexDeliveryImage },
+  { title: '세텍 행사 납품', image: landingImages.setecDeliveryImage },
+  { title: '킨텍스 행사 납품', image: landingImages.kintexDeliveryImage },
+  { title: '기업행사·학회·병원·학교 납품 사례', image: landingImages.generalCorporateDeliveryImage },
 ];
 
 const trustItems = [
   {
     title: '정시납품 관리',
     body: '행사 시작 시간에 맞춰 사전 배송 일정을 계획하고, 현장 도착 시간을 기준으로 납품을 준비합니다.',
-    imageLabel: '정시납품 이미지',
-    guide: imageGuides.deliveryTime,
+    image: landingImages.punctualDeliveryImage,
   },
   {
     title: '출고 전 검수',
     body: '출고 전 수량과 구성품을 확인하여 누락과 오배송을 줄이는 검수 과정을 거칩니다.',
-    imageLabel: '검수 시스템 이미지',
-    guide: imageGuides.inspection,
+    image: landingImages.inspectionSystemImage,
   },
   {
     title: '대량 납품 대응',
     body: '소규모 세미나부터 수백 명 규모 행사까지 수량과 일정에 맞춰 준비할 수 있습니다.',
-    imageLabel: '대량납품 이미지',
-    guide: imageGuides.largeDelivery,
+    image: landingImages.bulkDeliveryImage,
   },
 ];
 
@@ -93,18 +152,34 @@ const faqItems = [
   ['당일 배송 진행 상황을 확인할 수 있나요?', '네, 당일 배송 진행 상황을 안내해드립니다.'],
 ];
 
-const makePlaceholder = ({ className, label, guide }) => `
-  <button class="image-placeholder ${className}" type="button" data-guide="${guide}" aria-label="${label} 가이드 콘솔 출력">
-    <span class="placeholder-label">${label}</span>
-    <span class="placeholder-hint">클릭 시 사진 가이드 확인</span>
-  </button>
-`;
+const escapeAttr = (value) => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+
+const makeImageSlot = ({ className, image, title = '' }) => {
+  const hasImage = Boolean(image.src);
+  return `
+    <button class="image-placeholder ${className}${hasImage ? ' has-image' : ''}" type="button" data-guide="${escapeAttr(image.guide)}" aria-label="${escapeAttr(image.label)} 가이드 콘솔 출력">
+      ${hasImage ? `<img class="placeholder-photo" src="${escapeAttr(image.src)}" alt="${escapeAttr(image.alt)}" loading="lazy" />` : ''}
+      <span class="placeholder-label">${image.label}</span>
+      ${title ? `<span class="placeholder-title">${title}</span>` : ''}
+      <span class="placeholder-hint">클릭 시 사진 가이드 확인</span>
+    </button>
+  `;
+};
+
+const heroImageSlot = document.querySelector('#hero-image-slot');
+if (heroImageSlot) {
+  heroImageSlot.innerHTML = makeImageSlot({
+    className: 'hero-image',
+    image: landingImages.heroMainImage,
+    title: '고급 한식 단체도시락 대표컷',
+  });
+}
 
 const productList = document.querySelector('#product-list');
 if (productList) {
   productList.innerHTML = productItems.map((item) => `
     <article class="product-card">
-      ${makePlaceholder({ className: `product-image ${item.imageClass}`, label: item.imageLabel, guide: item.guide })}
+      ${makeImageSlot({ className: `product-image ${item.imageClass}`, image: item.image })}
       <h3>${item.title}</h3>
       <p>${item.body}</p>
       <strong>${item.price}</strong>
@@ -120,10 +195,10 @@ if (orderInfoList) {
 
 const deliveryCaseList = document.querySelector('#delivery-case-list');
 if (deliveryCaseList) {
-  deliveryCaseList.innerHTML = deliveryCases.map(([title, label, guide]) => `
+  deliveryCaseList.innerHTML = deliveryCases.map((item) => `
     <article class="case-card">
-      ${makePlaceholder({ className: 'case-image', label, guide })}
-      <h3>${title}</h3>
+      ${makeImageSlot({ className: 'case-image', image: item.image })}
+      <h3>${item.title}</h3>
     </article>
   `).join('');
 }
@@ -132,7 +207,7 @@ const trustList = document.querySelector('#trust-list');
 if (trustList) {
   trustList.innerHTML = trustItems.map((item) => `
     <article class="trust-card">
-      ${makePlaceholder({ className: 'trust-image', label: item.imageLabel, guide: item.guide })}
+      ${makeImageSlot({ className: 'trust-image', image: item.image })}
       <h3>${item.title}</h3>
       <p>${item.body}</p>
     </article>
