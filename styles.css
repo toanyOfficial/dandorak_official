@@ -11,6 +11,7 @@
   --nav-height: 76px;
   --mobile-cta-height: 78px;
   --gold: #c9a45b;
+  --deep-gold: #b57a2b;
   --gold-light: #f2d58a;
   --champagne: #f7ead1;
   --deep: #141312;
@@ -165,7 +166,7 @@ h3 { margin-bottom: 10px; font-size: 1.28rem; letter-spacing: -0.035em; }
 .hero-brand,
 .hero-brand-line .hero-brand {
   background: linear-gradient(180deg, #f7e7a3 0%, #d6b04a 40%, #b8860b 100%) !important;
-  color: #c9a227 !important;
+  color: var(--deep-gold) !important;
   display: inline-block !important;
   font-size: 1.18em !important;
   font-weight: 900 !important;
@@ -582,8 +583,8 @@ body { height: 100%; overflow: hidden; }
 }
 
 .hero-brand-line .hero-brand {
-  color: #c9a227 !important;
-  -webkit-text-fill-color: #c9a227 !important;
+  color: var(--deep-gold) !important;
+  -webkit-text-fill-color: var(--deep-gold) !important;
 }
 
 .hero-brand-line .hero-title-sub {
