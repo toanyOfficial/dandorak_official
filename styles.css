@@ -158,9 +158,11 @@ h3 { margin-bottom: 10px; font-size: 1.28rem; letter-spacing: -0.035em; }
   letter-spacing: -0.035em;
   white-space: nowrap;
 }
-.brand-char {
+.brand-highlight {
   color: var(--gold);
+  font-size: 1.18em;
   font-weight: 950;
+  letter-spacing: -0.02em;
   text-shadow: 0 8px 22px rgba(201, 164, 91, 0.25);
 }
 .hero-lead {
