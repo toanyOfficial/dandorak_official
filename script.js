@@ -23,6 +23,12 @@ const landingImages = {
     guide: '[한상도시락 이미지 가이드] 한상도시락 대표사진 필요. 실속 있지만 빈약해 보이지 않아야 함. 단체 주문용으로 안정적인 구성이 보이는 사진 사용.',
     src: '',
   },
+  specialCustomLunchboxImage: {
+    label: '특수맞춤도시락 대표 이미지',
+    alt: '특수맞춤도시락 대표 사진',
+    guide: '[특수맞춤도시락 이미지 가이드] 특수경조사, 고위임원, 연예인 대상 맞춤형 고급 도시락 대표사진 필요. 고급스러운 식재료와 정갈한 구성이 잘 보이고 특별한 대접에 어울리는 사진 사용.',
+    src: '',
+  },
   seniorWomenMedicalSeminarImage: {
     label: '대한노인여성의학회 납품 이미지',
     alt: '대한노인여성의학회 춘계 세미나 납품 사진',
@@ -103,6 +109,14 @@ const productItems = [
     recommend: '학교행사 · 워크숍 · 설명회',
     imageClass: 'product-table',
     image: landingImages.hansangLunchboxImage,
+  },
+  {
+    title: '특수맞춤도시락',
+    body: '아주 특별한 분들께 대접해야 하는 맞춤형 고급 도시락입니다.',
+    price: '50,000원 ~',
+    recommend: '특수경조사 · 고위임원 · 연예인대상',
+    imageClass: 'product-special',
+    image: landingImages.specialCustomLunchboxImage,
   },
 ];
 
@@ -318,6 +332,21 @@ let isAutoSnapping = false;
 const findNearestSection = () => {
   if (!scrollContainer || !sections.length) return null;
   const currentTop = scrollContainer.scrollTop;
+  const viewportHeight = scrollContainer.clientHeight;
+  const internalScrollSection = Array.from(sections).find((section) => {
+    const sectionTop = getSectionSnapTop(section);
+    const sectionHeight = section.offsetHeight;
+    const sectionBottom = sectionTop + sectionHeight;
+    const hasInternalScroll = sectionHeight > viewportHeight + 2;
+    if (!hasInternalScroll) return false;
+
+    const internalTopLimit = sectionTop + 8;
+    const internalBottomLimit = sectionBottom - viewportHeight - 8;
+    return currentTop > internalTopLimit && currentTop < internalBottomLimit;
+  });
+
+  if (internalScrollSection) return null;
+
   return Array.from(sections).reduce((nearest, section) => {
     const distance = Math.abs(getSectionSnapTop(section) - currentTop);
     return !nearest || distance < nearest.distance ? { section, distance } : nearest;
