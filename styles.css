@@ -580,3 +580,13 @@ body { height: 100%; overflow: hidden; }
     font-size: 1.3rem;
   }
 }
+
+.hero-brand-line .hero-brand {
+  color: #c9a227 !important;
+  -webkit-text-fill-color: #c9a227 !important;
+}
+
+.hero-brand-line .hero-title-sub {
+  color: inherit;
+  -webkit-text-fill-color: currentColor;
+}
