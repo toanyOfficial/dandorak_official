@@ -69,19 +69,19 @@ const landingImages = {
     label: '매장 대시보드 이미지',
     alt: '주방 홀 제조 공정 관리 매장 대시보드 화면',
     guide: '[매장 대시보드 이미지 가이드] 주방-홀 대시보드를 통해 주문 상태, 제조 공정, 준비 현황이 체계적으로 관리되는 화면 필요. 실제 관리 시스템의 신뢰감이 느껴지도록 정돈된 UI 화면이나 현장 사용 장면이 좋음.',
-    src: '',
+    src: './assets/images/landing/trust-store-dashboard.webp',
   },
   deliveryDashboardImage: {
     label: '배달 대시보드 이미지',
     alt: '도시락 배달 현황 관리 대시보드 화면',
     guide: '[배달 대시보드 이미지 가이드] 배달 대시보드를 통해 배송 현황, 기사 배정, 도착 상태를 확인할 수 있는 화면 필요. 신뢰도 높은 배달 관리 시스템처럼 보이는 UI 또는 운영 장면이 좋음.',
-    src: '',
+    src: './assets/images/landing/trust-delivery-dashboard.webp',
   },
   orderLookupSiteImage: {
     label: '주문조회 사이트 이미지',
     alt: '고객 주문내역 견적서 배송기사 조회 사이트 화면',
     guide: '[주문조회 사이트 이미지 가이드] 고객이 주문내역, 견적서, 배송기사 정보를 직접 확인할 수 있는 웹사이트 화면 필요. 모바일 또는 PC 화면에서 주문 조회 기능이 직관적으로 보이면 좋음.',
-    src: '',
+    src: './assets/images/landing/trust-order-lookup-site.webp',
   },
   deliveryFeeGuideImage: {
     label: '배송비 안내 이미지',
