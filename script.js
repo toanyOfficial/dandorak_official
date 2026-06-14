@@ -83,6 +83,12 @@ const landingImages = {
     guide: '[대량 납품 이미지 가이드] 20개, 50개, 100개 이상 도시락이 정렬된 사진 필요. 규모감과 정돈된 느낌이 중요함.',
     src: '',
   },
+  deliveryFeeGuideImage: {
+    label: '배송비 안내 이미지',
+    alt: '단도락 지역별 배송비 안내 이미지',
+    guide: '[배송비 안내 이미지 가이드] 지역별 배송 가능 구역을 한눈에 보여주는 지도형 이미지 필요. 남동쪽, 남서쪽, 북서쪽, 북동쪽, 장거리 구역이 구분되어 보이면 좋음.',
+    src: '',
+  },
 };
 
 const productItems = [
@@ -121,12 +127,12 @@ const productItems = [
 ];
 
 const orderInfoItems = [
-  ['가격대', '10,000원대 ~ 100,000원대'],
-  ['최소 주문 수량', '강남서초 20만원 / 서울 및 수도권 동남부 30만원 / 수도권 북서부 50만원'],
-  ['밥국포함', '밥,국 포함 / 국 대신 식혜선택 가능'],
-  ['주문 마감 시간', 'D-1 15:00 / 100개이상 D-3'],
-  ['결제 방식', '카드번호 결제, 세금계산서, 현금'],
-  ['현금결제', '세금계산서, 현금영수증, 지출증빙'],
+  ['가격대', '10,000원대부터 25,000원대 이상까지 행사 목적에 따라 선택 가능'],
+  ['최소 주문 수량', '행사 규모와 지역에 따라 상담 후 안내'],
+  ['배송 가능 지역', '서울 전 지역 및 경기 일부 지역'],
+  ['주문 마감 시간', '행사 일정과 수량에 따라 사전 상담 필요'],
+  ['결제 방식', '계좌이체, 현장 카드결제, 카드번호 결제'],
+  ['세금계산서 발행', '가능'],
 ];
 
 const deliveryCases = [
@@ -157,14 +163,14 @@ const trustItems = [
 ];
 
 const faqItems = [
-  ['최소 주문금액이 있나요?', '강남서초는 20만원, 서울지역과 수도권 남동부는 30만원, 수도권 북서부는 50만원입니다.'],
-  ['결제 방식은 어떻게 되나요?', '현장카드결제, 카드번호결제, 현금결제(세금계산서,현금영수증) 모두 가능합니다'],
-  ['밥,국이 포함되어있나요??', '밥,국이 모두 포함되어있으며 야외 취식의 경우 국 대신 식혜 선택을 권장드립니다. (비건2호는 밥 제외)'],
-  ['배송비용이 어떻게 되나요?', '서울 전 지역 및 경기 일부 지역 배송이 가능합니다.'],
-  ['수거 서비스 가능한가요?', '네 수거 서비스 신청 가능하십니다. 주문규모에 따라 다르지만 평균적으로 개당 700원의 비용이 추가됩니다.'],
-  ['주문은 며칠 전까지 해야 하나요?', '50개 미만은 전날 오후3시까지만 해주시면 됩니다. 그 이상은 3일 전까지 주문 해주시고, 세부 조정은 전날 오후3시까지 가능합니다.'],
-  ['배송 시 연락 주시나요?', '주문조회 사이트를 안내 해드립니다. 해당 사이트를 통해 당일, 배정된 배송기사님에게 직접 바로 전화연결 가능합니다'],
-  ['저희 스티커로 라벨링 가능한가요?', '행사 규모와 일정에 따라 로고 라벨 부착이 가능합니다. 상담 시 문의해주세요.'],
+  ['몇 개부터 주문 가능한가요?', '행사 규모와 배송 지역에 따라 상담 후 안내드립니다.'],
+  ['서울 전 지역 배송 가능한가요?', '서울 전 지역 및 경기 일부 지역 배송이 가능합니다.'],
+  ['배송비용이 어떻게 되나요?', '지역별 최소주문금액과 배송비 기준이 다르며, 자세한 기준은 아래 버튼을 통해 확인하실 수 있습니다.', 'deliveryFee'],
+  ['행사 로고 라벨 가능한가요?', '행사 규모와 일정에 따라 로고 라벨 부착이 가능합니다. 상담 시 문의해주세요.'],
+  ['세금계산서 발행 가능한가요?', '네, 세금계산서 발행 가능합니다.'],
+  ['메뉴 변경 가능한가요?', '행사 성격과 수량에 따라 일부 메뉴 조정이 가능합니다.'],
+  ['주문은 며칠 전까지 해야 하나요?', '수량과 일정에 따라 달라질 수 있어 가능한 한 사전 문의를 권장드립니다.'],
+  ['당일 배송 진행 상황을 확인할 수 있나요?', '네, 당일 배송 진행 상황을 안내해드립니다.'],
 ];
 
 const escapeAttr = (value) => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
@@ -231,13 +237,90 @@ if (trustList) {
 
 const faqList = document.querySelector('#faq-list');
 if (faqList) {
-  faqList.innerHTML = faqItems.map(([question, answer], index) => `
+  faqList.innerHTML = faqItems.map(([question, answer, action], index) => `
     <details ${index === 0 ? 'open' : ''}>
       <summary>${question}</summary>
       <p>${answer}</p>
+      ${action === 'deliveryFee' ? '<button class="faq-modal-button" type="button" data-open-delivery-fee-modal>배송비 기준 자세히 보기</button>' : ''}
     </details>
   `).join('');
 }
+
+const deliveryFeeModalMarkup = `
+  <div class="modal-backdrop" id="delivery-fee-modal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="delivery-fee-modal-title">
+      <div class="modal-header">
+        <h3 id="delivery-fee-modal-title">지역별 배송비 안내</h3>
+        <button class="modal-close" type="button" data-close-delivery-fee-modal aria-label="배송비 안내 모달 닫기">닫기</button>
+      </div>
+      ${makeImageSlot({ className: 'modal-delivery-image', image: landingImages.deliveryFeeGuideImage })}
+      <div class="delivery-fee-copy">
+        <section>
+          <h4>[ 남동쪽 ]</h4>
+          <p>최소주문금액 : 35만원<br>배송비 : 35,000원<br>대상지역 : 하남시,성남시,과천시,의왕시,용인시(일부지역제외)</p>
+        </section>
+        <section>
+          <h4>[ 남서쪽 ]</h4>
+          <p>최소주문금액 : 35만원<br>배송비 : 40,000원<br>대상지역 : 안양시,군포시,광명시,부천시</p>
+        </section>
+        <section>
+          <h4>[ 북서쪽 ]</h4>
+          <p>최소주문금액 : 40만원<br>배송비 : 40,000원<br>대상지역 : 고양시</p>
+        </section>
+        <section>
+          <h4>[ 북동쪽 ]</h4>
+          <p>최소주문금액 : 35만원<br>배송비 : 35,000원<br>대상지역 : 구리시,의정부시,남양주시</p>
+        </section>
+        <section>
+          <h4>[ 장거리 ]</h4>
+          <p>최소주문금액 : 50만원<br>배송비 : 50,000원<br>대상지역 : 인천, 강화, 안산, 시흥, 수원, 광주, 양주, 파주, 김포, 동두천</p>
+        </section>
+        <ul>
+          <li>그 외 지역은 별도 상담 필요</li>
+          <li>평균적으로 택시비의 2배 부과</li>
+          <li>[ 성수기/평수기/비수기 ] x [ 원활/혼잡/마감 ] 상황에 따라 달라질 수 있습니다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+`;
+
+document.body.insertAdjacentHTML('beforeend', deliveryFeeModalMarkup);
+
+const deliveryFeeModal = document.querySelector('#delivery-fee-modal');
+const openDeliveryFeeModalButtons = document.querySelectorAll('[data-open-delivery-fee-modal]');
+const closeDeliveryFeeModalButtons = document.querySelectorAll('[data-close-delivery-fee-modal]');
+
+const closeDeliveryFeeModal = () => {
+  if (!deliveryFeeModal) return;
+  deliveryFeeModal.classList.remove('is-open');
+  deliveryFeeModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+};
+
+const openDeliveryFeeModal = () => {
+  if (!deliveryFeeModal) return;
+  deliveryFeeModal.classList.add('is-open');
+  deliveryFeeModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+  deliveryFeeModal.querySelector('[data-close-delivery-fee-modal]')?.focus();
+};
+
+openDeliveryFeeModalButtons.forEach((button) => {
+  button.addEventListener('click', openDeliveryFeeModal);
+});
+
+closeDeliveryFeeModalButtons.forEach((button) => {
+  button.addEventListener('click', closeDeliveryFeeModal);
+});
+
+deliveryFeeModal?.addEventListener('click', (event) => {
+  if (event.target === deliveryFeeModal) closeDeliveryFeeModal();
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && deliveryFeeModal?.classList.contains('is-open')) closeDeliveryFeeModal();
+});
 
 document.querySelectorAll('.image-placeholder').forEach((placeholder) => {
   placeholder.addEventListener('click', () => {
