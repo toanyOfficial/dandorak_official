@@ -87,7 +87,7 @@ const landingImages = {
     label: '배송비 안내 이미지',
     alt: '단도락 지역별 배송비 안내 이미지',
     guide: '[배송비 안내 이미지 가이드] 지역별 배송 가능 구역을 한눈에 보여주는 지도형 이미지 필요. 남동쪽, 남서쪽, 북서쪽, 북동쪽, 장거리 구역이 구분되어 보이면 좋음.',
-    src: '',
+    src: './delivery-fee-map.webp',
   },
 };
 
@@ -355,9 +355,6 @@ const header = document.querySelector('.floating-nav');
 const scrollContainer = document.querySelector('.landing-scroll-container');
 const sections = document.querySelectorAll('[data-observe-section]');
 
-const usesSnapCorrection = () => window.matchMedia('(max-width: 767px)').matches;
-const isSnapViewport = () => usesSnapCorrection();
-
 const syncHeaderHeight = () => {
   if (!header) return;
   const height = Math.ceil(header.getBoundingClientRect().height);
@@ -370,22 +367,8 @@ if ('ResizeObserver' in window && header) {
   new ResizeObserver(syncHeaderHeight).observe(header);
 }
 
-const getSectionSnapTop = (section) => Math.max(0, section.offsetTop);
-
 const moveToSection = (section, behavior = 'smooth') => {
   if (!section) return;
-
-  if (isSnapViewport() && scrollContainer) {
-    isAutoSnapping = true;
-    scrollContainer.scrollTo({
-      top: getSectionSnapTop(section),
-      behavior,
-    });
-    window.setTimeout(() => {
-      isAutoSnapping = false;
-    }, behavior === 'smooth' ? 520 : 0);
-    return;
-  }
 
   section.scrollIntoView({ behavior, block: 'start' });
 };
@@ -410,99 +393,6 @@ const setActiveSection = (sectionId) => {
     link.classList.toggle('is-active', link.dataset.section === sectionId);
   });
 };
-
-let snapTimer;
-let isAutoSnapping = false;
-let bounceTimer;
-
-const getInternalScrollableSection = () => {
-  if (!scrollContainer || !sections.length) return null;
-  const currentTop = scrollContainer.scrollTop;
-  const viewportHeight = scrollContainer.clientHeight;
-
-  return Array.from(sections).find((section) => {
-    const sectionTop = getSectionSnapTop(section);
-    const sectionHeight = section.offsetHeight;
-    const sectionBottom = sectionTop + sectionHeight;
-    return sectionHeight > viewportHeight + 2
-      && currentTop >= sectionTop - 2
-      && currentTop <= sectionBottom - viewportHeight + 2;
-  }) ?? null;
-};
-
-const showSectionBounce = (section, direction) => {
-  if (!section) return;
-  window.clearTimeout(bounceTimer);
-  section.classList.remove('is-bounce-start', 'is-bounce-end');
-  void section.offsetWidth;
-  section.classList.add(direction === 'up' ? 'is-bounce-start' : 'is-bounce-end');
-  bounceTimer = window.setTimeout(() => {
-    section.classList.remove('is-bounce-start', 'is-bounce-end');
-  }, 280);
-};
-
-const findNearestSection = () => {
-  if (!scrollContainer || !sections.length) return null;
-  const currentTop = scrollContainer.scrollTop;
-  const viewportHeight = scrollContainer.clientHeight;
-  const internalScrollSection = Array.from(sections).find((section) => {
-    const sectionTop = getSectionSnapTop(section);
-    const sectionHeight = section.offsetHeight;
-    const sectionBottom = sectionTop + sectionHeight;
-    const hasInternalScroll = sectionHeight > viewportHeight + 2;
-    if (!hasInternalScroll) return false;
-
-    const internalTopLimit = sectionTop + 8;
-    const internalBottomLimit = sectionBottom - viewportHeight - 8;
-    return currentTop > internalTopLimit && currentTop < internalBottomLimit;
-  });
-
-  if (internalScrollSection) return null;
-
-  return Array.from(sections).reduce((nearest, section) => {
-    const distance = Math.abs(getSectionSnapTop(section) - currentTop);
-    return !nearest || distance < nearest.distance ? { section, distance } : nearest;
-  }, null)?.section ?? null;
-};
-
-const snapToNearestSection = () => {
-  if (!usesSnapCorrection() || !scrollContainer || isAutoSnapping) return;
-  const nearestSection = findNearestSection();
-  if (!nearestSection) return;
-
-  const targetTop = getSectionSnapTop(nearestSection);
-  if (Math.abs(scrollContainer.scrollTop - targetTop) < 2) return;
-
-  isAutoSnapping = true;
-  scrollContainer.scrollTo({ top: targetTop, behavior: 'smooth' });
-  window.setTimeout(() => {
-    isAutoSnapping = false;
-  }, 380);
-};
-
-if (scrollContainer) {
-  scrollContainer.addEventListener('wheel', (event) => {
-    if (!usesSnapCorrection()) return;
-    const currentSection = getInternalScrollableSection();
-    if (!currentSection) return;
-
-    const currentTop = scrollContainer.scrollTop;
-    const sectionTop = getSectionSnapTop(currentSection);
-    const sectionBottom = sectionTop + currentSection.offsetHeight;
-    const viewportHeight = scrollContainer.clientHeight;
-    const atSectionStart = currentTop <= sectionTop + 2;
-    const atSectionEnd = currentTop >= sectionBottom - viewportHeight - 2;
-
-    if (event.deltaY < 0 && atSectionStart) showSectionBounce(currentSection, 'up');
-    if (event.deltaY > 0 && atSectionEnd) showSectionBounce(currentSection, 'down');
-  }, { passive: true });
-
-  scrollContainer.addEventListener('scroll', () => {
-    if (!usesSnapCorrection()) return;
-    window.clearTimeout(snapTimer);
-    snapTimer = window.setTimeout(snapToNearestSection, 140);
-  }, { passive: true });
-}
 
 if ('IntersectionObserver' in window && sections.length) {
   const getObserverRoot = () => scrollContainer;
