@@ -87,7 +87,7 @@ const landingImages = {
     label: '배송비 안내 이미지',
     alt: '단도락 지역별 배송비 안내 이미지',
     guide: '[배송비 안내 이미지 가이드] 지역별 배송 가능 구역을 한눈에 보여주는 지도형 이미지 필요. 남동쪽, 남서쪽, 북서쪽, 북동쪽, 장거리 구역이 구분되어 보이면 좋음.',
-    src: './delivery-fee-map.webp',
+    src: './assets/images/landing/delivery-fee-map.webp',
   },
 };
 
