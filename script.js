@@ -136,12 +136,12 @@ const orderInfoItems = [
 ];
 
 const deliveryCases = [
-  { title: '대한노인여성의학회 춘계 세미나', image: landingImages.seniorWomenMedicalSeminarImage },
-  { title: '건국대학교병원 납품', image: landingImages.konkukHospitalImage },
-  { title: '코엑스 행사 납품', image: landingImages.coexDeliveryImage },
-  { title: '세텍 행사 납품', image: landingImages.setecDeliveryImage },
-  { title: '킨텍스 행사 납품', image: landingImages.kintexDeliveryImage },
-  { title: '기업행사·학회·병원·학교 납품 사례', image: landingImages.generalCorporateDeliveryImage },
+  { title: '박람회장', image: landingImages.seniorWomenMedicalSeminarImage },
+  { title: '교회 도시락', image: landingImages.konkukHospitalImage },
+  { title: '세미나 도시락', image: landingImages.coexDeliveryImage },
+  { title: '공간대여 도시락', image: landingImages.setecDeliveryImage },
+  { title: '컨벤션 센터', image: landingImages.kintexDeliveryImage },
+  { title: '예식장', image: landingImages.generalCorporateDeliveryImage },
 ];
 
 const trustItems = [
