@@ -140,7 +140,7 @@ const deliveryCases = [
   { title: '교회 도시락', image: landingImages.konkukHospitalImage },
   { title: '세미나 도시락', image: landingImages.coexDeliveryImage },
   { title: '공간대여 도시락', image: landingImages.setecDeliveryImage },
-  { title: '컨벤션 센터', image: landingImages.kintexDeliveryImage },
+  { title: '야유회 도시락', image: landingImages.kintexDeliveryImage },
   { title: '예식장', image: landingImages.generalCorporateDeliveryImage },
 ];
 
