@@ -98,15 +98,15 @@ button { font: inherit; }
   margin-top: var(--nav-height);
   overflow-y: auto;
   overflow-x: hidden;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: none;
   scroll-behavior: smooth;
   scroll-padding-block: 0;
   overscroll-behavior-y: contain;
 }
 .landing-section {
   min-height: calc(100svh - var(--nav-height));
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
   scroll-margin-block: 0;
   display: flex;
   align-items: center;

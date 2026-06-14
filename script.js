@@ -270,8 +270,8 @@ const header = document.querySelector('.floating-nav');
 const scrollContainer = document.querySelector('.landing-scroll-container');
 const sections = document.querySelectorAll('[data-observe-section]');
 
-const isSnapViewport = () => true;
-const usesSnapCorrection = () => window.matchMedia('(min-width: 768px)').matches;
+const usesSnapCorrection = () => window.matchMedia('(max-width: 767px)').matches;
+const isSnapViewport = () => usesSnapCorrection();
 
 const syncHeaderHeight = () => {
   if (!header) return;
@@ -397,6 +397,7 @@ const snapToNearestSection = () => {
 
 if (scrollContainer) {
   scrollContainer.addEventListener('wheel', (event) => {
+    if (!usesSnapCorrection()) return;
     const currentSection = getInternalScrollableSection();
     if (!currentSection) return;
 
