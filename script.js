@@ -328,6 +328,33 @@ const setActiveSection = (sectionId) => {
 
 let snapTimer;
 let isAutoSnapping = false;
+let bounceTimer;
+
+const getInternalScrollableSection = () => {
+  if (!scrollContainer || !sections.length) return null;
+  const currentTop = scrollContainer.scrollTop;
+  const viewportHeight = scrollContainer.clientHeight;
+
+  return Array.from(sections).find((section) => {
+    const sectionTop = getSectionSnapTop(section);
+    const sectionHeight = section.offsetHeight;
+    const sectionBottom = sectionTop + sectionHeight;
+    return sectionHeight > viewportHeight + 2
+      && currentTop >= sectionTop - 2
+      && currentTop <= sectionBottom - viewportHeight + 2;
+  }) ?? null;
+};
+
+const showSectionBounce = (section, direction) => {
+  if (!section) return;
+  window.clearTimeout(bounceTimer);
+  section.classList.remove('is-bounce-start', 'is-bounce-end');
+  void section.offsetWidth;
+  section.classList.add(direction === 'up' ? 'is-bounce-start' : 'is-bounce-end');
+  bounceTimer = window.setTimeout(() => {
+    section.classList.remove('is-bounce-start', 'is-bounce-end');
+  }, 280);
+};
 
 const findNearestSection = () => {
   if (!scrollContainer || !sections.length) return null;
@@ -369,6 +396,21 @@ const snapToNearestSection = () => {
 };
 
 if (scrollContainer) {
+  scrollContainer.addEventListener('wheel', (event) => {
+    const currentSection = getInternalScrollableSection();
+    if (!currentSection) return;
+
+    const currentTop = scrollContainer.scrollTop;
+    const sectionTop = getSectionSnapTop(currentSection);
+    const sectionBottom = sectionTop + currentSection.offsetHeight;
+    const viewportHeight = scrollContainer.clientHeight;
+    const atSectionStart = currentTop <= sectionTop + 2;
+    const atSectionEnd = currentTop >= sectionBottom - viewportHeight - 2;
+
+    if (event.deltaY < 0 && atSectionStart) showSectionBounce(currentSection, 'up');
+    if (event.deltaY > 0 && atSectionEnd) showSectionBounce(currentSection, 'down');
+  }, { passive: true });
+
   scrollContainer.addEventListener('scroll', () => {
     if (!usesSnapCorrection()) return;
     window.clearTimeout(snapTimer);
