@@ -33,37 +33,37 @@ const landingImages = {
     label: '박람회장 납품 이미지',
     alt: '박람회장 도시락 납품 사진',
     guide: '[박람회장 납품 사진 가이드] 박람회장, 전시장, 행사 부스 또는 대량 도시락 납품 정렬 사진 필요. 행사 규모감과 현장 납품 신뢰가 느껴지는 사진.',
-    src: '',
+    src: './assets/images/landing/case-exhibition-hall.webp',
   },
   churchLunchboxImage: {
     label: '교회 도시락 이미지',
     alt: '교회 행사 도시락 납품 사진',
     guide: '[교회 도시락 사진 가이드] 교회 행사, 예배 후 식사, 수련회, 단체 모임 도시락 납품 분위기가 보이는 사진 필요. 따뜻하고 정돈된 단체 배식 느낌이 좋음.',
-    src: '',
+    src: './assets/images/landing/case-church-lunchbox.webp',
   },
   seminarLunchboxImage: {
     label: '세미나 도시락 이미지',
     alt: '세미나 행사 도시락 납품 사진',
     guide: '[세미나 도시락 사진 가이드] 세미나, 학회, 기업 교육 현장에 어울리는 도시락 납품 사진 필요. 책상, 강의장, 컨퍼런스 분위기와 깔끔한 도시락 구성이 보이면 좋음.',
-    src: '',
+    src: './assets/images/landing/case-seminar-lunchbox.webp',
   },
   rentalSpaceLunchboxImage: {
     label: '공간대여 도시락 이미지',
     alt: '공간대여 행사 도시락 납품 사진',
     guide: '[공간대여 도시락 사진 가이드] 대관 공간, 회의실, 스튜디오, 소규모 행사장에서 도시락이 준비된 사진 필요. 깔끔한 공간과 도시락 배치가 함께 보이면 좋음.',
-    src: '',
+    src: './assets/images/landing/case-rental-space-lunchbox.webp',
   },
   picnicLunchboxImage: {
     label: '야유회 도시락 이미지',
     alt: '야유회 단체 도시락 납품 사진',
     guide: '[야유회 도시락 사진 가이드] 야외 행사, 워크숍, 체육대회, 야유회에 어울리는 단체 도시락 사진 필요. 이동성과 실속 있는 구성이 보이면 좋음.',
-    src: '',
+    src: './assets/images/landing/case-picnic-lunchbox.webp',
   },
   weddingHallDeliveryImage: {
     label: '예식장 납품 이미지',
     alt: '예식장 도시락 납품 사진',
     guide: '[예식장 납품 사진 가이드] 예식장, 피로연, 가족 행사, 특수 경조사 도시락 납품 사진 필요. 격식 있고 깔끔한 고급 행사 분위기가 느껴지는 사진.',
-    src: '',
+    src: './assets/images/landing/case-wedding-hall.webp',
   },
   punctualDeliveryImage: {
     label: '정시납품 이미지',
@@ -142,7 +142,6 @@ const deliveryCases = [
   { title: '공간대여 도시락', image: landingImages.rentalSpaceLunchboxImage },
   { title: '야유회 도시락', image: landingImages.picnicLunchboxImage },
   { title: '예식장', image: landingImages.weddingHallDeliveryImage },
-
 ];
 
 const trustItems = [
