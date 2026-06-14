@@ -157,7 +157,7 @@ const trustItems = [
   },
   {
     title: '주문조회 사이트',
-    body: '고객이 나의 주문내역/견적서/배송기사를 직접 확인 할 수 있는 웹사이트를 제공합니다..',
+    body: '고객님이 나의 주문내역/견적서/배송기사를 직접 확인 할 수 있는 웹사이트를 제공합니다.',
     image: landingImages.orderLookupSiteImage,
   },
 ];
