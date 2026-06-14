@@ -323,7 +323,8 @@ h3 { margin-bottom: 10px; font-size: 1.28rem; letter-spacing: -0.035em; }
   z-index: -1;
 }
 .image-placeholder.has-image {
-  background: none;
+  background: transparent;
+  box-shadow: none;
 }
 .image-placeholder.has-image::before,
 .image-placeholder.has-image::after {
@@ -359,6 +360,8 @@ h3 { margin-bottom: 10px; font-size: 1.28rem; letter-spacing: -0.035em; }
   z-index: -1;
 }
 .image-placeholder.has-image .placeholder-photo {
+  padding: clamp(8px, 1.8vw, 18px);
+  object-fit: contain;
   z-index: 0;
 }
 .placeholder-label {
