@@ -29,40 +29,40 @@ const landingImages = {
     guide: '[특수맞춤도시락 이미지 가이드] 특수경조사, 고위임원, 연예인 대상 맞춤형 고급 도시락 대표사진 필요. 고급스러운 식재료와 정갈한 구성이 잘 보이고 특별한 대접에 어울리는 사진 사용.',
     src: './assets/images/landing/product-special-custom.webp',
   },
-  seniorWomenMedicalSeminarImage: {
-    label: '대한노인여성의학회 납품 이미지',
-    alt: '대한노인여성의학회 춘계 세미나 납품 사진',
-    guide: '[학회 납품 사진 가이드] 대한노인여성의학회 춘계 세미나 관련 납품 사진 또는 행사장 납품 사진 필요. 학회/세미나 납품 신뢰를 보여줄 수 있는 사진.',
+  exhibitionHallDeliveryImage: {
+    label: '박람회장 납품 이미지',
+    alt: '박람회장 도시락 납품 사진',
+    guide: '[박람회장 납품 사진 가이드] 박람회장, 전시장, 행사 부스 또는 대량 도시락 납품 정렬 사진 필요. 행사 규모감과 현장 납품 신뢰가 느껴지는 사진.',
     src: '',
   },
-  konkukHospitalImage: {
-    label: '건국대학교병원 납품 이미지',
-    alt: '건국대학교병원 납품 사례 사진',
-    guide: '[병원 납품 사진 가이드] 건국대학교병원 또는 병원 세미나 납품 사례 사진 필요. 병원 행사에 납품 가능한 신뢰감이 느껴지는 사진.',
+  churchLunchboxImage: {
+    label: '교회 도시락 이미지',
+    alt: '교회 행사 도시락 납품 사진',
+    guide: '[교회 도시락 사진 가이드] 교회 행사, 예배 후 식사, 수련회, 단체 모임 도시락 납품 분위기가 보이는 사진 필요. 따뜻하고 정돈된 단체 배식 느낌이 좋음.',
     src: '',
   },
-  coexDeliveryImage: {
-    label: '코엑스 납품 이미지',
-    alt: '코엑스 행사 납품 사례 사진',
-    guide: '[코엑스 납품 사진 가이드] 코엑스 행사장, 전시장, 대량 납품 전 정렬 사진 등 전시회 납품 경험을 보여줄 수 있는 사진.',
+  seminarLunchboxImage: {
+    label: '세미나 도시락 이미지',
+    alt: '세미나 행사 도시락 납품 사진',
+    guide: '[세미나 도시락 사진 가이드] 세미나, 학회, 기업 교육 현장에 어울리는 도시락 납품 사진 필요. 책상, 강의장, 컨퍼런스 분위기와 깔끔한 도시락 구성이 보이면 좋음.',
     src: '',
   },
-  setecDeliveryImage: {
-    label: '세텍 납품 이미지',
-    alt: '세텍 행사 납품 사례 사진',
-    guide: '[세텍 납품 사진 가이드] 세텍 행사 또는 전시장 납품 사례 사진 필요. 행사장 납품 분위기가 느껴지는 사진.',
+  rentalSpaceLunchboxImage: {
+    label: '공간대여 도시락 이미지',
+    alt: '공간대여 행사 도시락 납품 사진',
+    guide: '[공간대여 도시락 사진 가이드] 대관 공간, 회의실, 스튜디오, 소규모 행사장에서 도시락이 준비된 사진 필요. 깔끔한 공간과 도시락 배치가 함께 보이면 좋음.',
     src: '',
   },
-  kintexDeliveryImage: {
-    label: '킨텍스 납품 이미지',
-    alt: '킨텍스 행사 납품 사례 사진',
-    guide: '[킨텍스 납품 사진 가이드] 킨텍스 행사 또는 대규모 전시장 납품 사례 사진 필요. 규모감이 느껴지는 사진.',
+  picnicLunchboxImage: {
+    label: '야유회 도시락 이미지',
+    alt: '야유회 단체 도시락 납품 사진',
+    guide: '[야유회 도시락 사진 가이드] 야외 행사, 워크숍, 체육대회, 야유회에 어울리는 단체 도시락 사진 필요. 이동성과 실속 있는 구성이 보이면 좋음.',
     src: '',
   },
-  generalCorporateDeliveryImage: {
-    label: '기타 납품 사례 이미지',
-    alt: '기업행사 학회 병원 학교 납품 사례 사진',
-    guide: '[기타 납품 사례 사진 가이드] 기업행사, 학교, 병원, 학회 등 다양한 납품 경험을 보여줄 수 있는 사진. 실제 납품 박스, 진열, 행사장 입구 사진 가능.',
+  weddingHallDeliveryImage: {
+    label: '예식장 납품 이미지',
+    alt: '예식장 도시락 납품 사진',
+    guide: '[예식장 납품 사진 가이드] 예식장, 피로연, 가족 행사, 특수 경조사 도시락 납품 사진 필요. 격식 있고 깔끔한 고급 행사 분위기가 느껴지는 사진.',
     src: '',
   },
   punctualDeliveryImage: {
@@ -136,12 +136,13 @@ const orderInfoItems = [
 ];
 
 const deliveryCases = [
-  { title: '박람회장', image: landingImages.seniorWomenMedicalSeminarImage },
-  { title: '교회 도시락', image: landingImages.konkukHospitalImage },
-  { title: '세미나 도시락', image: landingImages.coexDeliveryImage },
-  { title: '공간대여 도시락', image: landingImages.setecDeliveryImage },
-  { title: '야유회 도시락', image: landingImages.kintexDeliveryImage },
-  { title: '예식장', image: landingImages.generalCorporateDeliveryImage },
+  { title: '박람회장', image: landingImages.exhibitionHallDeliveryImage },
+  { title: '교회 도시락', image: landingImages.churchLunchboxImage },
+  { title: '세미나 도시락', image: landingImages.seminarLunchboxImage },
+  { title: '공간대여 도시락', image: landingImages.rentalSpaceLunchboxImage },
+  { title: '야유회 도시락', image: landingImages.picnicLunchboxImage },
+  { title: '예식장', image: landingImages.weddingHallDeliveryImage },
+
 ];
 
 const trustItems = [
