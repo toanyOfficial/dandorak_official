@@ -65,22 +65,22 @@ const landingImages = {
     guide: '[예식장 납품 사진 가이드] 예식장, 피로연, 가족 행사, 특수 경조사 도시락 납품 사진 필요. 격식 있고 깔끔한 고급 행사 분위기가 느껴지는 사진.',
     src: './assets/images/landing/case-wedding-hall.webp',
   },
-  punctualDeliveryImage: {
-    label: '정시납품 이미지',
-    alt: '행사 시간에 맞춘 정시납품 사진',
-    guide: '[정시납품 이미지 가이드] 배송 차량, 납품 현장, 행사장 도착 사진 등 시간 맞춤 배송을 보여줄 수 있는 사진 필요.',
+  storeDashboardImage: {
+    label: '매장 대시보드 이미지',
+    alt: '주방 홀 제조 공정 관리 매장 대시보드 화면',
+    guide: '[매장 대시보드 이미지 가이드] 주방-홀 대시보드를 통해 주문 상태, 제조 공정, 준비 현황이 체계적으로 관리되는 화면 필요. 실제 관리 시스템의 신뢰감이 느껴지도록 정돈된 UI 화면이나 현장 사용 장면이 좋음.',
     src: '',
   },
-  inspectionSystemImage: {
-    label: '검수 시스템 이미지',
-    alt: '도시락 출고 전 검수 시스템 사진',
-    guide: '[검수 시스템 이미지 가이드] 도시락 수량 확인, 구성품 확인, 포장 완료 전 검수하는 장면 필요. 작업자가 나와도 되지만 깔끔하고 신뢰감 있어야 함.',
+  deliveryDashboardImage: {
+    label: '배달 대시보드 이미지',
+    alt: '도시락 배달 현황 관리 대시보드 화면',
+    guide: '[배달 대시보드 이미지 가이드] 배달 대시보드를 통해 배송 현황, 기사 배정, 도착 상태를 확인할 수 있는 화면 필요. 신뢰도 높은 배달 관리 시스템처럼 보이는 UI 또는 운영 장면이 좋음.',
     src: '',
   },
-  bulkDeliveryImage: {
-    label: '대량납품 이미지',
-    alt: '대량 도시락 납품 준비 사진',
-    guide: '[대량 납품 이미지 가이드] 20개, 50개, 100개 이상 도시락이 정렬된 사진 필요. 규모감과 정돈된 느낌이 중요함.',
+  orderLookupSiteImage: {
+    label: '주문조회 사이트 이미지',
+    alt: '고객 주문내역 견적서 배송기사 조회 사이트 화면',
+    guide: '[주문조회 사이트 이미지 가이드] 고객이 주문내역, 견적서, 배송기사 정보를 직접 확인할 수 있는 웹사이트 화면 필요. 모바일 또는 PC 화면에서 주문 조회 기능이 직관적으로 보이면 좋음.',
     src: '',
   },
   deliveryFeeGuideImage: {
@@ -146,19 +146,19 @@ const deliveryCases = [
 
 const trustItems = [
   {
-    title: '정시납품 관리',
-    body: '행사 시작 시간에 맞춰 사전 배송 일정을 계획하고, 현장 도착 시간을 기준으로 납품을 준비합니다.',
-    image: landingImages.punctualDeliveryImage,
+    title: '매장 대시보드',
+    body: '주방-홀 대시보드를 통해 제조 공정을 체계적으로 관리합니다.',
+    image: landingImages.storeDashboardImage,
   },
   {
-    title: '출고 전 검수',
-    body: '출고 전 수량과 구성품을 확인하여 누락과 오배송을 줄이는 검수 과정을 거칩니다.',
-    image: landingImages.inspectionSystemImage,
+    title: '배달 대시보드',
+    body: '배달 대시보드를 통해 신뢰도 높은 배달 서비스를 제공합니다.',
+    image: landingImages.deliveryDashboardImage,
   },
   {
-    title: '대량 납품 대응',
-    body: '소규모 세미나부터 수백 명 규모 행사까지 수량과 일정에 맞춰 준비할 수 있습니다.',
-    image: landingImages.bulkDeliveryImage,
+    title: '주문조회 사이트',
+    body: '고객이 나의 주문내역/견적서/배송기사를 직접 확인 할 수 있는 웹사이트를 제공합니다..',
+    image: landingImages.orderLookupSiteImage,
   },
 ];
 
