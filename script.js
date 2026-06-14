@@ -95,7 +95,7 @@ const productItems = [
   {
     title: '보양도시락',
     body: '중요한 학회, 병원 세미나, VIP 행사에 어울리는 든든한 프리미엄 구성입니다.',
-    price: '25,000원~',
+    price: '25,000원 ~ 50,000원 대',
     recommend: '학회 · 병원 세미나 · VIP 행사',
     imageClass: 'product-wellness',
     image: landingImages.boyangLunchboxImage,
@@ -103,7 +103,7 @@ const productItems = [
   {
     title: '프리미엄 도시락',
     body: '기업교육, 컨퍼런스, 간담회 등 격식을 갖춘 행사에 적합한 균형 잡힌 구성입니다.',
-    price: '15,000원~20,000원대',
+    price: '15,000원 ~ 20,000원 대',
     recommend: '기업교육 · 컨퍼런스 · 간담회',
     imageClass: 'product-premium',
     image: landingImages.premiumLunchboxImage,
@@ -111,7 +111,7 @@ const productItems = [
   {
     title: '한상도시락',
     body: '학교 행사, 워크숍, 설명회 등 실속 있는 단체 주문에 적합한 구성입니다.',
-    price: '10,000원~15,000원대',
+    price: '10,000원 ~ 15,000원 대',
     recommend: '학교행사 · 워크숍 · 설명회',
     imageClass: 'product-table',
     image: landingImages.hansangLunchboxImage,
@@ -119,7 +119,7 @@ const productItems = [
   {
     title: '특수맞춤도시락',
     body: '아주 특별한 분들께 대접해야 하는 맞춤형 고급 도시락입니다.',
-    price: '50,000원 ~',
+    price: '50,000원 ~ 100,000원 대',
     recommend: '특수경조사 · 고위임원 · 연예인대상',
     imageClass: 'product-special',
     image: landingImages.specialCustomLunchboxImage,
