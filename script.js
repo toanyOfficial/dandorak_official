@@ -180,9 +180,9 @@ const makeImageSlot = ({ className, image, title = '' }) => {
   return `
     <button class="image-placeholder ${className}${hasImage ? ' has-image' : ''}" type="button" data-guide="${escapeAttr(image.guide)}" aria-label="${escapeAttr(image.label)} 가이드 콘솔 출력">
       ${hasImage ? `<img class="placeholder-photo" src="${escapeAttr(image.src)}" alt="${escapeAttr(image.alt)}" loading="lazy" />` : ''}
-      <span class="placeholder-label">${image.label}</span>
-      ${title ? `<span class="placeholder-title">${title}</span>` : ''}
-      <span class="placeholder-hint">클릭 시 사진 가이드 확인</span>
+      ${hasImage ? '' : `<span class="placeholder-label">${image.label}</span>`}
+      ${!hasImage && title ? `<span class="placeholder-title">${title}</span>` : ''}
+      ${hasImage ? '' : '<span class="placeholder-hint">클릭 시 사진 가이드 확인</span>'}
     </button>
   `;
 };

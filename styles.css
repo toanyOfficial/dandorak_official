@@ -322,6 +322,13 @@ h3 { margin-bottom: 10px; font-size: 1.28rem; letter-spacing: -0.035em; }
   background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04));
   z-index: -1;
 }
+.image-placeholder.has-image {
+  background: none;
+}
+.image-placeholder.has-image::before,
+.image-placeholder.has-image::after {
+  content: none;
+}
 .hero-image {
   min-height: clamp(380px, 58svh, 650px);
   display: grid;
@@ -351,12 +358,8 @@ h3 { margin-bottom: 10px; font-size: 1.28rem; letter-spacing: -0.035em; }
   object-fit: cover;
   z-index: -1;
 }
-.image-placeholder.has-image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.45));
+.image-placeholder.has-image .placeholder-photo {
+  z-index: 0;
 }
 .placeholder-label {
   border-radius: 999px;
