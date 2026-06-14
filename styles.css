@@ -161,9 +161,12 @@ h3 { margin-bottom: 10px; font-size: 1.28rem; letter-spacing: -0.035em; }
 
 .hero-title { max-width: 9.2em; }
 .hero-title > span { display: block; }
-.hero-title-focus {
+.hero-title > .hero-title-focus {
+  display: inline-block;
+  width: fit-content;
+  white-space: nowrap;
   color: #17110a;
-  font-size: 1.05em;
+  font-size: clamp(1.45rem, 7vw, 3.25rem);
   font-weight: 950;
 }
 .hero-brand-line {
