@@ -1,8 +1,8 @@
 const categoryFilters = document.querySelector('#menu-category-filters');
 const minPriceInput = document.querySelector('#menu-min-price');
 const maxPriceInput = document.querySelector('#menu-max-price');
-const minPriceLabel = document.querySelector('#menu-min-price-label');
-const maxPriceLabel = document.querySelector('#menu-max-price-label');
+const minPriceNumberInput = document.querySelector('#menu-min-price-number');
+const maxPriceNumberInput = document.querySelector('#menu-max-price-number');
 const priceRangeControl = document.querySelector('.price-range-control');
 const results = document.querySelector('#menu-results');
 const floatingNav = document.querySelector('#menu-floating-nav');
@@ -26,13 +26,26 @@ const getCategoryPriceRange = (category) => {
   return `${formatPrice(category.min_price)} ~ ${formatPrice(category.max_price)}`;
 };
 
-const syncPriceInputs = () => {
-  const minPrice = Math.min(Number(minPriceInput.value), Number(maxPriceInput.value));
-  const maxPrice = Math.max(Number(minPriceInput.value), Number(maxPriceInput.value));
+const clampPrice = (value, fallback) => {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.min(Number(minPriceInput.max), Math.max(Number(minPriceInput.min), Math.round(parsed / 1000) * 1000));
+};
+
+const syncPriceInputs = ({ source = 'range' } = {}) => {
+  const fallbackMin = Number(minPriceInput.min);
+  const fallbackMax = Number(maxPriceInput.value);
+  const rawMinPrice = source === 'number' ? minPriceNumberInput.value : minPriceInput.value;
+  const rawMaxPrice = source === 'number' ? maxPriceNumberInput.value : maxPriceInput.value;
+  const nextMinPrice = clampPrice(rawMinPrice, fallbackMin);
+  const nextMaxPrice = clampPrice(rawMaxPrice, fallbackMax);
+  const minPrice = Math.min(nextMinPrice, nextMaxPrice);
+  const maxPrice = Math.max(nextMinPrice, nextMaxPrice);
+
   minPriceInput.value = minPrice;
   maxPriceInput.value = maxPrice;
-  minPriceLabel.textContent = formatPrice(minPrice);
-  maxPriceLabel.textContent = formatPrice(maxPrice);
+  minPriceNumberInput.value = minPrice;
+  maxPriceNumberInput.value = maxPrice;
 
   const rangeMin = Number(minPriceInput.min);
   const rangeMax = Number(minPriceInput.max);
@@ -160,6 +173,19 @@ const scheduleLoadMenu = () => {
 };
 
 [minPriceInput, maxPriceInput].forEach((input) => input.addEventListener('input', scheduleLoadMenu));
+[minPriceNumberInput, maxPriceNumberInput].forEach((input) => {
+  input.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      syncPriceInputs({ source: 'number' });
+      loadMenu();
+    }, 220);
+  });
+  input.addEventListener('change', () => {
+    syncPriceInputs({ source: 'number' });
+    loadMenu();
+  });
+});
 sortInputs.forEach((input) => input.addEventListener('change', loadMenu));
 syncPriceInputs();
 loadMenu();

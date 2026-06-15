@@ -742,47 +742,46 @@ body { height: 100%; overflow: hidden; }
 .menu-price-panel {
   min-width: 0;
   display: grid;
-  justify-items: center;
+  gap: 14px;
 }
 .price-range-control {
   --price-min-percent: 0%;
   --price-max-percent: 45%;
   position: relative;
-  width: 58px;
-  height: 220px;
-  margin: 4px auto 16px;
+  width: min(360px, 100%);
+  height: 44px;
+  margin: 0 auto;
 }
 .price-range-track,
 .price-range-track::before {
   position: absolute;
-  left: 50%;
-  width: 8px;
+  top: 50%;
+  height: 8px;
   border-radius: 999px;
-  transform: translateX(-50%);
+  transform: translateY(-50%);
 }
 .price-range-track {
-  inset-block: 8px;
+  left: 0;
+  right: 0;
   background: #f3dfc5;
   box-shadow: inset 0 0 0 1px rgba(92, 56, 32, 0.08);
 }
 .price-range-track::before {
   content: "";
-  bottom: var(--price-min-percent);
-  height: calc(var(--price-max-percent) - var(--price-min-percent));
-  background: linear-gradient(180deg, var(--gold-light), var(--orange));
+  left: var(--price-min-percent);
+  width: calc(var(--price-max-percent) - var(--price-min-percent));
+  background: linear-gradient(90deg, var(--gold-light), var(--orange));
   box-shadow: 0 0 18px rgba(201, 164, 91, 0.34);
 }
 .price-range-input {
   position: absolute;
   inset: 0;
-  width: 220px;
-  height: 58px;
-  margin: 81px 0 0 -81px;
+  width: 100%;
+  height: 44px;
   appearance: none;
   background: transparent;
   cursor: pointer;
   pointer-events: none;
-  transform: rotate(-90deg);
 }
 .price-range-input::-webkit-slider-runnable-track { height: 8px; background: transparent; }
 .price-range-input::-moz-range-track { height: 8px; background: transparent; }
@@ -808,17 +807,31 @@ body { height: 100%; overflow: hidden; }
 }
 .price-range-values {
   display: grid;
-  gap: 8px;
-  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: min(360px, 100%);
   color: var(--muted);
   font-weight: 800;
 }
-.price-range-values span {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
+.price-range-values label {
+  display: grid;
+  gap: 6px;
 }
-.price-range-values strong { color: var(--orange-dark); font-size: 1.08rem; }
+.price-range-values input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0 12px;
+  color: var(--brown);
+  background: #fffaf2;
+  font: inherit;
+  font-weight: 900;
+}
+.price-range-values input:focus-visible {
+  outline: 3px solid rgba(216, 111, 38, 0.32);
+  outline-offset: 2px;
+}
 .menu-sort-group {
   display: flex;
   flex-direction: column;
