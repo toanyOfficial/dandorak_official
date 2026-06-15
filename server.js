@@ -89,10 +89,19 @@ app.get("/api/menu", async (req, res) => {
 
   try {
     const [categories] = await getPool().query(
-      `SELECT id, name
-       FROM dandorak_category
-       WHERE id BETWEEN 1 AND 9
-       ORDER BY id`,
+      `SELECT
+         c.id,
+         c.name,
+         MIN(CAST(REPLACE(i.price, ',', '') AS UNSIGNED)) AS min_price,
+         MAX(CAST(REPLACE(i.price, ',', '') AS UNSIGNED)) AS max_price
+       FROM dandorak_category c
+       LEFT JOIN dandorak_item_position ip
+         ON ip.category_id = c.id
+       LEFT JOIN dandorak_item i
+         ON i.id = ip.item_id
+       WHERE c.id BETWEEN 1 AND 9
+       GROUP BY c.id, c.name
+       ORDER BY c.id`,
     );
 
     const [items] = await getPool().query(

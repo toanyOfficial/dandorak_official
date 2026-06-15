@@ -967,3 +967,82 @@ body { height: 100%; overflow: hidden; }
   .menu-home-link { width: 100%; }
   .menu-item-card { grid-template-columns: 1fr; }
 }
+
+.menu-operation-bar { display: block; }
+.menu-operation-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 54px;
+  border-radius: 22px;
+  color: var(--brown);
+  background: linear-gradient(135deg, #fff7eb, #fffdf8);
+  font-size: 1.05rem;
+  font-weight: 950;
+  cursor: pointer;
+  list-style: none;
+}
+.menu-operation-summary::-webkit-details-marker { display: none; }
+.menu-operation-bar[open] .menu-operation-summary { margin-bottom: 22px; }
+.menu-operation-bar[open] .menu-operation-summary span { transform: rotate(180deg); }
+.menu-checkbox-copy {
+  display: grid;
+  gap: 2px;
+  line-height: 1.2;
+}
+.menu-checkbox-copy strong { font-size: 0.98rem; }
+.menu-checkbox-copy small {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+.menu-floating-nav {
+  position: fixed;
+  right: 18px;
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  z-index: 980;
+  display: grid;
+  grid-template-columns: repeat(2, 44px);
+  gap: 9px;
+}
+.menu-floating-bubble {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  border: 1px solid rgba(92, 56, 32, 0.14);
+  border-radius: 50%;
+  color: var(--brown);
+  font-weight: 950;
+  box-shadow: 0 14px 30px rgba(87, 54, 25, 0.18);
+  cursor: pointer;
+}
+.menu-floating-bubble::before { z-index: 0; }
+.menu-floating-bubble:not(.menu-card-signature-gold)::before { content: none; }
+.menu-floating-bubble > *,
+.menu-floating-bubble { isolation: isolate; }
+.menu-floating-top {
+  color: #fff;
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+}
+.menu-floating-bubble:focus-visible {
+  outline: 3px solid rgba(216, 111, 38, 0.48);
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .menu-floating-nav {
+    right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    grid-template-columns: repeat(2, 40px);
+    gap: 7px;
+  }
+  .menu-floating-bubble {
+    width: 40px;
+    height: 40px;
+    font-size: 0.92rem;
+  }
+}

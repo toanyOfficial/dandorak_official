@@ -5,6 +5,7 @@ const minPriceLabel = document.querySelector('#menu-min-price-label');
 const maxPriceLabel = document.querySelector('#menu-max-price-label');
 const priceRangeControl = document.querySelector('.price-range-control');
 const results = document.querySelector('#menu-results');
+const floatingNav = document.querySelector('#menu-floating-nav');
 const sortInputs = document.querySelectorAll('input[name="menu-sort"]');
 
 const formatPrice = (value) => `${Number(value).toLocaleString('ko-KR')}원`;
@@ -19,6 +20,11 @@ let debounceTimer;
 
 const getSelectedCategoryIds = () => [...document.querySelectorAll('input[name="menu-category"]:checked')].map((input) => input.value);
 const getSelectedSort = () => document.querySelector('input[name="menu-sort"]:checked')?.value || 'price_asc';
+const getCategoryInitial = (category) => String(category.name || '').trim().slice(0, 1) || String(category.id);
+const getCategoryPriceRange = (category) => {
+  if (category.min_price == null || category.max_price == null) return '가격 정보 없음';
+  return `${formatPrice(category.min_price)} ~ ${formatPrice(category.max_price)}`;
+};
 
 const syncPriceInputs = () => {
   const minPrice = Math.min(Number(minPriceInput.value), Number(maxPriceInput.value));
@@ -38,15 +44,46 @@ const syncPriceInputs = () => {
   return { minPrice, maxPrice };
 };
 
+const renderFloatingNav = () => {
+  if (!floatingNav) return;
+
+  floatingNav.innerHTML = `
+    <button class="menu-floating-bubble menu-floating-top" type="button" aria-label="최상단으로 이동">↑</button>
+    ${categories.map((category) => `
+      <button
+        class="menu-floating-bubble ${getCategoryCardClass(category.id)}"
+        type="button"
+        data-menu-category-target="${category.id}"
+        aria-label="${escapeHtml(category.name)} 카테고리로 이동"
+      >${escapeHtml(getCategoryInitial(category))}</button>
+    `).join('')}
+  `;
+
+  floatingNav.querySelector('.menu-floating-top')?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  floatingNav.querySelectorAll('[data-menu-category-target]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const target = document.querySelector(`#menu-category-${button.dataset.menuCategoryTarget}`);
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+};
+
 const renderCategoryFilters = (nextCategories) => {
   categories = nextCategories;
   categoryFilters.innerHTML = categories.map((category) => `
     <label class="menu-checkbox-pill">
       <input type="checkbox" name="menu-category" value="${category.id}" checked />
-      <span>${escapeHtml(category.name)}</span>
+      <span class="menu-checkbox-copy">
+        <strong>${escapeHtml(category.name)}</strong>
+        <small>${escapeHtml(getCategoryPriceRange(category))}</small>
+      </span>
     </label>
   `).join('');
   categoryFilters.querySelectorAll('input').forEach((input) => input.addEventListener('change', loadMenu));
+  renderFloatingNav();
 };
 
 const groupItems = (items) => items.reduce((groups, item) => {
@@ -64,7 +101,7 @@ const renderItems = (items) => {
 
   const groupedItems = groupItems(items);
   results.innerHTML = [...groupedItems.entries()].map(([categoryId, group]) => `
-    <details class="menu-category-card ${getCategoryCardClass(categoryId)}" open>
+    <details id="menu-category-${categoryId}" class="menu-category-card ${getCategoryCardClass(categoryId)}" open>
       <summary class="menu-category-header">
         <span class="menu-folding-icon" aria-hidden="true"></span>
         <h2>${escapeHtml(group.categoryName)}</h2>

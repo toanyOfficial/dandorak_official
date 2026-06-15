@@ -18,7 +18,8 @@
     </header>
 
     <main class="menu-shell">
-      <section class="menu-operation-bar" aria-label="메뉴 조회 조건">
+      <details class="menu-operation-bar" aria-label="메뉴 조회 조건">
+        <summary class="menu-operation-summary">조회조건 설정하기 <span aria-hidden="true">▼</span></summary>
         <div class="menu-filter-group">
           <div>
             <p class="eyebrow">카테고리 필터</p>
@@ -42,12 +43,14 @@
           <label><input type="radio" name="menu-sort" value="price_desc" /> 금액 내림차순</label>
           <label><input type="radio" name="menu-sort" value="price_asc" checked /> 금액 오름차순</label>
         </fieldset>
-      </section>
+      </details>
 
       <section class="menu-results-section" aria-label="조회된 메뉴">
         <div id="menu-results" class="menu-category-stack" aria-live="polite"></div>
       </section>
     </main>
+
+    <nav id="menu-floating-nav" class="menu-floating-nav" aria-label="메뉴 빠른 이동"></nav>
 
     <script src="menu.js"></script>
   </body>
