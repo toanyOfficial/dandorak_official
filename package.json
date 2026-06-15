@@ -3,7 +3,8 @@
     "build": "echo build-complete",
     "start": "bun run server.js",
     "dev": "bun run server.js",
-    "db:health": "bun run scripts/db-health.js"
+    "db:health": "bun run scripts/db-health.js",
+    "menu:query": "bun run scripts/menu-query.js"
   },
   "dependencies": {
     "dotenv": "^16",
