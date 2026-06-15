@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>단도락 메뉴보기</title>
+    <meta name="description" content="단도락 메뉴를 카테고리와 가격 조건으로 조회하는 페이지입니다." />
+    <link rel="icon" type="image/webp" href="./assets/images/landing/favicon.webp" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="menu-page">
+    <header class="menu-topbar">
+      <a class="brand" href="/" aria-label="단도락 첫 화면으로 이동">
+        <span class="brand-mark" aria-hidden="true"><img src="./assets/images/landing/favicon.webp" alt="" /></span>
+        <span>단도락 메뉴보기</span>
+      </a>
+      <a class="btn btn-secondary menu-home-link" href="/">홈으로</a>
+    </header>
+
+    <main class="menu-shell">
+      <details class="menu-operation-bar" aria-label="메뉴 조회 조건">
+        <summary class="menu-operation-summary">조회조건 설정하기 <span aria-hidden="true">▼</span></summary>
+        <div class="menu-filter-group">
+          <div>
+            <p class="eyebrow">카테고리 필터</p>
+            <div id="menu-category-filters" class="menu-checkbox-grid" aria-live="polite"></div>
+          </div>
+          <div class="menu-price-panel">
+            <p class="eyebrow">가격 필터</p>
+            <div class="price-range-control" aria-label="가격 범위 선택">
+              <div class="price-range-track" aria-hidden="true"></div>
+              <input id="menu-min-price" class="price-range-input" type="range" min="9000" max="100000" step="1000" value="9000" aria-label="최소 가격" />
+              <input id="menu-max-price" class="price-range-input" type="range" min="9000" max="100000" step="1000" value="50000" aria-label="최대 가격" />
+            </div>
+            <div class="price-range-values">
+              <label>최소 <input id="menu-min-price-number" type="number" min="9000" max="100000" step="1000" value="9000" inputmode="numeric" /></label>
+              <label>최대 <input id="menu-max-price-number" type="number" min="9000" max="100000" step="1000" value="50000" inputmode="numeric" /></label>
+            </div>
+          </div>
+        </div>
+        <fieldset class="menu-sort-group">
+          <legend class="eyebrow">정렬</legend>
+          <label><input type="radio" name="menu-sort" value="category" checked /> 카테고리순</label>
+          <div class="menu-sort-price-options" role="group" aria-label="가격순 정렬">
+            <span>가격순</span>
+            <label><input type="radio" name="menu-sort" value="price_desc" /> 내림차순</label>
+            <label><input type="radio" name="menu-sort" value="price_asc" /> 오름차순</label>
+          </div>
+        </fieldset>
+      </details>
+
+      <section class="menu-results-section" aria-label="조회된 메뉴">
+        <div id="menu-results" class="menu-category-stack" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <nav id="menu-floating-nav" class="menu-floating-nav" aria-label="메뉴 빠른 이동"></nav>
+
+    <script src="menu.js"></script>
+  </body>
+</html>
