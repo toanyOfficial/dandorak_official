@@ -8,6 +8,7 @@ const results = document.querySelector('#menu-results');
 const floatingNav = document.querySelector('#menu-floating-nav');
 const sortInputs = document.querySelectorAll('input[name="menu-sort"]');
 
+const parseMenuPrice = (value) => Number(String(value ?? '').replaceAll(',', ''));
 const formatPrice = (value) => `${Number(value).toLocaleString('ko-KR')}원`;
 const escapeHtml = (value) => String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
 const categoryColorClasses = ['menu-card-warm', 'menu-card-gold', 'menu-card-cream', 'menu-card-sage', 'menu-card-rose', 'menu-card-clay', 'menu-card-honey', 'menu-card-mint', 'menu-card-latte'];
@@ -99,6 +100,13 @@ const renderCategoryFilters = (nextCategories) => {
   renderFloatingNav();
 };
 
+const getGroupPriceRange = (items) => {
+  const prices = items.map((item) => parseMenuPrice(item.price)).filter(Number.isFinite);
+  if (!prices.length) return '가격 정보 없음';
+
+  return `${formatPrice(Math.min(...prices))} ~ ${formatPrice(Math.max(...prices))}`;
+};
+
 const groupItems = (items) => items.reduce((groups, item) => {
   const key = item.category_id;
   if (!groups.has(key)) groups.set(key, { categoryName: item.category_name, items: [] });
@@ -117,7 +125,10 @@ const renderItems = (items) => {
     <details id="menu-category-${categoryId}" class="menu-category-card ${getCategoryCardClass(categoryId)}" open>
       <summary class="menu-category-header">
         <span class="menu-folding-icon" aria-hidden="true"></span>
-        <h2>${escapeHtml(group.categoryName)}</h2>
+        <span class="menu-category-title-copy">
+          <h2>${escapeHtml(group.categoryName)}</h2>
+          <small>${escapeHtml(getGroupPriceRange(group.items))}</small>
+        </span>
         <span class="menu-count-badge">${group.items.length}개 메뉴</span>
       </summary>
       <div class="menu-item-list">

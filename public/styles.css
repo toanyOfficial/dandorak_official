@@ -1072,3 +1072,15 @@ body { height: 100%; overflow: hidden; }
   font-weight: 950;
 }
 .menu-sort-price-options label { width: 100%; }
+
+.menu-category-title-copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+.menu-category-title-copy small {
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 900;
+}
+.menu-card-signature-gold .menu-category-title-copy small { color: #7d5319; }
