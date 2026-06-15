@@ -1,14 +1,18 @@
 const categoryFilters = document.querySelector('#menu-category-filters');
 const minPriceInput = document.querySelector('#menu-min-price');
 const maxPriceInput = document.querySelector('#menu-max-price');
-const priceLabel = document.querySelector('#menu-price-label');
+const minPriceLabel = document.querySelector('#menu-min-price-label');
+const maxPriceLabel = document.querySelector('#menu-max-price-label');
+const priceRangeControl = document.querySelector('.price-range-control');
 const results = document.querySelector('#menu-results');
-const resultSummary = document.querySelector('#menu-result-summary');
 const sortInputs = document.querySelectorAll('input[name="menu-sort"]');
 
 const formatPrice = (value) => `${Number(value).toLocaleString('ko-KR')}원`;
 const escapeHtml = (value) => String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
 const categoryColorClasses = ['menu-card-warm', 'menu-card-gold', 'menu-card-cream', 'menu-card-sage', 'menu-card-rose', 'menu-card-clay', 'menu-card-honey', 'menu-card-mint', 'menu-card-latte'];
+const getCategoryCardClass = (categoryId) => Number(categoryId) === 7
+  ? 'menu-card-signature-gold'
+  : categoryColorClasses[(Number(categoryId) - 1) % categoryColorClasses.length];
 
 let categories = [];
 let debounceTimer;
@@ -21,7 +25,16 @@ const syncPriceInputs = () => {
   const maxPrice = Math.max(Number(minPriceInput.value), Number(maxPriceInput.value));
   minPriceInput.value = minPrice;
   maxPriceInput.value = maxPrice;
-  priceLabel.textContent = `${formatPrice(minPrice)} ~ ${formatPrice(maxPrice)}`;
+  minPriceLabel.textContent = formatPrice(minPrice);
+  maxPriceLabel.textContent = formatPrice(maxPrice);
+
+  const rangeMin = Number(minPriceInput.min);
+  const rangeMax = Number(minPriceInput.max);
+  const minPercent = ((minPrice - rangeMin) / (rangeMax - rangeMin)) * 100;
+  const maxPercent = ((maxPrice - rangeMin) / (rangeMax - rangeMin)) * 100;
+  priceRangeControl?.style.setProperty('--price-min-percent', `${minPercent}%`);
+  priceRangeControl?.style.setProperty('--price-max-percent', `${maxPercent}%`);
+
   return { minPrice, maxPrice };
 };
 
@@ -51,11 +64,12 @@ const renderItems = (items) => {
 
   const groupedItems = groupItems(items);
   results.innerHTML = [...groupedItems.entries()].map(([categoryId, group]) => `
-    <article class="menu-category-card ${categoryColorClasses[(Number(categoryId) - 1) % categoryColorClasses.length]}">
-      <header class="menu-category-header">
+    <details class="menu-category-card ${getCategoryCardClass(categoryId)}" open>
+      <summary class="menu-category-header">
+        <span class="menu-folding-icon" aria-hidden="true"></span>
         <h2>${escapeHtml(group.categoryName)}</h2>
-        <span>${group.items.length}개 메뉴</span>
-      </header>
+        <span class="menu-count-badge">${group.items.length}개 메뉴</span>
+      </summary>
       <div class="menu-item-list">
         ${group.items.map((item) => `
           <article class="menu-item-card">
@@ -72,7 +86,7 @@ const renderItems = (items) => {
           </article>
         `).join('')}
       </div>
-    </article>
+    </details>
   `).join('');
 };
 
@@ -82,12 +96,10 @@ async function loadMenu() {
   const selectedCategories = getSelectedCategoryIds();
   if (categories.length && !selectedCategories.length) {
     renderItems([]);
-    resultSummary.textContent = '0개 메뉴가 조회되었습니다.';
     return;
   }
   if (selectedCategories.length) params.set('categories', selectedCategories.join(','));
 
-  resultSummary.textContent = '메뉴 정보를 불러오는 중입니다.';
 
   try {
     const response = await fetch(`/api/menu?${params.toString()}`);
@@ -99,10 +111,8 @@ async function loadMenu() {
 
     if (!categories.length) renderCategoryFilters(data.categories);
     renderItems(data.items);
-    resultSummary.textContent = `${data.items.length}개 메뉴가 조회되었습니다.`;
   } catch (error) {
     console.error(error);
-    resultSummary.textContent = '메뉴 정보를 불러오지 못했습니다.';
     results.innerHTML = `<p class="menu-empty">DB 연결 또는 조회 중 문제가 발생했습니다.<br /><small>${escapeHtml(error.message)}</small></p>`;
   }
 }

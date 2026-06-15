@@ -26,11 +26,15 @@
           </div>
           <div class="menu-price-panel">
             <p class="eyebrow">가격 필터</p>
-            <div class="price-range-row">
-              <label>최소 <input id="menu-min-price" type="range" min="9000" max="100000" step="1000" value="9000" /></label>
-              <label>최대 <input id="menu-max-price" type="range" min="9000" max="100000" step="1000" value="50000" /></label>
+            <div class="price-range-control" aria-label="가격 범위 선택">
+              <div class="price-range-track" aria-hidden="true"></div>
+              <input id="menu-min-price" class="price-range-input" type="range" min="9000" max="100000" step="1000" value="9000" aria-label="최소 가격" />
+              <input id="menu-max-price" class="price-range-input" type="range" min="9000" max="100000" step="1000" value="50000" aria-label="최대 가격" />
             </div>
-            <strong id="menu-price-label">9,000원 ~ 50,000원</strong>
+            <div class="price-range-values">
+              <span>최소 <strong id="menu-min-price-label">9,000원</strong></span>
+              <span>최대 <strong id="menu-max-price-label">50,000원</strong></span>
+            </div>
           </div>
         </div>
         <fieldset class="menu-sort-group">
@@ -41,11 +45,6 @@
       </section>
 
       <section class="menu-results-section" aria-label="조회된 메뉴">
-        <div class="section-heading menu-heading">
-          <p class="eyebrow">전체 메뉴</p>
-          <h1>DB 메뉴정보 조회 결과</h1>
-          <p id="menu-result-summary">메뉴 정보를 불러오는 중입니다.</p>
-        </div>
         <div id="menu-results" class="menu-category-stack" aria-live="polite"></div>
       </section>
     </main>
