@@ -88,12 +88,10 @@ const renderFloatingNav = () => {
 const renderCategoryFilters = (nextCategories) => {
   categories = nextCategories;
   categoryFilters.innerHTML = categories.map((category) => `
-    <label class="menu-checkbox-pill">
-      <input type="checkbox" name="menu-category" value="${category.id}" checked />
-      <span class="menu-checkbox-copy">
-        <strong>${escapeHtml(category.name)}</strong>
-        <small>${escapeHtml(getCategoryPriceRange(category))}</small>
-      </span>
+    <label class="menu-category-filter-row">
+      <span class="menu-category-filter-check"><input type="checkbox" name="menu-category" value="${category.id}" checked /></span>
+      <strong>${escapeHtml(category.name)}</strong>
+      <small>${escapeHtml(getCategoryPriceRange(category))}</small>
     </label>
   `).join('');
   categoryFilters.querySelectorAll('input').forEach((input) => input.addEventListener('change', loadMenu));

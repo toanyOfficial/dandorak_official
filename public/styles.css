@@ -725,8 +725,44 @@ body { height: 100%; overflow: hidden; }
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.58fr);
   gap: 22px;
 }
-.menu-checkbox-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-.menu-checkbox-pill,
+.menu-checkbox-grid {
+  display: grid;
+  gap: 6px;
+  border: 1px solid rgba(234, 220, 202, 0.9);
+  border-radius: 22px;
+  padding: 8px;
+  background: rgba(255, 250, 242, 0.62);
+}
+.menu-category-filter-row {
+  display: grid;
+  grid-template-columns: 34px minmax(84px, 0.62fr) minmax(132px, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  padding: 7px 10px;
+  color: var(--brown);
+  background: rgba(255, 255, 255, 0.58);
+  font-weight: 900;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+.menu-category-filter-row:hover {
+  border-color: rgba(216, 111, 38, 0.2);
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+.menu-category-filter-check {
+  display: grid;
+  place-items: center;
+}
+.menu-category-filter-row input { accent-color: var(--orange); }
+.menu-category-filter-row small {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-align: right;
+}
 .menu-sort-group label {
   display: inline-flex;
   align-items: center;
@@ -978,6 +1014,12 @@ body { height: 100%; overflow: hidden; }
 @media (max-width: 560px) {
   .menu-topbar { align-items: flex-start; flex-direction: column; }
   .menu-home-link { width: 100%; }
+  .menu-category-filter-row {
+    grid-template-columns: 28px minmax(70px, 0.8fr) minmax(118px, 1fr);
+    gap: 8px;
+    padding-inline: 8px;
+  }
+  .menu-category-filter-row small { font-size: 0.74rem; }
   .menu-item-card { grid-template-columns: 1fr; }
 }
 
@@ -999,17 +1041,6 @@ body { height: 100%; overflow: hidden; }
 .menu-operation-summary::-webkit-details-marker { display: none; }
 .menu-operation-bar[open] .menu-operation-summary { margin-bottom: 22px; }
 .menu-operation-bar[open] .menu-operation-summary span { transform: rotate(180deg); }
-.menu-checkbox-copy {
-  display: grid;
-  gap: 2px;
-  line-height: 1.2;
-}
-.menu-checkbox-copy strong { font-size: 0.98rem; }
-.menu-checkbox-copy small {
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 800;
-}
 .menu-floating-nav {
   position: fixed;
   right: 18px;
