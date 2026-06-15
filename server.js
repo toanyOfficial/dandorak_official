@@ -56,6 +56,23 @@ const parseCategoryIds = (value) => {
   return [...new Set(ids)];
 };
 
+const shouldExposeDatabaseError = () => process.env.MENU_API_DEBUG === "true" || process.env.NODE_ENV !== "production";
+
+const buildDatabaseErrorPayload = (message, error) => ({
+  ok: false,
+  message,
+  ...(shouldExposeDatabaseError()
+    ? {
+        error: {
+          code: error.code,
+          errno: error.errno,
+          sqlState: error.sqlState,
+          sqlMessage: error.sqlMessage || error.message,
+        },
+      }
+    : {}),
+});
+
 app.get("/api/menu", async (req, res) => {
   const selectedCategoryIds = parseCategoryIds(req.query.categories);
   const minPrice = parsePrice(req.query.minPrice, 9000);
@@ -92,11 +109,11 @@ app.get("/api/menu", async (req, res) => {
        JOIN dandorak_item i
          ON i.id = ip.item_id
        WHERE ip.category_id BETWEEN 1 AND 9
-         AND i.price BETWEEN ? AND ?
+         AND CAST(REPLACE(i.price, ',', '') AS UNSIGNED) BETWEEN ? AND ?
          ${categoryCondition}
        ORDER BY
          ip.category_id,
-         i.price ${sortDirection},
+         CAST(REPLACE(i.price, ',', '') AS UNSIGNED) ${sortDirection},
          ip.seq,
          i.id`,
       params,
@@ -119,8 +136,14 @@ app.get("/api/menu", async (req, res) => {
       return;
     }
 
-    console.error("Menu query failed", error.message);
-    res.status(500).json({ ok: false, message: "Menu query failed" });
+    console.error("Menu query failed", {
+      code: error.code,
+      errno: error.errno,
+      sqlState: error.sqlState,
+      sqlMessage: error.sqlMessage,
+      message: error.message,
+    });
+    res.status(500).json(buildDatabaseErrorPayload("Menu query failed", error));
   }
 });
 

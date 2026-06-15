@@ -92,7 +92,10 @@ async function loadMenu() {
   try {
     const response = await fetch(`/api/menu?${params.toString()}`);
     const data = await response.json();
-    if (!response.ok || !data.ok) throw new Error(data.message || 'Menu query failed');
+    if (!response.ok || !data.ok) {
+      const detail = data.error?.sqlMessage || data.message || 'Menu query failed';
+      throw new Error(detail);
+    }
 
     if (!categories.length) renderCategoryFilters(data.categories);
     renderItems(data.items);
@@ -100,7 +103,7 @@ async function loadMenu() {
   } catch (error) {
     console.error(error);
     resultSummary.textContent = '메뉴 정보를 불러오지 못했습니다.';
-    results.innerHTML = '<p class="menu-empty">DB 연결 또는 조회 중 문제가 발생했습니다.</p>';
+    results.innerHTML = `<p class="menu-empty">DB 연결 또는 조회 중 문제가 발생했습니다.<br /><small>${escapeHtml(error.message)}</small></p>`;
   }
 }
 
