@@ -631,12 +631,15 @@ body { height: 100%; overflow: hidden; }
     padding: 30px 18px calc(112px + env(safe-area-inset-bottom));
   }
   .hero-section { padding-top: 28px; }
-  .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 34px; }
   .hero-title { max-width: 100%; }
   h1 { font-size: clamp(2rem, 11vw, 3rem); }
   h2 { font-size: clamp(1.85rem, 9vw, 2.5rem); }
   .lead { font-size: 1.05rem; }
-  .hero-image { min-height: 260px; padding: 22px; }
+  .hero-title { margin-bottom: 30px; }
+  .hero-lead { margin-bottom: 0; }
+  .hero-section .badge-list { margin: 36px 0 0; }
+  .hero-image { min-height: 300px; padding: 22px; }
   .badge-list { gap: 8px; }
   .badge-list li { font-size: 0.88rem; padding: 9px 11px; }
   .btn { width: 100%; min-height: 50px; }
