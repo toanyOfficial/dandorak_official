@@ -79,7 +79,25 @@ app.get("/api/menu", async (req, res) => {
   const maxPrice = parsePrice(req.query.maxPrice, 50000);
   const normalizedMinPrice = Math.min(minPrice, maxPrice);
   const normalizedMaxPrice = Math.max(minPrice, maxPrice);
-  const sortDirection = req.query.sort === "price_desc" ? "DESC" : "ASC";
+  const requestedSort = ["category", "price_desc", "price_asc"].includes(req.query.sort) ? req.query.sort : "category";
+  const itemPriceSortDirection = requestedSort === "price_desc" ? "DESC" : "ASC";
+  const categoryPriceSortDirection = requestedSort === "price_desc" ? "DESC" : "ASC";
+  const orderClause = requestedSort === "category"
+    ? `CASE
+         WHEN ip.category_id = 7 THEN 0
+         WHEN ip.category_id = 9 THEN 2
+         ELSE 1
+       END,
+       category_price.category_min_price ASC,
+       ip.category_id,
+       item_price ASC,
+       ip.seq,
+       i.id`
+    : `category_price.category_min_price ${categoryPriceSortDirection},
+       ip.category_id,
+       item_price ${itemPriceSortDirection},
+       ip.seq,
+       i.id`;
 
   const params = [normalizedMinPrice, normalizedMaxPrice];
   const categoryCondition = selectedCategoryIds.length
@@ -111,20 +129,30 @@ app.get("/api/menu", async (req, res) => {
          i.name AS short_name,
          i.long_name,
          i.main_dish,
-         i.price
+         i.price,
+         CAST(REPLACE(i.price, ',', '') AS UNSIGNED) AS item_price,
+         category_price.category_min_price
        FROM dandorak_item_position ip
        JOIN dandorak_category c
          ON c.id = ip.category_id
        JOIN dandorak_item i
          ON i.id = ip.item_id
+       JOIN (
+         SELECT
+           ip_inner.category_id,
+           MIN(CAST(REPLACE(i_inner.price, ',', '') AS UNSIGNED)) AS category_min_price
+         FROM dandorak_item_position ip_inner
+         JOIN dandorak_item i_inner
+           ON i_inner.id = ip_inner.item_id
+         WHERE ip_inner.category_id BETWEEN 1 AND 9
+         GROUP BY ip_inner.category_id
+       ) category_price
+         ON category_price.category_id = ip.category_id
        WHERE ip.category_id BETWEEN 1 AND 9
          AND CAST(REPLACE(i.price, ',', '') AS UNSIGNED) BETWEEN ? AND ?
          ${categoryCondition}
        ORDER BY
-         ip.category_id,
-         CAST(REPLACE(i.price, ',', '') AS UNSIGNED) ${sortDirection},
-         ip.seq,
-         i.id`,
+         ${orderClause}`,
       params,
     );
 
@@ -134,7 +162,7 @@ app.get("/api/menu", async (req, res) => {
         categories: selectedCategoryIds,
         minPrice: normalizedMinPrice,
         maxPrice: normalizedMaxPrice,
-        sort: sortDirection === "DESC" ? "price_desc" : "price_asc",
+        sort: requestedSort,
       },
       categories,
       items,

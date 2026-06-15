@@ -40,8 +40,12 @@
         </div>
         <fieldset class="menu-sort-group">
           <legend class="eyebrow">정렬</legend>
-          <label><input type="radio" name="menu-sort" value="price_desc" /> 금액 내림차순</label>
-          <label><input type="radio" name="menu-sort" value="price_asc" checked /> 금액 오름차순</label>
+          <label><input type="radio" name="menu-sort" value="category" checked /> 카테고리순</label>
+          <div class="menu-sort-price-options" role="group" aria-label="가격순 정렬">
+            <span>가격순</span>
+            <label><input type="radio" name="menu-sort" value="price_desc" /> 내림차순</label>
+            <label><input type="radio" name="menu-sort" value="price_asc" /> 오름차순</label>
+          </div>
         </fieldset>
       </details>
 

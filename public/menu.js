@@ -19,7 +19,7 @@ let categories = [];
 let debounceTimer;
 
 const getSelectedCategoryIds = () => [...document.querySelectorAll('input[name="menu-category"]:checked')].map((input) => input.value);
-const getSelectedSort = () => document.querySelector('input[name="menu-sort"]:checked')?.value || 'price_asc';
+const getSelectedSort = () => document.querySelector('input[name="menu-sort"]:checked')?.value || 'category';
 const getCategoryInitial = (category) => String(category.name || '').trim().slice(0, 1) || String(category.id);
 const getCategoryPriceRange = (category) => {
   if (category.min_price == null || category.max_price == null) return '가격 정보 없음';
