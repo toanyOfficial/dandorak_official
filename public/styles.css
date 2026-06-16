@@ -980,15 +980,27 @@ body { height: 100%; overflow: hidden; }
   background: rgba(255, 255, 255, 0.84);
 }
 .menu-photo-placeholder {
+  position: relative;
   display: grid;
   place-items: center;
   min-height: 120px;
+  overflow: hidden;
   border-radius: 18px;
   color: rgba(92, 56, 32, 0.72);
   background: linear-gradient(135deg, rgba(216,111,38,0.14), rgba(201,164,91,0.22));
   font-weight: 950;
   text-align: center;
 }
+.menu-item-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.menu-photo-fallback { position: relative; z-index: 1; }
+.menu-photo-placeholder.has-menu-photo { background: #fff; }
+.menu-photo-placeholder.has-menu-photo .menu-photo-fallback { display: none; }
 .menu-item-copy { min-width: 0; }
 .menu-category-name { margin: 0 0 4px; color: var(--orange-dark); font-weight: 900; }
 .menu-item-copy h3 { margin: 0 0 8px; color: #1f160d; font-size: clamp(1.45rem, 3vw, 2rem); font-weight: 950; }

@@ -22,6 +22,22 @@ let debounceTimer;
 const getSelectedCategoryIds = () => [...document.querySelectorAll('input[name="menu-category"]:checked')].map((input) => input.value);
 const getSelectedSort = () => document.querySelector('input[name="menu-sort"]:checked')?.value || 'category';
 const getCategoryInitial = (category) => String(category.name || '').trim().slice(0, 1) || String(category.id);
+const getMenuItemImageSrc = (item) => `./assets/images/goods/${encodeURIComponent(item.id)}.png`;
+const getMenuItemImageAlt = (item) => `${item.short_name} 상품 사진`;
+const renderMenuItemPhoto = (item) => `
+  <div class="menu-photo-placeholder" aria-label="${escapeHtml(item.short_name)} 사진 예정">
+    <img
+      class="menu-item-photo"
+      src="${escapeHtml(getMenuItemImageSrc(item))}"
+      alt="${escapeHtml(getMenuItemImageAlt(item))}"
+      loading="lazy"
+      onerror="this.remove(); this.parentElement.classList.remove('has-menu-photo');"
+      onload="this.parentElement.classList.add('has-menu-photo');"
+    />
+    <span class="menu-photo-fallback">사진<br />준비중</span>
+  </div>
+`;
+
 const getCategoryPriceRange = (category) => {
   if (category.min_price == null || category.max_price == null) return '가격 정보 없음';
   return `${formatPrice(category.min_price)} ~ ${formatPrice(category.max_price)}`;
@@ -132,7 +148,7 @@ const renderItems = (items) => {
       <div class="menu-item-list">
         ${group.items.map((item) => `
           <article class="menu-item-card">
-            <div class="menu-photo-placeholder" aria-label="${escapeHtml(item.short_name)} 사진 예정">사진<br />준비중</div>
+            ${renderMenuItemPhoto(item)}
             <div class="menu-item-copy">
               <p class="menu-category-name">${escapeHtml(item.category_name)}</p>
               <h3>${escapeHtml(item.short_name)}</h3>
