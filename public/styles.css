@@ -1180,6 +1180,7 @@ body { height: 100%; overflow: hidden; }
   z-index: 1;
   width: min(960px, 100%);
   max-height: min(90svh, 920px);
+  overflow-y: auto;
   border: 1px solid rgba(201, 164, 91, 0.34);
   border-radius: 28px;
   padding: clamp(12px, 2.6vw, 22px);
@@ -1216,7 +1217,7 @@ body { height: 100%; overflow: hidden; }
 .menu-image-modal-content img {
   display: block;
   width: 100%;
-  max-height: calc(90svh - 120px);
+  max-height: calc(90svh - 180px);
   border-radius: 20px;
   object-fit: contain;
   background: transparent;
@@ -1228,9 +1229,23 @@ body { height: 100%; overflow: hidden; }
   font-weight: 950;
   text-align: center;
 }
-.menu-image-modal-content figcaption strong {
+.menu-image-modal-name-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 4px 7px;
+  margin: 0;
+}
+.menu-image-modal-name-line strong {
   color: var(--brown);
-  font-size: clamp(1.05rem, 2.6vw, 1.35rem);
+  font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+  font-weight: 950;
+}
+.menu-image-modal-name-line span {
+  color: #7d5c3c;
+  font-size: clamp(0.98rem, 2.3vw, 1.18rem);
+  font-weight: 850;
 }
 .menu-image-modal-content figcaption small {
   color: var(--muted);
@@ -1242,7 +1257,7 @@ body.menu-image-modal-open { overflow: hidden; }
 @media (max-width: 560px) {
   .menu-photo-zoom-hint { opacity: 1; transform: none; }
   .menu-image-modal-dialog { border-radius: 22px; }
-  .menu-image-modal-content img { max-height: calc(92svh - 112px); }
+  .menu-image-modal-content img { max-height: calc(92svh - 172px); }
 }
 
 .site-footer {

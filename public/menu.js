@@ -63,7 +63,7 @@ const openMenuImageModal = ({ src, alt, title, longName, mainDish }) => {
   imageModalImg.src = src;
   imageModalImg.alt = alt || title || '메뉴 상품 사진';
   imageModalTitle.textContent = title || alt || '메뉴 상품 사진';
-  if (imageModalLongName) imageModalLongName.textContent = longName || '';
+  if (imageModalLongName) imageModalLongName.textContent = longName ? `(${longName})` : '';
   if (imageModalMainDish) imageModalMainDish.textContent = mainDish || '';
   imageModal.classList.add('is-open');
   imageModal.setAttribute('aria-hidden', 'false');
