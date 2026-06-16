@@ -10,6 +10,8 @@ const sortInputs = document.querySelectorAll('input[name="menu-sort"]');
 const imageModal = document.querySelector('#menu-image-modal');
 const imageModalImg = document.querySelector('#menu-image-modal-img');
 const imageModalTitle = document.querySelector('#menu-image-modal-title');
+const imageModalLongName = document.querySelector('#menu-image-modal-long-name');
+const imageModalMainDish = document.querySelector('#menu-image-modal-main-dish');
 
 const parseMenuPrice = (value) => Number(String(value ?? '').replaceAll(',', ''));
 const formatPrice = (value) => `${Number(value).toLocaleString('ko-KR')}원`;
@@ -34,6 +36,8 @@ const renderMenuItemPhoto = (item) => `
     data-menu-image-src="${escapeHtml(getMenuItemImageSrc(item))}"
     data-menu-image-alt="${escapeHtml(getMenuItemImageAlt(item))}"
     data-menu-image-title="${escapeHtml(item.short_name)}"
+    data-menu-image-long-name="${escapeHtml(item.long_name)}"
+    data-menu-image-main-dish="${escapeHtml(item.main_dish)}"
     aria-label="${escapeHtml(item.short_name)} 큰 사진 보기"
   >
     <img
@@ -53,12 +57,14 @@ const renderMenuItemPhoto = (item) => `
 `;
 
 
-const openMenuImageModal = ({ src, alt, title }) => {
+const openMenuImageModal = ({ src, alt, title, longName, mainDish }) => {
   if (!imageModal || !imageModalImg || !imageModalTitle || !src) return;
 
   imageModalImg.src = src;
   imageModalImg.alt = alt || title || '메뉴 상품 사진';
   imageModalTitle.textContent = title || alt || '메뉴 상품 사진';
+  if (imageModalLongName) imageModalLongName.textContent = longName || '';
+  if (imageModalMainDish) imageModalMainDish.textContent = mainDish || '';
   imageModal.classList.add('is-open');
   imageModal.setAttribute('aria-hidden', 'false');
   document.body.classList.add('menu-image-modal-open');
@@ -73,6 +79,8 @@ const closeMenuImageModal = () => {
   document.body.classList.remove('menu-image-modal-open');
   imageModalImg.removeAttribute('src');
   imageModalImg.alt = '';
+  if (imageModalLongName) imageModalLongName.textContent = '';
+  if (imageModalMainDish) imageModalMainDish.textContent = '';
 };
 
 const getCategoryPriceRange = (category) => {
@@ -257,6 +265,8 @@ results?.addEventListener('click', (event) => {
     src: trigger.dataset.menuImageSrc,
     alt: trigger.dataset.menuImageAlt,
     title: trigger.dataset.menuImageTitle,
+    longName: trigger.dataset.menuImageLongName,
+    mainDish: trigger.dataset.menuImageMainDish,
   });
 });
 imageModal?.addEventListener('click', (event) => {
