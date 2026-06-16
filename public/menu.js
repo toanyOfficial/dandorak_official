@@ -29,6 +29,13 @@ const getSelectedSort = () => document.querySelector('input[name="menu-sort"]:ch
 const getCategoryInitial = (category) => String(category.name || '').trim().slice(0, 1) || String(category.id);
 const getMenuItemImageSrc = (item) => `./assets/images/goods/${encodeURIComponent(item.id)}.png`;
 const getMenuItemImageAlt = (item) => `${item.short_name} 상품 사진`;
+const shouldShowRiceSoupNote = (item) => Number(item.id) !== 77;
+const renderMenuPrice = (item) => `
+  <p class="menu-price">
+    <span>${formatPrice(item.price)}</span>
+    ${shouldShowRiceSoupNote(item) ? '<small>(밥,국 포함 / 국대신식혜가능)</small>' : ''}
+  </p>
+`;
 const renderMenuItemPhoto = (item) => `
   <button
     class="menu-photo-placeholder"
@@ -52,7 +59,7 @@ const renderMenuItemPhoto = (item) => `
       onload="this.parentElement.classList.add('has-menu-photo');"
     />
     <span class="menu-photo-fallback">사진<br />준비중</span>
-    <span class="menu-photo-zoom-hint" aria-hidden="true">확대보기</span>
+    <span class="menu-photo-zoom-hint" aria-hidden="true">🔍</span>
   </button>
 `;
 
@@ -201,7 +208,7 @@ const renderItems = (items) => {
                 <strong>${escapeHtml(item.long_name)}</strong>
                 <span>${escapeHtml(item.main_dish)}</span>
               </div>
-              <p class="menu-price">${formatPrice(item.price)}</p>
+              ${renderMenuPrice(item)}
             </div>
           </article>
         `).join('')}
