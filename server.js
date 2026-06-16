@@ -124,6 +124,7 @@ app.get("/api/menu", async (req, res) => {
 
     const [items] = await getPool().query(
       `SELECT
+         i.id,
          ip.category_id,
          c.name AS category_name,
          i.name AS short_name,
