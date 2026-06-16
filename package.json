@@ -1,10 +1,11 @@
 {
   "scripts": {
     "build": "echo build-complete",
-    "start": "bun run server.js",
-    "dev": "bun run server.js",
+    "start": "npm run images:menu-thumbs || echo \"menu thumbnail generation skipped\"; bun run server.js",
+    "dev": "npm run images:menu-thumbs || echo \"menu thumbnail generation skipped\"; bun run server.js",
     "db:health": "bun run scripts/db-health.js",
-    "menu:query": "bun run scripts/menu-query.js"
+    "menu:query": "bun run scripts/menu-query.js",
+    "images:menu-thumbs": "python3 scripts/generate-menu-thumbnails.py"
   },
   "dependencies": {
     "dotenv": "^16",
