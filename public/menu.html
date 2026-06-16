@@ -56,6 +56,21 @@
 
     <nav id="menu-floating-nav" class="menu-floating-nav" aria-label="메뉴 빠른 이동"></nav>
 
+    <div id="menu-image-modal" class="menu-image-modal" role="dialog" aria-modal="true" aria-labelledby="menu-image-modal-title" aria-hidden="true">
+      <div class="menu-image-modal-backdrop" data-menu-modal-close></div>
+      <div class="menu-image-modal-dialog" role="document">
+        <button class="menu-image-modal-close" type="button" data-menu-modal-close aria-label="큰 이미지 닫기">×</button>
+        <figure class="menu-image-modal-content">
+          <img id="menu-image-modal-img" src="" alt="" decoding="async" />
+          <figcaption>
+            <span id="menu-image-modal-title"></span>
+            <strong id="menu-image-modal-long-name"></strong>
+            <small id="menu-image-modal-main-dish"></small>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
     <script src="menu.js"></script>
   </body>
 </html>

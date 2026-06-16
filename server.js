@@ -90,14 +90,11 @@ app.get("/api/menu", async (req, res) => {
        END,
        category_price.category_min_price ASC,
        ip.category_id,
-       item_price ASC,
-       ip.seq,
-       i.id`
+       i.id ASC`
     : `category_price.category_min_price ${categoryPriceSortDirection},
        ip.category_id,
        item_price ${itemPriceSortDirection},
-       ip.seq,
-       i.id`;
+       i.id ASC`;
 
   const params = [normalizedMinPrice, normalizedMaxPrice];
   const categoryCondition = selectedCategoryIds.length

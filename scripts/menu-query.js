@@ -17,8 +17,7 @@ WHERE ip.category_id BETWEEN 1 AND 9
   AND CAST(REPLACE(i.price, ',', '') AS UNSIGNED) BETWEEN ? AND ?
 ORDER BY
   ip.category_id,
-  ip.seq,
-  i.id
+  i.id ASC
 LIMIT 20`;
 
 try {
