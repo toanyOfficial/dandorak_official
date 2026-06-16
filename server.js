@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { MissingDatabaseEnvironmentError, checkDatabaseConnection, getPool } from "./lib/db.js";
@@ -7,6 +8,31 @@ import { MissingDatabaseEnvironmentError, checkDatabaseConnection, getPool } fro
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const publicDir = path.join(__dirname, "public");
+const goodsImageDir = path.join(publicDir, "assets", "images", "goods");
+const goodsImageExtensions = new Set([".png", ".jpg", ".jpeg", ".webp"]);
+
+const buildGoodsImageIdSet = () => {
+  try {
+    return new Set(
+      fs.readdirSync(goodsImageDir, { withFileTypes: true })
+        .filter((entry) => entry.isFile())
+        .map((entry) => path.parse(entry.name))
+        .filter(({ name, ext }) => /^\d+$/.test(name) && goodsImageExtensions.has(ext.toLowerCase()))
+        .map(({ name }) => name),
+    );
+  } catch (error) {
+    console.warn(`Goods image directory scan failed: ${error.message}`);
+    return new Set();
+  }
+};
+
+const publicMenuImageIdSet = buildGoodsImageIdSet();
+const publicMenuImageIds = [...publicMenuImageIdSet].map(Number).sort((a, b) => a - b);
+const publicMenuImageIdPlaceholders = publicMenuImageIds.map(() => "?").join(", ");
+const buildPublicMenuItemImageCondition = (itemAlias) => publicMenuImageIds.length
+  ? `${itemAlias}.id IN (${publicMenuImageIdPlaceholders})`
+  : "1 = 0";
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -96,7 +122,7 @@ app.get("/api/menu", async (req, res) => {
        item_price ${itemPriceSortDirection},
        i.id ASC`;
 
-  const params = [normalizedMinPrice, normalizedMaxPrice];
+  const params = [...publicMenuImageIds, ...publicMenuImageIds, normalizedMinPrice, normalizedMaxPrice];
   const categoryCondition = selectedCategoryIds.length
     ? `AND ip.category_id IN (${selectedCategoryIds.map(() => "?").join(", ")})`
     : "";
@@ -114,9 +140,11 @@ app.get("/api/menu", async (req, res) => {
          ON ip.category_id = c.id
        LEFT JOIN dandorak_item i
          ON i.id = ip.item_id
+        AND ${buildPublicMenuItemImageCondition("i")}
        WHERE c.id BETWEEN 1 AND 9
        GROUP BY c.id, c.name
        ORDER BY c.id`,
+      publicMenuImageIds,
     );
 
     const [items] = await getPool().query(
@@ -143,10 +171,12 @@ app.get("/api/menu", async (req, res) => {
          JOIN dandorak_item i_inner
            ON i_inner.id = ip_inner.item_id
          WHERE ip_inner.category_id BETWEEN 1 AND 9
+           AND ${buildPublicMenuItemImageCondition("i_inner")}
          GROUP BY ip_inner.category_id
        ) category_price
          ON category_price.category_id = ip.category_id
        WHERE ip.category_id BETWEEN 1 AND 9
+         AND ${buildPublicMenuItemImageCondition("i")}
          AND CAST(REPLACE(i.price, ',', '') AS UNSIGNED) BETWEEN ? AND ?
          ${categoryCondition}
        ORDER BY
