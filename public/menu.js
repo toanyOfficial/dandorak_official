@@ -7,6 +7,9 @@ const priceRangeControl = document.querySelector('.price-range-control');
 const results = document.querySelector('#menu-results');
 const floatingNav = document.querySelector('#menu-floating-nav');
 const sortInputs = document.querySelectorAll('input[name="menu-sort"]');
+const imageModal = document.querySelector('#menu-image-modal');
+const imageModalImg = document.querySelector('#menu-image-modal-img');
+const imageModalTitle = document.querySelector('#menu-image-modal-title');
 
 const parseMenuPrice = (value) => Number(String(value ?? '').replaceAll(',', ''));
 const formatPrice = (value) => `${Number(value).toLocaleString('ko-KR')}원`;
@@ -25,18 +28,52 @@ const getCategoryInitial = (category) => String(category.name || '').trim().slic
 const getMenuItemImageSrc = (item) => `./assets/images/goods/${encodeURIComponent(item.id)}.png`;
 const getMenuItemImageAlt = (item) => `${item.short_name} 상품 사진`;
 const renderMenuItemPhoto = (item) => `
-  <div class="menu-photo-placeholder" aria-label="${escapeHtml(item.short_name)} 사진 예정">
+  <button
+    class="menu-photo-placeholder"
+    type="button"
+    data-menu-image-src="${escapeHtml(getMenuItemImageSrc(item))}"
+    data-menu-image-alt="${escapeHtml(getMenuItemImageAlt(item))}"
+    data-menu-image-title="${escapeHtml(item.short_name)}"
+    aria-label="${escapeHtml(item.short_name)} 큰 사진 보기"
+  >
     <img
       class="menu-item-photo"
       src="${escapeHtml(getMenuItemImageSrc(item))}"
       alt="${escapeHtml(getMenuItemImageAlt(item))}"
       loading="lazy"
-      onerror="this.remove(); this.parentElement.classList.remove('has-menu-photo');"
+      decoding="async"
+      width="150"
+      height="120"
+      onerror="this.remove(); this.parentElement.classList.remove('has-menu-photo'); this.parentElement.disabled = true;"
       onload="this.parentElement.classList.add('has-menu-photo');"
     />
     <span class="menu-photo-fallback">사진<br />준비중</span>
-  </div>
+    <span class="menu-photo-zoom-hint" aria-hidden="true">확대보기</span>
+  </button>
 `;
+
+
+const openMenuImageModal = ({ src, alt, title }) => {
+  if (!imageModal || !imageModalImg || !imageModalTitle || !src) return;
+
+  imageModalImg.src = src;
+  imageModalImg.alt = alt || title || '메뉴 상품 사진';
+  imageModalTitle.textContent = title || alt || '메뉴 상품 사진';
+  imageModal.classList.add('is-open');
+  imageModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('menu-image-modal-open');
+  imageModal.querySelector('.menu-image-modal-close')?.focus();
+};
+
+const closeMenuImageModal = () => {
+  if (!imageModal || !imageModalImg) return;
+
+  imageModal.classList.remove('is-open');
+  imageModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('menu-image-modal-open');
+  imageModalImg.removeAttribute('src');
+  imageModalImg.alt = '';
+};
 
 const getCategoryPriceRange = (category) => {
   if (category.min_price == null || category.max_price == null) return '가격 정보 없음';
@@ -212,5 +249,21 @@ const scheduleLoadMenu = () => {
   });
 });
 sortInputs.forEach((input) => input.addEventListener('change', loadMenu));
+results?.addEventListener('click', (event) => {
+  const trigger = event.target.closest('[data-menu-image-src]');
+  if (!trigger || trigger.disabled) return;
+
+  openMenuImageModal({
+    src: trigger.dataset.menuImageSrc,
+    alt: trigger.dataset.menuImageAlt,
+    title: trigger.dataset.menuImageTitle,
+  });
+});
+imageModal?.addEventListener('click', (event) => {
+  if (event.target.closest('[data-menu-modal-close]')) closeMenuImageModal();
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && imageModal?.classList.contains('is-open')) closeMenuImageModal();
+});
 syncPriceInputs();
 loadMenu();
