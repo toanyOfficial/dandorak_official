@@ -27,7 +27,8 @@ let debounceTimer;
 const getSelectedCategoryIds = () => [...document.querySelectorAll('input[name="menu-category"]:checked')].map((input) => input.value);
 const getSelectedSort = () => document.querySelector('input[name="menu-sort"]:checked')?.value || 'category';
 const getCategoryInitial = (category) => String(category.name || '').trim().slice(0, 1) || String(category.id);
-const getMenuItemImageSrc = (item) => `./assets/images/goods/${encodeURIComponent(item.id)}.png`;
+const getMenuItemImageSrc = (item) => `/assets/images/goods/${encodeURIComponent(item.id)}.png`;
+const getMenuItemLiteImageSrc = (item) => `/assets/images/goods-lite/${encodeURIComponent(item.id)}.png`;
 const getMenuItemImageAlt = (item) => `${item.short_name} 상품 사진`;
 const shouldShowRiceSoupNote = (item) => Number(item.id) !== 77;
 const renderMenuPrice = (item) => `
@@ -49,13 +50,14 @@ const renderMenuItemPhoto = (item) => `
   >
     <img
       class="menu-item-photo"
-      src="${escapeHtml(getMenuItemImageSrc(item))}"
+      src="${escapeHtml(getMenuItemLiteImageSrc(item))}"
+      data-original-src="${escapeHtml(getMenuItemImageSrc(item))}"
       alt="${escapeHtml(getMenuItemImageAlt(item))}"
       loading="lazy"
       decoding="async"
       width="150"
       height="120"
-      onerror="this.remove(); this.parentElement.classList.remove('has-menu-photo'); this.parentElement.disabled = true;"
+      onerror="if (this.dataset.originalSrc && this.src !== this.dataset.originalSrc) { this.src = this.dataset.originalSrc; this.removeAttribute('data-original-src'); } else { this.remove(); this.parentElement.classList.remove('has-menu-photo'); this.parentElement.disabled = true; }"
       onload="this.parentElement.classList.add('has-menu-photo');"
     />
     <span class="menu-photo-fallback">사진<br />준비중</span>
