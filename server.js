@@ -29,8 +29,8 @@ const buildGoodsImageIdSet = () => {
 const publicMenuImageIdSet = buildGoodsImageIdSet();
 const publicMenuImageIds = [...publicMenuImageIdSet].map(Number).sort((a, b) => a - b);
 const publicMenuImageIdPlaceholders = publicMenuImageIds.map(() => "?").join(", ");
-const publicMenuItemImageCondition = publicMenuImageIds.length
-  ? `i.id IN (${publicMenuImageIdPlaceholders})`
+const buildPublicMenuItemImageCondition = (itemAlias) => publicMenuImageIds.length
+  ? `${itemAlias}.id IN (${publicMenuImageIdPlaceholders})`
   : "1 = 0";
 
 
@@ -140,7 +140,7 @@ app.get("/api/menu", async (req, res) => {
          ON ip.category_id = c.id
        LEFT JOIN dandorak_item i
          ON i.id = ip.item_id
-        AND ${publicMenuItemImageCondition}
+        AND ${buildPublicMenuItemImageCondition("i")}
        WHERE c.id BETWEEN 1 AND 9
        GROUP BY c.id, c.name
        ORDER BY c.id`,
@@ -171,12 +171,12 @@ app.get("/api/menu", async (req, res) => {
          JOIN dandorak_item i_inner
            ON i_inner.id = ip_inner.item_id
          WHERE ip_inner.category_id BETWEEN 1 AND 9
-           AND ${publicMenuItemImageCondition}
+           AND ${buildPublicMenuItemImageCondition("i_inner")}
          GROUP BY ip_inner.category_id
        ) category_price
          ON category_price.category_id = ip.category_id
        WHERE ip.category_id BETWEEN 1 AND 9
-         AND ${publicMenuItemImageCondition}
+         AND ${buildPublicMenuItemImageCondition("i")}
          AND CAST(REPLACE(i.price, ',', '') AS UNSIGNED) BETWEEN ? AND ?
          ${categoryCondition}
        ORDER BY
