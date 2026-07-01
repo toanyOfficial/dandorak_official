@@ -133,6 +133,7 @@ app.get("/api/menu", async (req, res) => {
       `SELECT
          c.id,
          c.name,
+         c.remark,
          MIN(CAST(REPLACE(i.price, ',', '') AS UNSIGNED)) AS min_price,
          MAX(CAST(REPLACE(i.price, ',', '') AS UNSIGNED)) AS max_price
        FROM dandorak_category c
@@ -142,7 +143,7 @@ app.get("/api/menu", async (req, res) => {
          ON i.id = ip.item_id
         AND ${buildPublicMenuItemImageCondition("i")}
        WHERE c.id BETWEEN 1 AND 9
-       GROUP BY c.id, c.name
+       GROUP BY c.id, c.name, c.remark
        ORDER BY c.id`,
       publicMenuImageIds,
     );
@@ -152,6 +153,7 @@ app.get("/api/menu", async (req, res) => {
          i.id,
          ip.category_id,
          c.name AS category_name,
+         c.remark AS category_remark,
          i.name AS short_name,
          i.long_name,
          i.main_dish,
