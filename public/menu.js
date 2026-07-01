@@ -12,6 +12,7 @@ const imageModalImg = document.querySelector('#menu-image-modal-img');
 const imageModalTitle = document.querySelector('#menu-image-modal-title');
 const imageModalLongName = document.querySelector('#menu-image-modal-long-name');
 const imageModalMainDish = document.querySelector('#menu-image-modal-main-dish');
+const imageModalCategoryRemark = document.querySelector('#menu-image-modal-category-remark');
 
 const parseMenuPrice = (value) => Number(String(value ?? '').replaceAll(',', ''));
 const formatPrice = (value) => `${Number(value).toLocaleString('ko-KR')}원`;
@@ -30,11 +31,14 @@ const getCategoryInitial = (category) => String(category.name || '').trim().slic
 const getMenuItemImageSrc = (item) => `/assets/images/goods/${encodeURIComponent(item.id)}.png`;
 const getMenuItemLiteImageSrc = (item) => `/assets/images/goods-lite/${encodeURIComponent(item.id)}.png`;
 const getMenuItemImageAlt = (item) => `${item.short_name} 상품 사진`;
-const shouldShowRiceSoupNote = (item) => Number(item.id) !== 77;
+const renderCategoryRemark = (remark) => {
+  const normalizedRemark = String(remark ?? '').trim();
+  return normalizedRemark ? `<small>${escapeHtml(normalizedRemark)}</small>` : '';
+};
 const renderMenuPrice = (item) => `
   <p class="menu-price">
     <span>${formatPrice(item.price)}</span>
-    ${shouldShowRiceSoupNote(item) ? '<small>(밥,국 포함 / 국대신식혜가능)</small>' : ''}
+    ${renderCategoryRemark(item.category_remark)}
   </p>
 `;
 const renderMenuItemPhoto = (item) => `
@@ -46,6 +50,7 @@ const renderMenuItemPhoto = (item) => `
     data-menu-image-title="${escapeHtml(item.short_name)}"
     data-menu-image-long-name="${escapeHtml(item.long_name)}"
     data-menu-image-main-dish="${escapeHtml(item.main_dish)}"
+    data-menu-image-category-remark="${escapeHtml(item.category_remark)}"
     aria-label="${escapeHtml(item.short_name)} 큰 사진 보기"
   >
     <img
@@ -66,7 +71,7 @@ const renderMenuItemPhoto = (item) => `
 `;
 
 
-const openMenuImageModal = ({ src, alt, title, longName, mainDish }) => {
+const openMenuImageModal = ({ src, alt, title, longName, mainDish, categoryRemark }) => {
   if (!imageModal || !imageModalImg || !imageModalTitle || !src) return;
 
   imageModalImg.src = src;
@@ -74,6 +79,7 @@ const openMenuImageModal = ({ src, alt, title, longName, mainDish }) => {
   imageModalTitle.textContent = title || alt || '메뉴 상품 사진';
   if (imageModalLongName) imageModalLongName.textContent = longName ? `(${longName})` : '';
   if (imageModalMainDish) imageModalMainDish.textContent = mainDish || '';
+  if (imageModalCategoryRemark) imageModalCategoryRemark.textContent = categoryRemark || '';
   imageModal.classList.add('is-open');
   imageModal.setAttribute('aria-hidden', 'false');
   document.body.classList.add('menu-image-modal-open');
@@ -90,6 +96,7 @@ const closeMenuImageModal = () => {
   imageModalImg.alt = '';
   if (imageModalLongName) imageModalLongName.textContent = '';
   if (imageModalMainDish) imageModalMainDish.textContent = '';
+  if (imageModalCategoryRemark) imageModalCategoryRemark.textContent = '';
 };
 
 const getCategoryPriceRange = (category) => {
@@ -177,7 +184,7 @@ const getGroupPriceRange = (items) => {
 
 const groupItems = (items) => items.reduce((groups, item) => {
   const key = item.category_id;
-  if (!groups.has(key)) groups.set(key, { categoryName: item.category_name, items: [] });
+  if (!groups.has(key)) groups.set(key, { categoryName: item.category_name, categoryRemark: item.category_remark, items: [] });
   groups.get(key).items.push(item);
   return groups;
 }, new Map());
@@ -196,6 +203,7 @@ const renderItems = (items) => {
         <span class="menu-category-title-copy">
           <h2>${escapeHtml(group.categoryName)}</h2>
           <small>${escapeHtml(getGroupPriceRange(group.items))}</small>
+          ${renderCategoryRemark(group.categoryRemark)}
         </span>
         <span class="menu-count-badge">${group.items.length}개 메뉴</span>
       </summary>
@@ -276,6 +284,7 @@ results?.addEventListener('click', (event) => {
     title: trigger.dataset.menuImageTitle,
     longName: trigger.dataset.menuImageLongName,
     mainDish: trigger.dataset.menuImageMainDish,
+    categoryRemark: trigger.dataset.menuImageCategoryRemark,
   });
 });
 imageModal?.addEventListener('click', (event) => {
