@@ -89,6 +89,12 @@ const landingImages = {
     guide: '[배송비 안내 이미지 가이드] 지역별 배송 가능 구역을 한눈에 보여주는 지도형 이미지 필요. 남동쪽, 남서쪽, 북서쪽, 북동쪽, 장거리 구역이 구분되어 보이면 좋음.',
     src: './assets/images/landing/delivery-fee-map.webp',
   },
+  sizeInformationImage: {
+    label: '도시락 사이즈 안내 이미지',
+    alt: '단도락 도시락 사이즈 안내 이미지',
+    guide: '[도시락 사이즈 안내 이미지 가이드] 도시락 종류별 가로 세로 사이즈를 한눈에 확인할 수 있는 안내 이미지.',
+    src: './assets/images/landing/size-information.webp',
+  },
 };
 
 const productItems = [
@@ -166,6 +172,7 @@ const faqItems = [
   ['주문 최소 금액이 어떻게 되나요?', '서초·강남구 20만원 / 서울 및 수도권 남동부 30만원 / 수도권 북서부 50만원 입니다.'],
   ['서울 전 지역 배송 가능한가요?', '네 서울 뿐 아니라 전국 모든지역 배송 가능합니다.'],
   ['배송비용이 어떻게 되나요?', '지역별 최소주문금액과 배송비 기준이 다르며, 자세한 기준은 아래 버튼을 통해 확인하실 수 있습니다.', 'deliveryFee'],
+  ['도시락 사이즈가 어떻게 되나요?', '보양 : 30x30 / 프리미엄 : 28x24 / 정찬 : 22x22 / 단도락 : 22x19 / 한상 : 28x26 / 푸드박스 : 30x30 (가로x세로 / 단위:cm)', 'sizeInformation'],
   ['도시락 수거도 해주시나요?', '네 수거서비스는 거리와 주문금액에 따라 조금씩 다르지만 평균적으로 1개당 700원의 비용이 부과됩니다. 점심식사는 대략 3시부터 하여 동선에 따라 순차적으로 진행되며 저녁식사는 다음날 오전에 수거됩니다.'],
   ['수거는 어떤식으로 이루어지나요?', '배달 갈 때 큰 박스에 담아 보내드립니다. 박스에서 도시락을 꺼내어 드시고 그 박스에 다시 차곡차곡 담아서 편하신 곳에 내어두고 사진찍어 저희에게 사진과 함께 설명해주시면 됩니다. 잔반은 처리하실 필요 없습니다.'],
   ['밥,국이 포함되어있나요?', '네 모든 도시락에 밥,국이 포함되어있습니다. 야외에서 식사하실 경우 국 대신 식혜로 변경 가능합니다.(비건2호는 밥 미포함)'],
@@ -246,6 +253,7 @@ if (faqList) {
       <summary>${question}</summary>
       <p>${answer}</p>
       ${action === 'deliveryFee' ? '<button class="faq-modal-button" type="button" data-open-delivery-fee-modal>배송비 기준 자세히 보기</button>' : ''}
+      ${action === 'sizeInformation' ? '<button class="faq-modal-button" type="button" data-open-size-information-modal>이미지보기</button>' : ''}
     </details>
   `).join('');
 }
@@ -289,11 +297,27 @@ const deliveryFeeModalMarkup = `
   </div>
 `;
 
+const sizeInformationModalMarkup = `
+  <div class="modal-backdrop" id="size-information-modal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="size-information-modal-title">
+      <div class="modal-header">
+        <h3 id="size-information-modal-title">도시락 사이즈 안내</h3>
+        <button class="modal-close" type="button" data-close-size-information-modal aria-label="도시락 사이즈 안내 모달 닫기">닫기</button>
+      </div>
+      ${makeImageSlot({ className: 'modal-size-information-image', image: landingImages.sizeInformationImage })}
+    </div>
+  </div>
+`;
+
 document.body.insertAdjacentHTML('beforeend', deliveryFeeModalMarkup);
+document.body.insertAdjacentHTML('beforeend', sizeInformationModalMarkup);
 
 const deliveryFeeModal = document.querySelector('#delivery-fee-modal');
 const openDeliveryFeeModalButtons = document.querySelectorAll('[data-open-delivery-fee-modal]');
 const closeDeliveryFeeModalButtons = document.querySelectorAll('[data-close-delivery-fee-modal]');
+const sizeInformationModal = document.querySelector('#size-information-modal');
+const openSizeInformationModalButtons = document.querySelectorAll('[data-open-size-information-modal]');
+const closeSizeInformationModalButtons = document.querySelectorAll('[data-close-size-information-modal]');
 
 const closeDeliveryFeeModal = () => {
   if (!deliveryFeeModal) return;
@@ -310,6 +334,21 @@ const openDeliveryFeeModal = () => {
   deliveryFeeModal.querySelector('[data-close-delivery-fee-modal]')?.focus();
 };
 
+const closeSizeInformationModal = () => {
+  if (!sizeInformationModal) return;
+  sizeInformationModal.classList.remove('is-open');
+  sizeInformationModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+};
+
+const openSizeInformationModal = () => {
+  if (!sizeInformationModal) return;
+  sizeInformationModal.classList.add('is-open');
+  sizeInformationModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+  sizeInformationModal.querySelector('[data-close-size-information-modal]')?.focus();
+};
+
 openDeliveryFeeModalButtons.forEach((button) => {
   button.addEventListener('click', openDeliveryFeeModal);
 });
@@ -318,12 +357,25 @@ closeDeliveryFeeModalButtons.forEach((button) => {
   button.addEventListener('click', closeDeliveryFeeModal);
 });
 
+openSizeInformationModalButtons.forEach((button) => {
+  button.addEventListener('click', openSizeInformationModal);
+});
+
+closeSizeInformationModalButtons.forEach((button) => {
+  button.addEventListener('click', closeSizeInformationModal);
+});
+
 deliveryFeeModal?.addEventListener('click', (event) => {
   if (event.target === deliveryFeeModal) closeDeliveryFeeModal();
 });
 
+sizeInformationModal?.addEventListener('click', (event) => {
+  if (event.target === sizeInformationModal) closeSizeInformationModal();
+});
+
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && deliveryFeeModal?.classList.contains('is-open')) closeDeliveryFeeModal();
+  if (event.key === 'Escape' && sizeInformationModal?.classList.contains('is-open')) closeSizeInformationModal();
 });
 
 document.querySelectorAll('.image-placeholder').forEach((placeholder) => {
