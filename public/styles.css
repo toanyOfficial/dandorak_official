@@ -496,11 +496,14 @@ details p { margin: 14px 0 0; color: var(--muted); line-height: 1.65; }
   font-weight: 900;
   cursor: pointer;
 }
-.modal-delivery-image {
+.modal-delivery-image,
+.modal-size-information-image {
   min-height: clamp(190px, 28svh, 280px);
   margin-bottom: 20px;
   background: linear-gradient(135deg, #f7ead1, #b57a2b 58%, #2d1d12);
 }
+
+.modal-size-information-image { margin-bottom: 0; }
 .delivery-fee-copy {
   display: grid;
   gap: 14px;
