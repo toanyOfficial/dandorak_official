@@ -397,6 +397,11 @@ details,
 }
 #faq summary,
 #trust .trust-card h3 { color: #fff; }
+.faq-highlight {
+  color: var(--gold);
+  font-weight: 900;
+  white-space: nowrap;
+}
 #contact .footer-info li {
   border-color: rgba(201, 164, 91, 0.46);
   color: var(--gold-light);
