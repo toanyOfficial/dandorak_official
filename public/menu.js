@@ -8,11 +8,13 @@ const results = document.querySelector('#menu-results');
 const floatingNav = document.querySelector('#menu-floating-nav');
 const sortInputs = document.querySelectorAll('input[name="menu-sort"]');
 const imageModal = document.querySelector('#menu-image-modal');
+const recommendModal = document.querySelector('#menu-recommend-modal');
 const imageModalImg = document.querySelector('#menu-image-modal-img');
 const imageModalTitle = document.querySelector('#menu-image-modal-title');
 const imageModalLongName = document.querySelector('#menu-image-modal-long-name');
 const imageModalMainDish = document.querySelector('#menu-image-modal-main-dish');
 const imageModalCategoryRemark = document.querySelector('#menu-image-modal-category-remark');
+const closeRecommendModalButtons = document.querySelectorAll('[data-menu-recommend-modal-close]');
 
 const parseMenuPrice = (value) => Number(String(value ?? '').replaceAll(',', ''));
 const formatPrice = (value) => `${Number(value).toLocaleString('ko-KR')}원`;
@@ -149,6 +151,23 @@ const closeMenuImageModal = () => {
   if (imageModalCategoryRemark) imageModalCategoryRemark.textContent = '';
 };
 
+const openRecommendModal = () => {
+  if (!recommendModal) return;
+
+  recommendModal.classList.add('is-open');
+  recommendModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('menu-image-modal-open');
+  recommendModal.querySelector('[data-menu-recommend-modal-close]')?.focus();
+};
+
+const closeRecommendModal = () => {
+  if (!recommendModal) return;
+
+  recommendModal.classList.remove('is-open');
+  recommendModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('menu-image-modal-open');
+};
+
 const getCategoryPriceRange = (category) => {
   if (category.min_price == null || category.max_price == null) return '가격 정보 없음';
   return `${formatPrice(category.min_price)} ~ ${formatPrice(category.max_price)}`;
@@ -203,9 +222,7 @@ const renderFloatingNav = () => {
 
   setupRecommendedMenuBounce(floatingNav.querySelector('.menu-floating-recommend'));
 
-  floatingNav.querySelector('.menu-floating-recommend')?.addEventListener('click', () => {
-    console.log('추천보기 모달은 준비 중입니다.');
-  });
+  floatingNav.querySelector('.menu-floating-recommend')?.addEventListener('click', openRecommendModal);
 
   floatingNav.querySelector('.menu-floating-top')?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -347,8 +364,15 @@ results?.addEventListener('click', (event) => {
 imageModal?.addEventListener('click', (event) => {
   if (event.target.closest('[data-menu-modal-close]')) closeMenuImageModal();
 });
+recommendModal?.addEventListener('click', (event) => {
+  if (event.target.closest('[data-menu-recommend-modal-close]')) closeRecommendModal();
+});
+closeRecommendModalButtons.forEach((button) => {
+  button.addEventListener('click', closeRecommendModal);
+});
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && imageModal?.classList.contains('is-open')) closeMenuImageModal();
+  if (event.key === 'Escape' && recommendModal?.classList.contains('is-open')) closeRecommendModal();
 });
 syncPriceInputs();
 loadMenu();
