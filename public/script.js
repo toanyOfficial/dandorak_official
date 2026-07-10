@@ -283,11 +283,11 @@ const deliveryFeeModalMarkup = `
         </section>
         <section>
           <h4>[ 북동쪽 ]</h4>
-          <p>최소주문금액 : 35만원<br>배송비 : 35,000원<br>대상지역 : 구리시,의정부시,남양주시</p>
+          <p>최소주문금액 : 35만원<br>배송비 : 35,000원<br>대상지역 : 구리시,의정부시</p>
         </section>
         <section>
           <h4>[ 장거리 ]</h4>
-          <p>최소주문금액 : 50만원<br>배송비 : 50,000원<br>대상지역 : 인천, 강화, 안산, 시흥, 수원, 광주, 양주, 파주, 김포, 동두천</p>
+          <p>최소주문금액 : 50만원<br>배송비 : 50,000원<br>대상지역 : 인천, 강화, 안산, 시흥, 수원, 광주, 양주, 파주, 김포, 동두천, 남양주시</p>
         </section>
         <ul>
           <li>그 외 지역은 별도 상담 필요</li>
@@ -391,6 +391,52 @@ document.querySelectorAll('.kakao-link').forEach((link) => {
     console.log('카카오톡 채널로 이동합니다.');
   });
 });
+
+
+const floatingMenuAction = document.querySelector('.floating-action-menu');
+const prefersReducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let floatingMenuBounceTimer;
+
+const randomBetween = (min, max) => min + Math.random() * (max - min);
+
+const playFloatingMenuBounce = () => {
+  if (!floatingMenuAction || prefersReducedMotionQuery.matches) return;
+
+  const duration = Math.round(randomBetween(760, 980));
+  const lift = Math.round(randomBetween(8, 14));
+  const squash = randomBetween(1.012, 1.034).toFixed(3);
+  const stretch = randomBetween(0.966, 0.986).toFixed(3);
+  const settle = randomBetween(1.2, 2.8).toFixed(1);
+  const tilt = randomBetween(-0.85, 0.85).toFixed(2);
+
+  floatingMenuAction.style.setProperty('--bounce-duration', `${duration}ms`);
+  floatingMenuAction.style.setProperty('--bounce-lift', `-${lift}px`);
+  floatingMenuAction.style.setProperty('--bounce-squash-x', squash);
+  floatingMenuAction.style.setProperty('--bounce-squash-y', stretch);
+  floatingMenuAction.style.setProperty('--bounce-settle', `${settle}px`);
+  floatingMenuAction.style.setProperty('--bounce-tilt', `${tilt}deg`);
+
+  floatingMenuAction.classList.remove('is-bouncing');
+  void floatingMenuAction.offsetWidth;
+  floatingMenuAction.classList.add('is-bouncing');
+};
+
+const scheduleFloatingMenuBounce = () => {
+  window.clearTimeout(floatingMenuBounceTimer);
+  if (!floatingMenuAction || prefersReducedMotionQuery.matches) return;
+
+  floatingMenuBounceTimer = window.setTimeout(() => {
+    playFloatingMenuBounce();
+    scheduleFloatingMenuBounce();
+  }, Math.round(randomBetween(3000, 5000)));
+};
+
+floatingMenuAction?.addEventListener('animationend', () => {
+  floatingMenuAction.classList.remove('is-bouncing');
+});
+
+prefersReducedMotionQuery.addEventListener?.('change', scheduleFloatingMenuBounce);
+scheduleFloatingMenuBounce();
 
 const menuToggle = document.querySelector('.menu-toggle');
 const mobileMenu = document.querySelector('#mobile-menu');
