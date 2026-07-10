@@ -1439,15 +1439,13 @@ body.menu-image-modal-open { overflow: hidden; }
 }
 
 .menu-recommend-modal-dialog {
-  width: min(960px, 100%);
-  height: min(90svh, 760px);
+  width: min(780px, calc(100vw - 28px));
+  max-height: 92svh;
   overflow: hidden;
   padding: clamp(14px, 2.4vw, 24px);
 }
 .menu-recommendation-panel {
   display: grid;
-  grid-template-rows: auto minmax(0, 1.08fr) minmax(0, 0.84fr) minmax(0, 1.92fr) minmax(0, 1.08fr);
-  height: 100%;
   gap: clamp(10px, 1.8vw, 18px);
   color: var(--ink);
   font-family: inherit;
@@ -1468,8 +1466,7 @@ body.menu-image-modal-open { overflow: hidden; }
 .recommend-guide-row {
   display: flex;
   align-items: center;
-  height: 100%;
-  min-height: 0;
+  min-height: clamp(70px, 9vw, 88px);
   gap: clamp(12px, 2.4vw, 26px);
   padding: clamp(10px, 1.8vw, 16px) clamp(12px, 2.8vw, 24px);
 }
@@ -1523,7 +1520,6 @@ body.menu-image-modal-open { overflow: hidden; }
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: stretch;
-  min-height: 0;
   gap: clamp(12px, 2.6vw, 24px);
   padding-inline: clamp(2px, 1.4vw, 12px);
 }
@@ -1532,7 +1528,6 @@ body.menu-image-modal-open { overflow: hidden; }
   align-content: center;
   text-align: center;
   gap: 5px;
-  min-height: 0;
   color: var(--muted);
   line-height: 1.45;
 }
@@ -1546,14 +1541,12 @@ body.menu-image-modal-open { overflow: hidden; }
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: stretch;
-  min-height: 0;
   gap: clamp(12px, 2.8vw, 24px);
 }
 .recommend-group-box {
   display: grid;
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  align-content: stretch;
-  min-height: 0;
+  align-content: center;
+  min-height: clamp(150px, 20vw, 190px);
   gap: clamp(10px, 1.8vw, 16px);
   padding: clamp(12px, 2vw, 18px);
 }
@@ -1569,18 +1562,15 @@ body.menu-image-modal-open { overflow: hidden; }
 @media (max-width: 720px) {
   .menu-recommend-modal-dialog {
     width: min(100%, calc(100vw - 28px));
-    height: min(92svh, 680px);
+    max-height: 92svh;
     padding: 12px;
   }
-  .menu-recommendation-panel {
-    grid-template-rows: auto minmax(0, 1.04fr) minmax(0, 0.82fr) minmax(0, 1.88fr) minmax(0, 1.04fr);
-    gap: 8px;
-  }
+  .menu-recommendation-panel { gap: 8px; }
   .recommend-style-grid,
   .recommend-group-grid { gap: 8px; }
   .recommend-guide-row {
     gap: 8px;
-    min-height: 0;
+    min-height: 58px;
     padding: 9px;
   }
   .recommend-category-box {
@@ -1605,7 +1595,7 @@ body.menu-image-modal-open { overflow: hidden; }
   }
   .recommend-group-box {
     gap: 8px;
-    min-height: 0;
+    min-height: 122px;
     padding: 9px;
   }
 }
