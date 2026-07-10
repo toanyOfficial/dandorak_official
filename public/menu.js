@@ -34,55 +34,53 @@ const getMenuItemImageSrc = (item) => `/assets/images/goods/${encodeURIComponent
 const getMenuItemLiteImageSrc = (item) => `/assets/images/goods-lite/${encodeURIComponent(item.id)}.png`;
 const getMenuItemImageAlt = (item) => `${item.short_name} 상품 사진`;
 
-const menuBounceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-let menuRecommendedBounceTimer;
+let floatingMenuAction;
+const prefersReducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let floatingMenuBounceTimer;
 
-const randomMenuBounceValue = (min, max) => min + Math.random() * (max - min);
+const randomBetween = (min, max) => min + Math.random() * (max - min);
 
-const playRecommendedMenuBounce = (button) => {
-  if (!button || menuBounceMotionQuery.matches) return;
+const playFloatingMenuBounce = () => {
+  if (!floatingMenuAction || prefersReducedMotionQuery.matches) return;
 
-  const duration = Math.round(randomMenuBounceValue(760, 980));
-  const lift = Math.round(randomMenuBounceValue(8, 14));
-  const squash = randomMenuBounceValue(1.012, 1.034).toFixed(3);
-  const stretch = randomMenuBounceValue(0.966, 0.986).toFixed(3);
-  const settle = randomMenuBounceValue(1.2, 2.8).toFixed(1);
-  const tilt = randomMenuBounceValue(-0.85, 0.85).toFixed(2);
+  const duration = Math.round(randomBetween(760, 980));
+  const lift = Math.round(randomBetween(8, 14));
+  const squash = randomBetween(1.012, 1.034).toFixed(3);
+  const stretch = randomBetween(0.966, 0.986).toFixed(3);
+  const settle = randomBetween(1.2, 2.8).toFixed(1);
+  const tilt = randomBetween(-0.85, 0.85).toFixed(2);
 
-  button.style.setProperty('--bounce-duration', `${duration}ms`);
-  button.style.setProperty('--bounce-lift', `-${lift}px`);
-  button.style.setProperty('--bounce-squash-x', squash);
-  button.style.setProperty('--bounce-squash-y', stretch);
-  button.style.setProperty('--bounce-settle', `${settle}px`);
-  button.style.setProperty('--bounce-tilt', `${tilt}deg`);
+  floatingMenuAction.style.setProperty('--bounce-duration', `${duration}ms`);
+  floatingMenuAction.style.setProperty('--bounce-lift', `-${lift}px`);
+  floatingMenuAction.style.setProperty('--bounce-squash-x', squash);
+  floatingMenuAction.style.setProperty('--bounce-squash-y', stretch);
+  floatingMenuAction.style.setProperty('--bounce-settle', `${settle}px`);
+  floatingMenuAction.style.setProperty('--bounce-tilt', `${tilt}deg`);
 
-  button.classList.remove('is-bouncing');
-  void button.offsetWidth;
-  button.classList.add('is-bouncing');
+  floatingMenuAction.classList.remove('is-bouncing');
+  void floatingMenuAction.offsetWidth;
+  floatingMenuAction.classList.add('is-bouncing');
 };
 
-const setupRecommendedMenuBounce = (button) => {
-  window.clearTimeout(menuRecommendedBounceTimer);
-  if (!button || menuBounceMotionQuery.matches) return;
+const scheduleFloatingMenuBounce = () => {
+  window.clearTimeout(floatingMenuBounceTimer);
+  if (!floatingMenuAction || prefersReducedMotionQuery.matches) return;
 
-  const scheduleBounce = () => {
-    window.clearTimeout(menuRecommendedBounceTimer);
-    menuRecommendedBounceTimer = window.setTimeout(() => {
-      playRecommendedMenuBounce(button);
-      scheduleBounce();
-    }, Math.round(randomMenuBounceValue(3000, 5000)));
-  };
+  floatingMenuBounceTimer = window.setTimeout(() => {
+    playFloatingMenuBounce();
+    scheduleFloatingMenuBounce();
+  }, Math.round(randomBetween(3000, 5000)));
+};
 
-  button.addEventListener('animationend', () => {
-    button.classList.remove('is-bouncing');
+const setupFloatingMenuBounce = (button) => {
+  floatingMenuAction = button;
+  floatingMenuAction?.addEventListener('animationend', () => {
+    floatingMenuAction.classList.remove('is-bouncing');
   });
-
-  scheduleBounce();
+  scheduleFloatingMenuBounce();
 };
 
-menuBounceMotionQuery.addEventListener?.('change', () => {
-  setupRecommendedMenuBounce(floatingNav?.querySelector('.menu-floating-recommend'));
-});
+prefersReducedMotionQuery.addEventListener?.('change', scheduleFloatingMenuBounce);
 const renderCategoryRemark = (remark) => {
   const normalizedRemark = String(remark ?? '').trim();
   return normalizedRemark ? `<small>${escapeHtml(normalizedRemark)}</small>` : '';
@@ -220,7 +218,7 @@ const renderFloatingNav = () => {
     `).join('')}
   `;
 
-  setupRecommendedMenuBounce(floatingNav.querySelector('.menu-floating-recommend'));
+  setupFloatingMenuBounce(floatingNav.querySelector('.menu-floating-recommend'));
 
   floatingNav.querySelector('.menu-floating-recommend')?.addEventListener('click', openRecommendModal);
 
