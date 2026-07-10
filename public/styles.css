@@ -1443,19 +1443,21 @@ body.menu-image-modal-open { overflow: hidden; }
 }
 
 .menu-recommend-modal-dialog {
-  width: min(900px, 100%);
-  padding: clamp(18px, 3.4vw, 34px);
+  width: min(820px, 100%);
+  height: min(88svh, 680px);
+  overflow: hidden;
+  padding: clamp(14px, 2.4vw, 24px);
 }
 .menu-recommendation-panel {
   display: grid;
-  gap: clamp(18px, 3vw, 28px);
+  gap: clamp(10px, 1.8vw, 18px);
   color: var(--ink);
   font-family: inherit;
 }
 .menu-recommend-title {
   margin: 0;
   color: var(--brown);
-  font-size: clamp(1.35rem, 3vw, 1.95rem);
+  font-size: clamp(1.16rem, 2.4vw, 1.58rem);
   font-weight: 950;
   text-align: center;
 }
@@ -1468,28 +1470,51 @@ body.menu-image-modal-open { overflow: hidden; }
 .recommend-guide-row {
   display: flex;
   align-items: center;
-  gap: clamp(18px, 4vw, 44px);
-  min-height: clamp(92px, 12vw, 118px);
-  padding: clamp(14px, 2.6vw, 22px) clamp(16px, 3.6vw, 34px);
+  gap: clamp(12px, 2.4vw, 26px);
+  min-height: clamp(70px, 9vw, 88px);
+  padding: clamp(10px, 1.8vw, 16px) clamp(12px, 2.8vw, 24px);
 }
 .recommend-category-box {
   display: grid;
-  flex: 0 0 clamp(108px, 15vw, 138px);
+  flex: 0 0 clamp(86px, 12vw, 112px);
   place-items: center;
-  min-height: 70px;
+  min-height: clamp(54px, 7vw, 64px);
   border-radius: 12px;
   color: #fff;
   background: linear-gradient(135deg, var(--orange), var(--orange-dark));
-  font-size: clamp(1.18rem, 2.4vw, 1.55rem);
+  font-size: clamp(1rem, 1.8vw, 1.28rem);
   font-weight: 950;
   text-align: center;
   line-height: 1.15;
 }
+
+.recommend-category-signature {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(201, 164, 91, 0.72);
+  color: #4c2e0b;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 239, 181, 0.92), transparent 34%),
+    linear-gradient(135deg, #fff9e6 0%, #f6df9e 42%, #d5aa45 100%);
+  box-shadow: 0 16px 34px rgba(150, 97, 23, 0.22);
+}
+.recommend-category-signature::before {
+  content: "";
+  position: absolute;
+  top: -36%;
+  left: -18%;
+  width: 60%;
+  height: 150%;
+  background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.3) 46%, transparent 72%);
+  transform: rotate(9deg);
+  pointer-events: none;
+}
+
 .recommend-copy {
   display: grid;
-  gap: 6px;
+  gap: 4px;
   color: var(--ink);
-  font-size: clamp(1rem, 2vw, 1.18rem);
+  font-size: clamp(0.88rem, 1.45vw, 1rem);
   font-weight: 800;
   line-height: 1.42;
 }
@@ -1498,57 +1523,79 @@ body.menu-image-modal-open { overflow: hidden; }
 .recommend-style-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(18px, 4vw, 42px);
-  padding-inline: clamp(4px, 2vw, 18px);
+  gap: clamp(12px, 2.6vw, 24px);
+  padding-inline: clamp(2px, 1.4vw, 12px);
 }
 .recommend-style-copy {
   display: grid;
-  gap: 8px;
+  text-align: center;
+  gap: 5px;
   color: var(--muted);
   line-height: 1.45;
 }
 .recommend-style-copy h3 {
   margin: 0 0 4px;
   color: var(--brown);
-  font-size: clamp(1.28rem, 2.5vw, 1.72rem);
+  font-size: clamp(1.08rem, 1.9vw, 1.34rem);
   font-weight: 950;
 }
 .recommend-group-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(18px, 3.8vw, 34px);
+  gap: clamp(12px, 2.8vw, 24px);
 }
 .recommend-group-box {
   display: grid;
   align-content: center;
-  gap: clamp(14px, 2.6vw, 22px);
-  min-height: clamp(230px, 30vw, 286px);
-  padding: clamp(16px, 3vw, 26px);
+  gap: clamp(10px, 1.8vw, 16px);
+  min-height: clamp(150px, 20vw, 190px);
+  padding: clamp(12px, 2vw, 18px);
 }
 .recommend-group-box .recommend-guide-row {
   min-height: 0;
   padding: 0;
   border: 0;
   border-radius: 0;
-  gap: clamp(14px, 2.6vw, 28px);
+  gap: clamp(10px, 2vw, 18px);
 }
 .recommend-guide-row-basic { margin-top: 2px; }
 
 @media (max-width: 720px) {
-  .menu-recommend-modal-dialog { padding: 18px; }
+  .menu-recommend-modal-dialog {
+    height: min(92svh, 640px);
+    padding: 12px;
+  }
+  .menu-recommendation-panel { gap: 8px; }
   .recommend-style-grid,
-  .recommend-group-grid { grid-template-columns: 1fr; }
+  .recommend-group-grid { gap: 8px; }
   .recommend-guide-row {
-    gap: 14px;
-    padding: 14px;
+    gap: 8px;
+    min-height: 58px;
+    padding: 9px;
   }
   .recommend-category-box {
-    flex-basis: 92px;
-    min-height: 62px;
-    font-size: 1.05rem;
+    flex-basis: 68px;
+    min-height: 48px;
+    font-size: 0.86rem;
+    border-radius: 10px;
+  }
+  .recommend-copy {
+    gap: 2px;
+    font-size: 0.76rem;
+    line-height: 1.28;
+  }
+  .recommend-style-copy {
+    gap: 3px;
+    font-size: 0.74rem;
+    line-height: 1.25;
+  }
+  .recommend-style-copy h3 {
+    margin-bottom: 1px;
+    font-size: 0.9rem;
   }
   .recommend-group-box {
-    min-height: 0;
-    padding: 14px;
+    gap: 8px;
+    min-height: 122px;
+    padding: 9px;
   }
 }
