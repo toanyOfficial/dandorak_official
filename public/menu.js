@@ -8,11 +8,13 @@ const results = document.querySelector('#menu-results');
 const floatingNav = document.querySelector('#menu-floating-nav');
 const sortInputs = document.querySelectorAll('input[name="menu-sort"]');
 const imageModal = document.querySelector('#menu-image-modal');
+const recommendModal = document.querySelector('#menu-recommend-modal');
 const imageModalImg = document.querySelector('#menu-image-modal-img');
 const imageModalTitle = document.querySelector('#menu-image-modal-title');
 const imageModalLongName = document.querySelector('#menu-image-modal-long-name');
 const imageModalMainDish = document.querySelector('#menu-image-modal-main-dish');
 const imageModalCategoryRemark = document.querySelector('#menu-image-modal-category-remark');
+const closeRecommendModalButtons = document.querySelectorAll('[data-menu-recommend-modal-close]');
 
 const parseMenuPrice = (value) => Number(String(value ?? '').replaceAll(',', ''));
 const formatPrice = (value) => `${Number(value).toLocaleString('ko-KR')}원`;
@@ -31,6 +33,56 @@ const getCategoryInitial = (category) => String(category.name || '').trim().slic
 const getMenuItemImageSrc = (item) => `/assets/images/goods/${encodeURIComponent(item.id)}.png`;
 const getMenuItemLiteImageSrc = (item) => `/assets/images/goods-lite/${encodeURIComponent(item.id)}.png`;
 const getMenuItemImageAlt = (item) => `${item.short_name} 상품 사진`;
+
+const menuBounceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let menuRecommendedBounceTimer;
+
+const randomMenuBounceValue = (min, max) => min + Math.random() * (max - min);
+
+const playRecommendedMenuBounce = (button) => {
+  if (!button || menuBounceMotionQuery.matches) return;
+
+  const duration = Math.round(randomMenuBounceValue(760, 980));
+  const lift = Math.round(randomMenuBounceValue(8, 14));
+  const squash = randomMenuBounceValue(1.012, 1.034).toFixed(3);
+  const stretch = randomMenuBounceValue(0.966, 0.986).toFixed(3);
+  const settle = randomMenuBounceValue(1.2, 2.8).toFixed(1);
+  const tilt = randomMenuBounceValue(-0.85, 0.85).toFixed(2);
+
+  button.style.setProperty('--bounce-duration', `${duration}ms`);
+  button.style.setProperty('--bounce-lift', `-${lift}px`);
+  button.style.setProperty('--bounce-squash-x', squash);
+  button.style.setProperty('--bounce-squash-y', stretch);
+  button.style.setProperty('--bounce-settle', `${settle}px`);
+  button.style.setProperty('--bounce-tilt', `${tilt}deg`);
+
+  button.classList.remove('is-bouncing');
+  void button.offsetWidth;
+  button.classList.add('is-bouncing');
+};
+
+const setupRecommendedMenuBounce = (button) => {
+  window.clearTimeout(menuRecommendedBounceTimer);
+  if (!button || menuBounceMotionQuery.matches) return;
+
+  const scheduleBounce = () => {
+    window.clearTimeout(menuRecommendedBounceTimer);
+    menuRecommendedBounceTimer = window.setTimeout(() => {
+      playRecommendedMenuBounce(button);
+      scheduleBounce();
+    }, Math.round(randomMenuBounceValue(3000, 5000)));
+  };
+
+  button.addEventListener('animationend', () => {
+    button.classList.remove('is-bouncing');
+  });
+
+  scheduleBounce();
+};
+
+menuBounceMotionQuery.addEventListener?.('change', () => {
+  setupRecommendedMenuBounce(floatingNav?.querySelector('.menu-floating-recommend'));
+});
 const renderCategoryRemark = (remark) => {
   const normalizedRemark = String(remark ?? '').trim();
   return normalizedRemark ? `<small>${escapeHtml(normalizedRemark)}</small>` : '';
@@ -99,6 +151,23 @@ const closeMenuImageModal = () => {
   if (imageModalCategoryRemark) imageModalCategoryRemark.textContent = '';
 };
 
+const openRecommendModal = () => {
+  if (!recommendModal) return;
+
+  recommendModal.classList.add('is-open');
+  recommendModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('menu-image-modal-open');
+  recommendModal.querySelector('[data-menu-recommend-modal-close]')?.focus();
+};
+
+const closeRecommendModal = () => {
+  if (!recommendModal) return;
+
+  recommendModal.classList.remove('is-open');
+  recommendModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('menu-image-modal-open');
+};
+
 const getCategoryPriceRange = (category) => {
   if (category.min_price == null || category.max_price == null) return '가격 정보 없음';
   return `${formatPrice(category.min_price)} ~ ${formatPrice(category.max_price)}`;
@@ -139,7 +208,8 @@ const renderFloatingNav = () => {
   if (!floatingNav) return;
 
   floatingNav.innerHTML = `
-    <button class="menu-floating-bubble menu-floating-top" type="button" aria-label="최상단으로 이동">↑</button>
+    <button class="menu-floating-bubble menu-floating-wide menu-floating-recommend" type="button">추천보기</button>
+    <button class="menu-floating-bubble menu-floating-wide menu-floating-top" type="button" aria-label="최상단으로 이동">제일위로</button>
     ${categories.map((category) => `
       <button
         class="menu-floating-bubble ${getCategoryCardClass(category.id)}"
@@ -149,6 +219,10 @@ const renderFloatingNav = () => {
       >${escapeHtml(getCategoryInitial(category))}</button>
     `).join('')}
   `;
+
+  setupRecommendedMenuBounce(floatingNav.querySelector('.menu-floating-recommend'));
+
+  floatingNav.querySelector('.menu-floating-recommend')?.addEventListener('click', openRecommendModal);
 
   floatingNav.querySelector('.menu-floating-top')?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -290,8 +364,15 @@ results?.addEventListener('click', (event) => {
 imageModal?.addEventListener('click', (event) => {
   if (event.target.closest('[data-menu-modal-close]')) closeMenuImageModal();
 });
+recommendModal?.addEventListener('click', (event) => {
+  if (event.target.closest('[data-menu-recommend-modal-close]')) closeRecommendModal();
+});
+closeRecommendModalButtons.forEach((button) => {
+  button.addEventListener('click', closeRecommendModal);
+});
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && imageModal?.classList.contains('is-open')) closeMenuImageModal();
+  if (event.key === 'Escape' && recommendModal?.classList.contains('is-open')) closeRecommendModal();
 });
 syncPriceInputs();
 loadMenu();
