@@ -1269,12 +1269,15 @@ body { height: 100%; overflow: hidden; }
   width: min(960px, 100%);
   max-height: min(90svh, 920px);
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   border: 1px solid rgba(201, 164, 91, 0.34);
   border-radius: 28px;
   padding: clamp(12px, 2.6vw, 22px);
   background: linear-gradient(180deg, #fffdf8 0%, #fff7eb 100%);
   box-shadow: 0 32px 90px rgba(0, 0, 0, 0.46);
 }
+.menu-image-modal-dialog::-webkit-scrollbar { display: none; }
 .menu-image-modal-close {
   position: absolute;
   top: 12px;
@@ -1444,11 +1447,9 @@ body.menu-image-modal-open { overflow: hidden; }
   padding: clamp(18px, 3.4vw, 34px);
 }
 .menu-recommendation-panel {
-  --recommend-navy: #1f3f68;
-  --recommend-blue: #2273bd;
   display: grid;
   gap: clamp(18px, 3vw, 28px);
-  color: #111;
+  color: var(--ink);
   font-family: inherit;
 }
 .menu-recommend-title {
@@ -1460,9 +1461,9 @@ body.menu-image-modal-open { overflow: hidden; }
 }
 .recommend-guide-row,
 .recommend-group-box {
-  border: 2px solid var(--recommend-navy);
+  border: 1px solid rgba(201, 164, 91, 0.36);
   border-radius: 18px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.76);
 }
 .recommend-guide-row {
   display: flex;
@@ -1478,7 +1479,7 @@ body.menu-image-modal-open { overflow: hidden; }
   min-height: 70px;
   border-radius: 12px;
   color: #fff;
-  background: var(--recommend-blue);
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
   font-size: clamp(1.18rem, 2.4vw, 1.55rem);
   font-weight: 950;
   text-align: center;
@@ -1487,7 +1488,7 @@ body.menu-image-modal-open { overflow: hidden; }
 .recommend-copy {
   display: grid;
   gap: 6px;
-  color: #111;
+  color: var(--ink);
   font-size: clamp(1rem, 2vw, 1.18rem);
   font-weight: 800;
   line-height: 1.42;
@@ -1503,12 +1504,12 @@ body.menu-image-modal-open { overflow: hidden; }
 .recommend-style-copy {
   display: grid;
   gap: 8px;
-  color: #111;
+  color: var(--muted);
   line-height: 1.45;
 }
 .recommend-style-copy h3 {
   margin: 0 0 4px;
-  color: #111;
+  color: var(--brown);
   font-size: clamp(1.28rem, 2.5vw, 1.72rem);
   font-weight: 950;
 }
