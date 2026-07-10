@@ -31,6 +31,56 @@ const getCategoryInitial = (category) => String(category.name || '').trim().slic
 const getMenuItemImageSrc = (item) => `/assets/images/goods/${encodeURIComponent(item.id)}.png`;
 const getMenuItemLiteImageSrc = (item) => `/assets/images/goods-lite/${encodeURIComponent(item.id)}.png`;
 const getMenuItemImageAlt = (item) => `${item.short_name} 상품 사진`;
+
+const menuBounceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let menuRecommendedBounceTimer;
+
+const randomMenuBounceValue = (min, max) => min + Math.random() * (max - min);
+
+const playRecommendedMenuBounce = (button) => {
+  if (!button || menuBounceMotionQuery.matches) return;
+
+  const duration = Math.round(randomMenuBounceValue(760, 980));
+  const lift = Math.round(randomMenuBounceValue(8, 14));
+  const squash = randomMenuBounceValue(1.012, 1.034).toFixed(3);
+  const stretch = randomMenuBounceValue(0.966, 0.986).toFixed(3);
+  const settle = randomMenuBounceValue(1.2, 2.8).toFixed(1);
+  const tilt = randomMenuBounceValue(-0.85, 0.85).toFixed(2);
+
+  button.style.setProperty('--bounce-duration', `${duration}ms`);
+  button.style.setProperty('--bounce-lift', `-${lift}px`);
+  button.style.setProperty('--bounce-squash-x', squash);
+  button.style.setProperty('--bounce-squash-y', stretch);
+  button.style.setProperty('--bounce-settle', `${settle}px`);
+  button.style.setProperty('--bounce-tilt', `${tilt}deg`);
+
+  button.classList.remove('is-bouncing');
+  void button.offsetWidth;
+  button.classList.add('is-bouncing');
+};
+
+const setupRecommendedMenuBounce = (button) => {
+  window.clearTimeout(menuRecommendedBounceTimer);
+  if (!button || menuBounceMotionQuery.matches) return;
+
+  const scheduleBounce = () => {
+    window.clearTimeout(menuRecommendedBounceTimer);
+    menuRecommendedBounceTimer = window.setTimeout(() => {
+      playRecommendedMenuBounce(button);
+      scheduleBounce();
+    }, Math.round(randomMenuBounceValue(3000, 5000)));
+  };
+
+  button.addEventListener('animationend', () => {
+    button.classList.remove('is-bouncing');
+  });
+
+  scheduleBounce();
+};
+
+menuBounceMotionQuery.addEventListener?.('change', () => {
+  setupRecommendedMenuBounce(floatingNav?.querySelector('.menu-floating-recommend'));
+});
 const renderCategoryRemark = (remark) => {
   const normalizedRemark = String(remark ?? '').trim();
   return normalizedRemark ? `<small>${escapeHtml(normalizedRemark)}</small>` : '';
@@ -139,7 +189,8 @@ const renderFloatingNav = () => {
   if (!floatingNav) return;
 
   floatingNav.innerHTML = `
-    <button class="menu-floating-bubble menu-floating-top" type="button" aria-label="최상단으로 이동">↑</button>
+    <button class="menu-floating-bubble menu-floating-wide menu-floating-recommend" type="button">추천보기</button>
+    <button class="menu-floating-bubble menu-floating-wide menu-floating-top" type="button" aria-label="최상단으로 이동">제일위로</button>
     ${categories.map((category) => `
       <button
         class="menu-floating-bubble ${getCategoryCardClass(category.id)}"
@@ -149,6 +200,12 @@ const renderFloatingNav = () => {
       >${escapeHtml(getCategoryInitial(category))}</button>
     `).join('')}
   `;
+
+  setupRecommendedMenuBounce(floatingNav.querySelector('.menu-floating-recommend'));
+
+  floatingNav.querySelector('.menu-floating-recommend')?.addEventListener('click', () => {
+    console.log('추천보기 모달은 준비 중입니다.');
+  });
 
   floatingNav.querySelector('.menu-floating-top')?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
