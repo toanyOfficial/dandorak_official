@@ -568,7 +568,8 @@ body.modal-open .landing-scroll-container { overflow: hidden; }
   transform-origin: 50% 100%;
   will-change: transform, box-shadow;
 }
-.floating-action-menu.is-bouncing {
+.floating-action-menu.is-bouncing,
+.menu-floating-recommend.is-bouncing {
   --bounce-lift: -10px;
   --bounce-squash-x: 1.025;
   --bounce-squash-y: 0.975;
@@ -596,7 +597,8 @@ body.modal-open .landing-scroll-container { overflow: hidden; }
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .floating-action-menu.is-bouncing { animation: none; }
+  .floating-action-menu.is-bouncing,
+  .menu-floating-recommend.is-bouncing { animation: none; }
 }
 .floating-action-direct {
   color: #fff;
@@ -1120,7 +1122,7 @@ body { height: 100%; overflow: hidden; }
   bottom: calc(18px + env(safe-area-inset-bottom));
   z-index: 980;
   display: grid;
-  grid-template-columns: repeat(2, 44px);
+  grid-template-columns: repeat(3, 44px);
   gap: 9px;
 }
 .menu-floating-bubble {
@@ -1136,14 +1138,26 @@ body { height: 100%; overflow: hidden; }
   font-weight: 950;
   box-shadow: 0 14px 30px rgba(87, 54, 25, 0.18);
   cursor: pointer;
+  transform-origin: 50% 100%;
+  will-change: transform, box-shadow;
+}
+.menu-floating-wide {
+  grid-column: 1 / -1;
+  width: 100%;
+  border-radius: 999px;
+  font-size: 0.92rem;
 }
 .menu-floating-bubble::before { z-index: 0; }
 .menu-floating-bubble:not(.menu-card-signature-gold)::before { content: none; }
 .menu-floating-bubble > *,
 .menu-floating-bubble { isolation: isolate; }
-.menu-floating-top {
+.menu-floating-recommend {
   color: #fff;
   background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+}
+.menu-floating-top {
+  color: #fff;
+  background: linear-gradient(135deg, var(--deep), #333);
 }
 .menu-floating-bubble:focus-visible {
   outline: 3px solid rgba(216, 111, 38, 0.48);
@@ -1154,13 +1168,17 @@ body { height: 100%; overflow: hidden; }
   .menu-floating-nav {
     right: 10px;
     bottom: calc(10px + env(safe-area-inset-bottom));
-    grid-template-columns: repeat(2, 40px);
+    grid-template-columns: repeat(3, 40px);
     gap: 7px;
   }
   .menu-floating-bubble {
     width: 40px;
     height: 40px;
     font-size: 0.92rem;
+  }
+  .menu-floating-wide {
+    width: 100%;
+    font-size: 0.86rem;
   }
 }
 
