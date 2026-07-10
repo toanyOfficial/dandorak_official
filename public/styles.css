@@ -596,10 +596,6 @@ body.modal-open .landing-scroll-container { overflow: hidden; }
     transform: translate3d(0, calc(var(--bounce-lift) * 0.16), 0) scale(0.998, 1.004) rotate(calc(var(--bounce-tilt) * 0.12));
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .floating-action-menu.is-bouncing,
-  .menu-floating-recommend.is-bouncing { animation: none; }
-}
 .floating-action-direct {
   color: #fff;
   background: linear-gradient(135deg, var(--deep), #333);

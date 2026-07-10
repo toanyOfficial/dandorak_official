@@ -394,13 +394,12 @@ document.querySelectorAll('.kakao-link').forEach((link) => {
 
 
 const floatingMenuAction = document.querySelector('.floating-action-menu');
-const prefersReducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 let floatingMenuBounceTimer;
 
 const randomBetween = (min, max) => min + Math.random() * (max - min);
 
 const playFloatingMenuBounce = () => {
-  if (!floatingMenuAction || prefersReducedMotionQuery.matches) return;
+  if (!floatingMenuAction) return;
 
   const duration = Math.round(randomBetween(760, 980));
   const lift = Math.round(randomBetween(8, 14));
@@ -423,7 +422,7 @@ const playFloatingMenuBounce = () => {
 
 const scheduleFloatingMenuBounce = () => {
   window.clearTimeout(floatingMenuBounceTimer);
-  if (!floatingMenuAction || prefersReducedMotionQuery.matches) return;
+  if (!floatingMenuAction) return;
 
   floatingMenuBounceTimer = window.setTimeout(() => {
     playFloatingMenuBounce();
@@ -435,7 +434,6 @@ floatingMenuAction?.addEventListener('animationend', () => {
   floatingMenuAction.classList.remove('is-bouncing');
 });
 
-prefersReducedMotionQuery.addEventListener?.('change', scheduleFloatingMenuBounce);
 scheduleFloatingMenuBounce();
 
 const menuToggle = document.querySelector('.menu-toggle');
