@@ -1512,7 +1512,7 @@ body.menu-image-modal-open { overflow: hidden; }
   z-index: 1;
 }
 .menu-recommend-title {
-  margin: 0 0 clamp(20px, 3.2vw, 28px);
+  margin: 0 0 clamp(26px, 3.8vw, 32px);
   color: var(--brown);
   font-size: clamp(1.16rem, 2.4vw, 1.58rem);
   font-weight: 950;
@@ -1520,7 +1520,7 @@ body.menu-image-modal-open { overflow: hidden; }
 }
 .recommend-purpose-axis {
   position: absolute;
-  top: clamp(50px, 7.6vw, 64px);
+  top: clamp(46px, 6.8vw, 56px);
   bottom: 3px;
   left: 50%;
   z-index: 0;
@@ -1546,8 +1546,8 @@ body.menu-image-modal-open { overflow: hidden; }
   border-left: 5px solid transparent;
 }
 .recommend-purpose-axis::before {
-  top: -4px;
-  border-bottom: 15px solid rgba(105, 63, 15, 0.9);
+  top: -6px;
+  border-bottom: 19px solid rgba(105, 63, 15, 0.9);
   transform: translateY(-75%);
 }
 .recommend-purpose-axis::after {
