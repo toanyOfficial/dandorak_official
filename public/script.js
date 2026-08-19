@@ -188,11 +188,11 @@ const faqItems = [
 
 const escapeAttr = (value) => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 
-const makeImageSlot = ({ className, image, title = '' }) => {
+const makeImageSlot = ({ className, image, title = '', expandable = false }) => {
   const hasImage = Boolean(image.src);
   return `
     <button class="image-placeholder ${className}${hasImage ? ' has-image' : ''}" type="button" data-guide="${escapeAttr(image.guide)}" aria-label="${escapeAttr(image.label)} 가이드 콘솔 출력">
-      ${hasImage ? `<img class="placeholder-photo" src="${escapeAttr(image.src)}" alt="${escapeAttr(image.alt)}" loading="lazy" />` : ''}
+      ${hasImage ? `<img class="placeholder-photo" src="${escapeAttr(image.src)}" alt="${escapeAttr(image.alt)}" loading="lazy"${expandable ? ' data-image-action="detail"' : ''} />` : ''}
       ${hasImage ? '' : `<span class="placeholder-label">${image.label}</span>`}
       ${!hasImage && title ? `<span class="placeholder-title">${title}</span>` : ''}
       ${hasImage ? '' : '<span class="placeholder-hint">클릭 시 사진 가이드 확인</span>'}
@@ -267,7 +267,7 @@ const deliveryFeeModalMarkup = `
         <h3 id="delivery-fee-modal-title">지역별 배송비 안내</h3>
         <button class="modal-close" type="button" data-close-delivery-fee-modal aria-label="배송비 안내 모달 닫기">닫기</button>
       </div>
-      ${makeImageSlot({ className: 'modal-delivery-image', image: landingImages.deliveryFeeGuideImage })}
+      ${makeImageSlot({ className: 'modal-delivery-image', image: landingImages.deliveryFeeGuideImage, expandable: true })}
       <div class="delivery-fee-copy">
         <section>
           <h4>[ 남동쪽 ]</h4>
@@ -306,7 +306,7 @@ const sizeInformationModalMarkup = `
         <h3 id="size-information-modal-title">도시락 사이즈 안내</h3>
         <button class="modal-close" type="button" data-close-size-information-modal aria-label="도시락 사이즈 안내 모달 닫기">닫기</button>
       </div>
-      ${makeImageSlot({ className: 'modal-size-information-image', image: landingImages.sizeInformationImage })}
+      ${makeImageSlot({ className: 'modal-size-information-image', image: landingImages.sizeInformationImage, expandable: true })}
     </div>
   </div>
 `;
