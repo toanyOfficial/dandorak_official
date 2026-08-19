@@ -99,6 +99,25 @@ const buildDatabaseErrorPayload = (message, error) => ({
     : {}),
 });
 
+const parseIncludedItemIds = (includedItemSet) => {
+  if (includedItemSet == null || includedItemSet === "") return [];
+
+  let parsed = includedItemSet;
+  if (typeof includedItemSet === "string") {
+    try {
+      parsed = JSON.parse(includedItemSet);
+    } catch {
+      return [];
+    }
+  }
+
+  if (!Array.isArray(parsed)) return [];
+
+  return [...new Set(parsed
+    .map((value) => Number(value?.id ?? value))
+    .filter((id) => Number.isInteger(id) && id > 0))];
+};
+
 app.get("/api/menu", async (req, res) => {
   const selectedCategoryIds = parseCategoryIds(req.query.categories);
   const minPrice = parsePrice(req.query.minPrice, 9000);
@@ -158,6 +177,7 @@ app.get("/api/menu", async (req, res) => {
          i.long_name,
          i.main_dish,
          i.price,
+         i.included_item_set,
          CAST(REPLACE(i.price, ',', '') AS UNSIGNED) AS item_price,
          category_price.category_min_price
        FROM dandorak_item_position ip
@@ -186,6 +206,25 @@ app.get("/api/menu", async (req, res) => {
       params,
     );
 
+    const includedItemIds = [...new Set(items.flatMap((item) => parseIncludedItemIds(item.included_item_set)))];
+    const includedItemNames = new Map();
+    if (includedItemIds.length) {
+      const [includedItems] = await getPool().query(
+        `SELECT id, name
+         FROM dandorak_item
+         WHERE id IN (${includedItemIds.map(() => "?").join(", ")})`,
+        includedItemIds,
+      );
+      includedItems.forEach((item) => includedItemNames.set(Number(item.id), item.name));
+    }
+
+    const menuItems = items.map(({ included_item_set: includedItemSet, ...item }) => ({
+      ...item,
+      included_items: parseIncludedItemIds(includedItemSet)
+        .map((id) => ({ id, name: includedItemNames.get(id) }))
+        .filter((includedItem) => includedItem.name),
+    }));
+
     res.json({
       ok: true,
       filters: {
@@ -195,7 +234,7 @@ app.get("/api/menu", async (req, res) => {
         sort: requestedSort,
       },
       categories,
-      items,
+      items: menuItems,
     });
   } catch (error) {
     if (error instanceof MissingDatabaseEnvironmentError) {

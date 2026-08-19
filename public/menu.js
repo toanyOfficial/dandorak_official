@@ -89,6 +89,16 @@ const renderMenuPrice = (item) => `
     ${renderCategoryRemark(item.category_remark)}
   </p>
 `;
+const renderIncludedItems = (includedItems) => {
+  if (!Array.isArray(includedItems) || !includedItems.length) return '';
+
+  return `
+    <small class="menu-included-items">
+      [${includedItems.map((includedItem) => `<span><i aria-hidden="true">✓</i> ${escapeHtml(includedItem.name)}</span>`).join(' ')}]
+      이 포함되어있습니다.
+    </small>
+  `;
+};
 const renderMenuItemPhoto = (item) => `
   <button
     class="menu-photo-placeholder"
@@ -283,7 +293,10 @@ const renderItems = (items) => {
             ${renderMenuItemPhoto(item)}
             <div class="menu-item-copy">
               <p class="menu-category-name">${escapeHtml(item.category_name)}</p>
-              <h3>${escapeHtml(item.short_name)}</h3>
+              <div class="menu-item-title-row">
+                <h3>${escapeHtml(item.short_name)}</h3>
+                ${renderIncludedItems(item.included_items)}
+              </div>
               <div class="menu-name-row">
                 <strong>${escapeHtml(item.long_name)}</strong>
                 <span>${escapeHtml(item.main_dish)}</span>
