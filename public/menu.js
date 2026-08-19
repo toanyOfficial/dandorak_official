@@ -94,7 +94,7 @@ const renderIncludedItems = (includedItems) => {
 
   return `
     <small class="menu-included-items">
-      [${includedItems.map((includedItem) => `<span><i aria-hidden="true">✓</i> ${escapeHtml(includedItem.name)}</span>`).join('<b aria-hidden="true">/</b>')}]
+      [${includedItems.map((includedItem) => `<span><i aria-hidden="true">✓</i> ${escapeHtml(includedItem.name)}</span>`).join(' ')}]
       이 포함되어있습니다.
     </small>
   `;
