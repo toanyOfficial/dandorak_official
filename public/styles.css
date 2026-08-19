@@ -1773,6 +1773,7 @@ body.menu-image-modal-open { overflow: hidden; }
   gap: clamp(10px, 2vw, 18px);
 }
 .recommend-guide-row-basic { margin-top: 2px; }
+.recommend-guide-row-basic .recommend-category-box { background: #c8923e; }
 
 @media (max-width: 720px) {
   .menu-recommend-modal-dialog {
