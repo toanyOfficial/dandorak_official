@@ -1501,6 +1501,7 @@ body.menu-image-modal-open { overflow: hidden; }
   isolation: isolate;
   display: grid;
   gap: clamp(10px, 1.8vw, 18px);
+  margin-block: clamp(6px, 1.2vw, 12px);
   padding-bottom: clamp(18px, 3vw, 26px);
   color: var(--ink);
   font-family: inherit;
@@ -1544,20 +1545,20 @@ body.menu-image-modal-open { overflow: hidden; }
   border-left: 5px solid transparent;
 }
 .recommend-purpose-axis::before {
-  top: -2px;
-  border-bottom: 11px solid rgba(105, 63, 15, 0.9);
+  top: -4px;
+  border-bottom: 15px solid rgba(105, 63, 15, 0.9);
   transform: translateY(-75%);
 }
 .recommend-purpose-axis::after {
-  bottom: -2px;
-  border-top: 11px solid rgba(203, 180, 135, 0.9);
+  bottom: -4px;
+  border-top: 15px solid rgba(203, 180, 135, 0.9);
   transform: translateY(75%);
 }
 .recommend-purpose-label {
   position: absolute;
   width: max-content;
   color: rgba(92, 56, 32, 0.72);
-  font-size: clamp(0.74rem, 1.3vw, 0.88rem);
+  font-size: clamp(0.8rem, 1.4vw, 0.94rem);
   font-weight: 900;
   line-height: 1;
 }
@@ -1580,15 +1581,15 @@ body.menu-image-modal-open { overflow: hidden; }
   height: 3px;
   background: linear-gradient(
     to right,
-    rgba(125, 103, 76, 0.72) 0%,
-    rgba(125, 103, 76, 0.46) 28%,
-    rgba(198, 159, 99, 0.025) 50%,
-    rgba(190, 82, 30, 0.48) 72%,
-    rgba(190, 82, 30, 0.76) 100%
+    rgba(125, 103, 76, 0.58) 0%,
+    rgba(125, 103, 76, 0.34) 28%,
+    rgba(198, 159, 99, 0.018) 50%,
+    rgba(190, 82, 30, 0.36) 72%,
+    rgba(190, 82, 30, 0.62) 100%
   );
   box-shadow:
-    0 -4px 8px rgba(125, 103, 76, 0.12),
-    0 4px 8px rgba(190, 82, 30, 0.12);
+    0 -7px 12px rgba(125, 103, 76, 0.1),
+    0 7px 12px rgba(190, 82, 30, 0.1);
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -1604,12 +1605,12 @@ body.menu-image-modal-open { overflow: hidden; }
 }
 .recommend-style-axis::before {
   left: -2px;
-  border-right: 8px solid rgba(125, 103, 76, 0.74);
+  border-right: 8px solid rgba(125, 103, 76, 0.62);
   transform: translateX(-75%);
 }
 .recommend-style-axis::after {
   right: -2px;
-  border-left: 8px solid rgba(190, 82, 30, 0.78);
+  border-left: 8px solid rgba(190, 82, 30, 0.66);
   transform: translateX(75%);
 }
 .recommend-guide-row,
