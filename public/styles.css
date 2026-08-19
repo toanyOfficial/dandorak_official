@@ -1474,21 +1474,14 @@ body.menu-image-modal-open { overflow: hidden; }
   font-weight: 950;
   text-align: center;
 }
-.recommend-map-intro {
-  margin: -6px 0 0;
-  color: var(--muted);
-  font-size: 0.84rem;
-  font-weight: 800;
-  text-align: center;
-}
 .recommend-map {
   display: grid;
-  grid-template-columns: 72px repeat(3, minmax(0, 1fr));
-  grid-template-rows: auto minmax(340px, 1fr);
-  gap: 10px;
-  min-width: 680px;
+  grid-template-columns: 54px repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto minmax(292px, 1fr);
+  gap: 8px;
+  min-width: 650px;
 }
-.recommend-map-corner,
+.recommend-map-compass,
 .recommend-lane-heading {
   display: flex;
   align-items: center;
@@ -1497,28 +1490,21 @@ body.menu-image-modal-open { overflow: hidden; }
   font-weight: 950;
   text-align: center;
 }
-.recommend-map-corner {
-  padding: 10px 6px;
-  color: var(--muted);
-  background: #f3ede5;
-  font-size: 0.75rem;
+.recommend-map-compass {
+  flex-direction: column;
+  gap: 1px;
+  color: var(--orange-dark);
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1;
 }
+.recommend-map-compass small { font-size: 0.62rem; font-weight: 950; }
 .recommend-lane-heading {
-  position: relative;
-  flex-wrap: wrap;
-  gap: 5px;
-  padding: 10px 8px;
+  padding: 9px 7px;
   color: var(--brown);
   background: #fff4e8;
 }
-.recommend-lane-heading strong { font-size: 1rem; }
-.recommend-lane-heading > span { color: var(--orange-dark); font-size: 1.15rem; }
-.recommend-lane-heading small {
-  flex-basis: 100%;
-  color: var(--muted);
-  font-size: 0.68rem;
-  font-weight: 800;
-}
+.recommend-lane-heading strong { font-size: 0.94rem; }
 .recommend-lane-heading-balance {
   color: #4c2e0b;
   background: linear-gradient(135deg, #fff9e6, #f7e7b8);
@@ -1529,12 +1515,12 @@ body.menu-image-modal-open { overflow: hidden; }
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 15px 4px;
+  gap: 6px;
+  padding: 12px 4px;
   border-radius: 16px;
   color: var(--brown);
   background: linear-gradient(#f4dfae, #f7eee2);
-  font-size: 0.68rem;
+  font-size: 0.64rem;
   text-align: center;
 }
 .recommend-level-axis span {
@@ -1558,9 +1544,9 @@ body.menu-image-modal-open { overflow: hidden; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 14px;
+  gap: 10px;
   min-width: 0;
-  padding: 14px;
+  padding: 10px;
   border: 1px solid rgba(201, 164, 91, 0.32);
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.7);
@@ -1574,24 +1560,24 @@ body.menu-image-modal-open { overflow: hidden; }
 .recommend-map-item {
   display: grid;
   justify-items: center;
-  gap: 7px;
-  padding: 11px 8px;
-  border-radius: 15px;
+  gap: 5px;
+  padding: 9px 7px;
+  border-radius: 13px;
   background: #fff;
-  box-shadow: 0 7px 18px rgba(92, 56, 32, 0.08);
+  box-shadow: 0 5px 14px rgba(92, 56, 32, 0.07);
   text-align: center;
 }
 .recommend-map-item p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 800;
   line-height: 1.35;
 }
 .recommend-category-box {
   display: grid;
   width: min(112px, 100%);
-  min-height: 48px;
+  min-height: 44px;
   place-items: center;
   border-radius: 12px;
   color: #fff;
@@ -1601,7 +1587,7 @@ body.menu-image-modal-open { overflow: hidden; }
 }
 .recommend-map-item-featured {
   position: relative;
-  padding-top: 24px;
+  padding-top: 21px;
   border: 1px solid rgba(201, 164, 91, 0.58);
   box-shadow: 0 14px 30px rgba(150, 97, 23, 0.18);
 }
@@ -1639,7 +1625,7 @@ body.menu-image-modal-open { overflow: hidden; }
 .recommend-balance-line {
   position: relative;
   width: 2px;
-  min-height: 18px;
+  min-height: 12px;
   margin: -8px auto;
   flex: 1;
   background: linear-gradient(rgba(181, 122, 43, 0.55), rgba(181, 122, 43, 0.15));
@@ -1654,18 +1640,15 @@ body.menu-image-modal-open { overflow: hidden; }
     padding: 12px;
   }
   .menu-recommendation-panel { gap: 8px; }
-  .recommend-map-intro { font-size: 0.72rem; }
   .recommend-map {
-    grid-template-columns: 58px repeat(3, minmax(145px, 1fr));
-    grid-template-rows: auto minmax(310px, 1fr);
+    grid-template-columns: 48px repeat(3, minmax(138px, 1fr));
+    grid-template-rows: auto minmax(275px, 1fr);
     gap: 7px;
-    min-width: 540px;
+    min-width: 500px;
   }
   .menu-recommendation-panel { overflow-x: auto; }
-  .recommend-map-corner { font-size: 0.66rem; }
   .recommend-lane-heading { padding: 8px 5px; }
   .recommend-lane-heading strong { font-size: 0.82rem; }
-  .recommend-lane-heading small { font-size: 0.59rem; }
   .recommend-level-axis { font-size: 0.6rem; }
   .recommend-lane { gap: 9px; padding: 9px; }
   .recommend-map-item { gap: 5px; padding: 9px 6px; }
