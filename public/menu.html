@@ -98,63 +98,26 @@
         <button class="menu-image-modal-close" type="button" data-menu-recommend-modal-close aria-label="상품 추천 안내 닫기">×</button>
         <section class="menu-recommendation-panel" aria-labelledby="menu-recommend-modal-title">
           <h2 id="menu-recommend-modal-title" class="menu-recommend-title">상품군 추천 안내</h2>
-          <div class="recommend-map" aria-label="상품군 스타일과 특성 비교표">
-            <div class="recommend-map-compass" aria-hidden="true"><span>↑</span><small>← · →</small></div>
-            <header class="recommend-lane-heading recommend-lane-heading-neat">
-              <strong>정갈하게</strong>
-            </header>
-            <header class="recommend-lane-heading recommend-lane-heading-balance">
-              <strong>균형 있게</strong>
-            </header>
-            <header class="recommend-lane-heading recommend-lane-heading-hearty">
-              <strong>든든하게</strong>
-            </header>
-
-            <aside class="recommend-level-axis" aria-label="위쪽은 품격 있는 주력 메뉴, 아래쪽은 기본 메뉴">
-              <strong>품격</strong>
-              <span aria-hidden="true"></span>
-              <strong>기본</strong>
-            </aside>
-
-            <section class="recommend-lane recommend-lane-neat" aria-label="정갈한 스타일 상품군">
-              <article class="recommend-map-item">
-                <strong class="recommend-category-box">한상</strong>
-                <p>메인 2 · 과일</p>
-              </article>
-              <article class="recommend-map-item">
-                <strong class="recommend-category-box">정찬</strong>
-                <p>메인 1 · 과일</p>
-              </article>
-            </section>
-
-            <section class="recommend-lane recommend-lane-balance" aria-label="양과 정갈함이 균형 잡힌 상품군">
-              <article class="recommend-map-item recommend-map-item-featured">
-                <span class="recommend-featured-label">BEST · 주력 메뉴</span>
-                <strong class="recommend-category-box recommend-category-signature">보양</strong>
-                <p>품격 · 맛 · 양 · 구성</p>
-              </article>
-              <span class="recommend-balance-line" aria-hidden="true"></span>
-              <article class="recommend-map-item recommend-map-item-basic">
-                <strong class="recommend-category-box">단도락</strong>
-                <p>기본 한 끼</p>
-              </article>
-            </section>
-
-            <section class="recommend-lane recommend-lane-hearty" aria-label="양 많아 스타일 상품군">
-              <article class="recommend-map-item">
-                <strong class="recommend-category-box">프리미엄</strong>
-                <p>메인 2 · 풍성한 반찬</p>
-              </article>
-              <article class="recommend-map-item">
-                <strong class="recommend-category-box">가성비</strong>
-                <p>든든한 메인 2</p>
-              </article>
-            </section>
+          <div class="recommend-map" aria-label="가로축은 정갈함에서 든든함, 세로축은 기본에서 품격을 나타내는 상품군 비교표">
+            <span class="recommend-axis-label recommend-axis-prestige">품격 있는 구성</span>
+            <span class="recommend-axis-label recommend-axis-basic">기본 구성</span>
+            <div class="recommend-style-labels" aria-hidden="true">
+              <span>정갈하게</span><span>균형 있게</span><span>든든하게</span>
+            </div>
+            <ul class="recommend-plot">
+              <li><strong>한상</strong><small>메인 2 · 과일</small></li>
+              <li class="recommend-point-featured"><em>BEST</em><strong>보양</strong><small>품격 · 맛 · 양 · 구성</small></li>
+              <li><strong>프리미엄</strong><small>메인 2 · 풍성한 반찬</small></li>
+              <li><strong>정찬</strong><small>메인 1 · 과일</small></li>
+              <li><strong>단도락</strong><small>기본 한 끼</small></li>
+              <li><strong>가성비</strong><small>든든한 메인 2</small></li>
+            </ul>
           </div>
         </section>
       </div>
     </div>
 
     <script src="menu.js"></script>
+    <script src="image-detail.js"></script>
   </body>
 </html>
