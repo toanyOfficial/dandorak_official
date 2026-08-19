@@ -1630,7 +1630,9 @@ body.menu-image-modal-open { overflow: hidden; }
 .recommend-category-box {
   display: grid;
   flex: 0 0 clamp(86px, 12vw, 112px);
+  align-content: center;
   place-items: center;
+  gap: 1px;
   min-height: clamp(54px, 7vw, 64px);
   border-radius: 12px;
   color: #fff;
@@ -1639,6 +1641,11 @@ body.menu-image-modal-open { overflow: hidden; }
   font-weight: 950;
   text-align: center;
   line-height: 1.15;
+}
+.recommend-category-suffix {
+  display: block;
+  font-size: 0.6em;
+  line-height: 1;
 }
 
 .recommend-category-signature {
