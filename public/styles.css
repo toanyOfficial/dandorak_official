@@ -1222,7 +1222,11 @@ body { height: 100%; overflow: hidden; }
     width: 100%;
     font-size: 0.86rem;
   }
-  .menu-floating-action { font-size: 0.74rem; }
+  .menu-floating-action {
+    width: 100%;
+    border-radius: 999px;
+    font-size: 0.74rem;
+  }
 }
 
 .menu-sort-price-options {
