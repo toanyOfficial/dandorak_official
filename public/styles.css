@@ -1496,10 +1496,16 @@ body.menu-image-modal-open { overflow: hidden; }
   padding: clamp(14px, 2.4vw, 24px);
 }
 .menu-recommendation-panel {
+  position: relative;
+  isolation: isolate;
   display: grid;
   gap: clamp(10px, 1.8vw, 18px);
   color: var(--ink);
   font-family: inherit;
+}
+.menu-recommendation-panel > :not(.recommend-purpose-axis) {
+  position: relative;
+  z-index: 1;
 }
 .menu-recommend-title {
   margin: 0;
@@ -1507,6 +1513,53 @@ body.menu-image-modal-open { overflow: hidden; }
   font-size: clamp(1.16rem, 2.4vw, 1.58rem);
   font-weight: 950;
   text-align: center;
+}
+.recommend-purpose-axis {
+  position: absolute;
+  top: clamp(24px, 4.4vw, 34px);
+  bottom: -5px;
+  left: 50%;
+  z-index: 0;
+  border-left: 2px dashed rgba(168, 79, 22, 0.3);
+  pointer-events: none;
+}
+.recommend-purpose-axis::before,
+.recommend-purpose-axis::after {
+  content: "";
+  position: absolute;
+  left: -6px;
+  width: 0;
+  height: 0;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+}
+.recommend-purpose-axis::before {
+  top: -2px;
+  border-bottom: 8px solid rgba(168, 79, 22, 0.38);
+  transform: translateY(-75%);
+}
+.recommend-purpose-axis::after {
+  bottom: -2px;
+  border-top: 8px solid rgba(168, 79, 22, 0.38);
+  transform: translateY(75%);
+}
+.recommend-purpose-label {
+  position: absolute;
+  width: max-content;
+  color: rgba(92, 56, 32, 0.72);
+  font-size: clamp(0.68rem, 1.2vw, 0.8rem);
+  font-weight: 900;
+  line-height: 1;
+}
+.recommend-purpose-label-top {
+  top: 0;
+  left: 12px;
+  transform: translateY(-50%);
+}
+.recommend-purpose-label-bottom {
+  right: 12px;
+  bottom: 0;
+  transform: translateY(50%);
 }
 .recommend-guide-row,
 .recommend-group-box {
