@@ -1502,6 +1502,7 @@ body.menu-image-modal-open { overflow: hidden; }
   isolation: isolate;
   display: grid;
   gap: clamp(10px, 1.8vw, 18px);
+  margin-block: clamp(6px, 1.2vw, 12px);
   padding-bottom: clamp(18px, 3vw, 26px);
   color: var(--ink);
   font-family: inherit;
