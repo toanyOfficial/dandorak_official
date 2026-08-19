@@ -2,8 +2,10 @@ const interactiveImageAncestorSelector = 'a, button, [role="button"], input, lab
 
 const isStandaloneImage = (image) => (
   image instanceof HTMLImageElement
-  && !image.parentElement?.closest(interactiveImageAncestorSelector)
-  && !image.hasAttribute('data-image-action')
+  && (
+    image.dataset.imageAction === 'detail'
+    || !image.parentElement?.closest(interactiveImageAncestorSelector)
+  )
 );
 
 const getImageSource = (image) => image.currentSrc || image.src;
