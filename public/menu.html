@@ -98,68 +98,65 @@
         <button class="menu-image-modal-close" type="button" data-menu-recommend-modal-close aria-label="상품 추천 안내 닫기">×</button>
         <section class="menu-recommendation-panel" aria-labelledby="menu-recommend-modal-title">
           <h2 id="menu-recommend-modal-title" class="menu-recommend-title">상품군 추천 안내</h2>
+          <p class="recommend-map-intro">좌우로는 식사 스타일을, 위아래로는 메뉴의 등급을 비교해 보세요.</p>
 
-          <div class="recommend-guide-row recommend-guide-row-featured">
-            <strong class="recommend-category-box recommend-category-signature">보양</strong>
-            <div class="recommend-copy">
-              <p>가장 시그니처 메뉴</p>
-              <p>품격, 맛, 양, 구성 모두 알찬 식사</p>
-            </div>
-          </div>
+          <div class="recommend-map" aria-label="상품군 스타일과 등급 비교표">
+            <div class="recommend-map-corner" aria-hidden="true">메뉴 등급</div>
+            <header class="recommend-lane-heading recommend-lane-heading-neat">
+              <span aria-hidden="true">←</span>
+              <strong>정갈한 스타일</strong>
+              <small>과일을 곁들인 깔끔한 구성</small>
+            </header>
+            <header class="recommend-lane-heading recommend-lane-heading-balance">
+              <strong>균형형</strong>
+              <small>양과 정갈함을 모두</small>
+            </header>
+            <header class="recommend-lane-heading recommend-lane-heading-hearty">
+              <strong>양 많아 스타일</strong>
+              <span aria-hidden="true">→</span>
+              <small>반찬까지 든든한 구성</small>
+            </header>
 
-          <div class="recommend-style-grid" aria-label="상품군 스타일 비교">
-            <section class="recommend-style-copy">
-              <h3>정갈한 스타일</h3>
-              <p>세미나, 회의 등 정갈한 식사가 필요한 경우</p>
-              <p>반찬이 적은 대신 과일이 포함</p>
-            </section>
-            <section class="recommend-style-copy">
-              <h3>양 많아 스타일</h3>
-              <p>학생, 노동 후 새참 등 와구와구 식사가 필요한 경우</p>
-              <p>과일이 없는 대신 반찬이 든든</p>
-            </section>
-          </div>
+            <aside class="recommend-level-axis" aria-label="위쪽은 고급 주력 메뉴, 아래쪽은 기본 보급 메뉴">
+              <strong>고급 · 주력</strong>
+              <span aria-hidden="true"></span>
+              <strong>기본 · 보급</strong>
+            </aside>
 
-          <div class="recommend-group-grid">
-            <section class="recommend-group-box" aria-label="정갈한 스타일 상품군">
-              <div class="recommend-guide-row">
+            <section class="recommend-lane recommend-lane-neat" aria-label="정갈한 스타일 상품군">
+              <article class="recommend-map-item">
                 <strong class="recommend-category-box">한상</strong>
-                <div class="recommend-copy">
-                  <p>2가지 메인</p>
-                  <p>과일</p>
-                </div>
-              </div>
-              <div class="recommend-guide-row">
+                <p>2가지 메인 · 과일</p>
+              </article>
+              <article class="recommend-map-item">
                 <strong class="recommend-category-box">정찬</strong>
-                <div class="recommend-copy">
-                  <p>1가지 메인</p>
-                  <p>과일</p>
-                </div>
-              </div>
+                <p>1가지 메인 · 과일</p>
+              </article>
             </section>
-            <section class="recommend-group-box" aria-label="양 많아 스타일 상품군">
-              <div class="recommend-guide-row">
-                <strong class="recommend-category-box">프리미엄</strong>
-                <div class="recommend-copy">
-                  <p>2가지 메인</p>
-                  <p>반찬도 많이</p>
-                </div>
-              </div>
-              <div class="recommend-guide-row">
-                <strong class="recommend-category-box">가성비</strong>
-                <div class="recommend-copy">
-                  <p>2가지 메인</p>
-                </div>
-              </div>
-            </section>
-          </div>
 
-          <div class="recommend-guide-row recommend-guide-row-basic">
-            <strong class="recommend-category-box">단도락</strong>
-            <div class="recommend-copy">
-              <p>가장 기본이 되는 메뉴</p>
-              <p>1만원 언저리의 한끼 식사</p>
-            </div>
+            <section class="recommend-lane recommend-lane-balance" aria-label="양과 정갈함이 균형 잡힌 상품군">
+              <article class="recommend-map-item recommend-map-item-featured">
+                <span class="recommend-featured-label">BEST · 주력 메뉴</span>
+                <strong class="recommend-category-box recommend-category-signature">보양</strong>
+                <p>품격, 맛, 양, 구성 모두 알찬 고급 식사</p>
+              </article>
+              <span class="recommend-balance-line" aria-hidden="true"></span>
+              <article class="recommend-map-item recommend-map-item-basic">
+                <strong class="recommend-category-box">단도락</strong>
+                <p>가장 기본이 되는 보급형 한 끼</p>
+              </article>
+            </section>
+
+            <section class="recommend-lane recommend-lane-hearty" aria-label="양 많아 스타일 상품군">
+              <article class="recommend-map-item">
+                <strong class="recommend-category-box">프리미엄</strong>
+                <p>2가지 메인 · 반찬도 많이</p>
+              </article>
+              <article class="recommend-map-item">
+                <strong class="recommend-category-box">가성비</strong>
+                <p>든든한 2가지 메인</p>
+              </article>
+            </section>
           </div>
         </section>
       </div>
