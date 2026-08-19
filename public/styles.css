@@ -1494,7 +1494,8 @@ body.menu-image-modal-open { overflow: hidden; }
   max-height: 92svh;
   overflow: hidden;
   padding: clamp(14px, 2.4vw, 24px);
-  padding-block: clamp(18px, 3vw, 28px);
+  padding-top: clamp(10px, 1.5vw, 14px);
+  padding-bottom: clamp(18px, 3vw, 28px);
 }
 .menu-recommendation-panel {
   position: relative;
@@ -1510,7 +1511,7 @@ body.menu-image-modal-open { overflow: hidden; }
   z-index: 1;
 }
 .menu-recommend-title {
-  margin: 0 0 clamp(8px, 1.5vw, 12px);
+  margin: 0 0 clamp(26px, 3.8vw, 32px);
   color: var(--brown);
   font-size: clamp(1.16rem, 2.4vw, 1.58rem);
   font-weight: 950;
@@ -1518,7 +1519,7 @@ body.menu-image-modal-open { overflow: hidden; }
 }
 .recommend-purpose-axis {
   position: absolute;
-  top: clamp(32px, 5.4vw, 43px);
+  top: clamp(46px, 6.8vw, 56px);
   bottom: 3px;
   left: 50%;
   z-index: 0;
@@ -1544,20 +1545,20 @@ body.menu-image-modal-open { overflow: hidden; }
   border-left: 5px solid transparent;
 }
 .recommend-purpose-axis::before {
-  top: -2px;
-  border-bottom: 11px solid rgba(105, 63, 15, 0.9);
+  top: -6px;
+  border-bottom: 19px solid rgba(105, 63, 15, 0.9);
   transform: translateY(-75%);
 }
 .recommend-purpose-axis::after {
-  bottom: -2px;
-  border-top: 11px solid rgba(203, 180, 135, 0.9);
+  bottom: -4px;
+  border-top: 15px solid rgba(203, 180, 135, 0.9);
   transform: translateY(75%);
 }
 .recommend-purpose-label {
   position: absolute;
   width: max-content;
   color: rgba(92, 56, 32, 0.72);
-  font-size: clamp(0.74rem, 1.3vw, 0.88rem);
+  font-size: clamp(0.8rem, 1.4vw, 0.94rem);
   font-weight: 900;
   line-height: 1;
 }
@@ -1580,15 +1581,15 @@ body.menu-image-modal-open { overflow: hidden; }
   height: 3px;
   background: linear-gradient(
     to right,
-    rgba(125, 103, 76, 0.72) 0%,
-    rgba(125, 103, 76, 0.46) 28%,
-    rgba(198, 159, 99, 0.025) 50%,
-    rgba(190, 82, 30, 0.48) 72%,
-    rgba(190, 82, 30, 0.76) 100%
+    rgba(125, 103, 76, 0.58) 0%,
+    rgba(125, 103, 76, 0.34) 28%,
+    rgba(198, 159, 99, 0.018) 50%,
+    rgba(190, 82, 30, 0.36) 72%,
+    rgba(190, 82, 30, 0.62) 100%
   );
   box-shadow:
-    0 -4px 8px rgba(125, 103, 76, 0.12),
-    0 4px 8px rgba(190, 82, 30, 0.12);
+    0 -7px 12px rgba(125, 103, 76, 0.1),
+    0 7px 12px rgba(190, 82, 30, 0.1);
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -1604,12 +1605,12 @@ body.menu-image-modal-open { overflow: hidden; }
 }
 .recommend-style-axis::before {
   left: -2px;
-  border-right: 8px solid rgba(125, 103, 76, 0.74);
+  border-right: 8px solid rgba(125, 103, 76, 0.62);
   transform: translateX(-75%);
 }
 .recommend-style-axis::after {
   right: -2px;
-  border-left: 8px solid rgba(190, 82, 30, 0.78);
+  border-left: 8px solid rgba(190, 82, 30, 0.66);
   transform: translateX(75%);
 }
 .recommend-guide-row,
@@ -1628,7 +1629,9 @@ body.menu-image-modal-open { overflow: hidden; }
 .recommend-category-box {
   display: grid;
   flex: 0 0 clamp(86px, 12vw, 112px);
+  align-content: center;
   place-items: center;
+  gap: 1px;
   min-height: clamp(54px, 7vw, 64px);
   border-radius: 12px;
   color: #fff;
@@ -1637,6 +1640,11 @@ body.menu-image-modal-open { overflow: hidden; }
   font-weight: 950;
   text-align: center;
   line-height: 1.15;
+}
+.recommend-category-suffix {
+  display: block;
+  font-size: 0.6em;
+  line-height: 1;
 }
 
 .recommend-category-signature {
@@ -1734,7 +1742,8 @@ body.menu-image-modal-open { overflow: hidden; }
     width: min(100%, calc(100vw - 28px));
     max-height: 92svh;
     padding: 12px;
-    padding-block: 16px;
+    padding-top: 10px;
+    padding-bottom: 16px;
   }
   .menu-recommendation-panel { gap: 8px; }
   .recommend-style-axis { top: calc(12.5px + 1.035rem); }
