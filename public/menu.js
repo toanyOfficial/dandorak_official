@@ -83,25 +83,22 @@ const renderCategoryRemark = (remark) => {
   const normalizedRemark = String(remark ?? '').trim();
   return normalizedRemark ? `<small>${escapeHtml(normalizedRemark)}</small>` : '';
 };
-const renderMenuPrice = (item) => `
-  <p class="menu-price">
-    <span>${formatPrice(item.price)}</span>
-    ${renderIncludedItems(item.included_items)}
-  </p>
-`;
-const renderIncludedItems = (includedItems) => {
-  if (!Array.isArray(includedItems) || !includedItems.length) return '';
-
+const renderMenuPricing = (item) => {
+  const includedItems = Array.isArray(item.included_items) ? item.included_items : [];
   const canChangeDrink = includedItems.some((includedItem) => Number(includedItem.id) === 108);
+  const includedItemDetails = includedItems.length ? `
+    <small class="menu-included-items menu-included-items-primary">
+      [${includedItems.map((includedItem) => `<span><i aria-hidden="true">✓</i> ${escapeHtml(includedItem.name)}</span>`).join(' ')}]
+      이 포함되어있습니다.
+    </small>
+    ${canChangeDrink ? '<small class="menu-included-items menu-included-items-secondary">국 대신 식혜나 생수로 변경 가능합니다.</small>' : ''}
+  ` : '';
 
   return `
-    <small class="menu-included-items">
-      <span class="menu-included-items-row">
-        [${includedItems.map((includedItem) => `<span><i aria-hidden="true">✓</i> ${escapeHtml(includedItem.name)}</span>`).join(' ')}]
-        이 포함되어있습니다.
-      </span>
-      ${canChangeDrink ? '<span class="menu-included-items-row">국 대신 식혜나 생수로 변경 가능합니다.</span>' : ''}
-    </small>
+    <div class="menu-pricing-table">
+      <strong class="menu-price-value">${formatPrice(item.price)}</strong>
+      ${includedItemDetails}
+    </div>
   `;
 };
 const renderMenuItemPhoto = (item) => `
@@ -306,7 +303,7 @@ const renderItems = (items) => {
                 <strong>${escapeHtml(item.long_name)}</strong>
                 <span>${escapeHtml(item.main_dish)}</span>
               </div>
-              ${renderMenuPrice(item)}
+              ${renderMenuPricing(item)}
             </div>
           </article>
         `).join('')}
