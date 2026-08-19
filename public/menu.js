@@ -239,7 +239,7 @@ const renderFloatingNav = () => {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="새 창에서 카카오톡 채널로 문의하기"
-    ><span class="menu-floating-kakao-mark" aria-hidden="true"></span>문의하기</a>
+    >문의하기</a>
   `;
 
   setupFloatingMenuBounce(floatingNav.querySelector('.menu-floating-recommend'));
