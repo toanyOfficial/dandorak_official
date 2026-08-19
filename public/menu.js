@@ -295,7 +295,10 @@ const renderItems = (items) => {
             ${renderMenuItemPhoto(item)}
             <div class="menu-item-copy">
               <p class="menu-category-name">${escapeHtml(item.category_name)}</p>
-              <h3>${escapeHtml(item.short_name)}</h3>
+              <div class="menu-item-title-row">
+                <h3>${escapeHtml(item.short_name)}</h3>
+                ${renderIncludedItems(item.included_items)}
+              </div>
               <div class="menu-name-row">
                 <strong>${escapeHtml(item.long_name)}</strong>
                 <span>${escapeHtml(item.main_dish)}</span>
