@@ -75,6 +75,11 @@ button { font: inherit; }
   display: block;
   object-fit: cover;
 }
+img[data-standalone-image] { cursor: zoom-in; }
+img[data-standalone-image]:focus-visible {
+  outline: 3px solid rgba(216, 111, 38, 0.48);
+  outline-offset: 3px;
+}
 .desktop-nav { gap: clamp(8px, 1.3vw, 22px); color: var(--muted); font-weight: 800; }
 .desktop-nav a {
   min-height: 44px;
@@ -1135,7 +1140,7 @@ body { height: 100%; overflow: hidden; }
   bottom: calc(18px + env(safe-area-inset-bottom));
   z-index: 980;
   display: grid;
-  grid-template-columns: repeat(3, 44px);
+  grid-template-columns: repeat(6, 17.5px);
   gap: 9px;
 }
 .menu-floating-bubble {
@@ -1153,9 +1158,11 @@ body { height: 100%; overflow: hidden; }
   cursor: pointer;
   transform-origin: 50% 100%;
   will-change: transform, box-shadow;
+  grid-column: span 2;
+  text-decoration: none;
 }
 .menu-floating-wide {
-  grid-column: 1 / -1;
+  grid-column: span 6;
   width: 100%;
   border-radius: 999px;
   font-size: 0.92rem;
@@ -1172,6 +1179,28 @@ body { height: 100%; overflow: hidden; }
   color: #fff;
   background: linear-gradient(135deg, var(--deep), #333);
 }
+.menu-floating-action {
+  grid-column: span 3;
+  width: 100%;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: -0.04em;
+}
+.menu-floating-order {
+  border-color: rgba(168, 79, 22, 0.3);
+  color: #fff;
+  background: linear-gradient(135deg, #d96f27, var(--orange-dark));
+  box-shadow: 0 14px 30px rgba(168, 79, 22, 0.24);
+}
+.menu-floating-kakao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-color: #e2c800;
+  color: #191919;
+  background: #fee500;
+  box-shadow: 0 14px 30px rgba(95, 82, 0, 0.2);
+}
 .menu-floating-bubble:focus-visible {
   outline: 3px solid rgba(216, 111, 38, 0.48);
   outline-offset: 3px;
@@ -1181,7 +1210,7 @@ body { height: 100%; overflow: hidden; }
   .menu-floating-nav {
     right: 10px;
     bottom: calc(10px + env(safe-area-inset-bottom));
-    grid-template-columns: repeat(3, 40px);
+    grid-template-columns: repeat(6, 16.5px);
     gap: 7px;
   }
   .menu-floating-bubble {
@@ -1193,6 +1222,7 @@ body { height: 100%; overflow: hidden; }
     width: 100%;
     font-size: 0.86rem;
   }
+  .menu-floating-action { font-size: 0.74rem; }
 }
 
 .menu-sort-price-options {
