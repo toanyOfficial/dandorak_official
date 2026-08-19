@@ -1521,17 +1521,22 @@ body.menu-image-modal-open { overflow: hidden; }
   bottom: 3px;
   left: 50%;
   z-index: 0;
-  width: 2px;
+  width: 3px;
   background:
-    repeating-linear-gradient(to bottom, transparent 0 7px, rgba(255, 253, 248, 0.96) 7px 13px),
-    linear-gradient(to bottom, rgba(139, 91, 25, 0.55), rgba(210, 191, 158, 0.46));
+    repeating-linear-gradient(to bottom, transparent 0 8px, rgba(255, 253, 248, 0.96) 8px 13px),
+    linear-gradient(
+      to bottom,
+      rgba(105, 63, 15, 0.9) 0%,
+      rgba(190, 151, 88, 0.4) 50%,
+      rgba(203, 180, 135, 0.88) 100%
+    );
   pointer-events: none;
 }
 .recommend-purpose-axis::before,
 .recommend-purpose-axis::after {
   content: "";
   position: absolute;
-  left: -4px;
+  left: -3.5px;
   width: 0;
   height: 0;
   border-right: 5px solid transparent;
@@ -1539,12 +1544,12 @@ body.menu-image-modal-open { overflow: hidden; }
 }
 .recommend-purpose-axis::before {
   top: -2px;
-  border-bottom: 8px solid rgba(139, 91, 25, 0.55);
+  border-bottom: 8px solid rgba(105, 63, 15, 0.9);
   transform: translateY(-75%);
 }
 .recommend-purpose-axis::after {
   bottom: -2px;
-  border-top: 8px solid rgba(210, 191, 158, 0.56);
+  border-top: 8px solid rgba(203, 180, 135, 0.9);
   transform: translateY(75%);
 }
 .recommend-purpose-label {
@@ -1566,18 +1571,23 @@ body.menu-image-modal-open { overflow: hidden; }
   transform: translateY(50%);
 }
 .recommend-style-axis {
-  height: 2px;
+  height: 3px;
   margin: clamp(-9px, -0.9vw, -5px) 4%;
   background:
-    repeating-linear-gradient(to right, transparent 0 7px, rgba(255, 253, 248, 0.96) 7px 13px),
-    linear-gradient(to right, rgba(176, 159, 133, 0.44), rgba(181, 105, 50, 0.52));
+    repeating-linear-gradient(to right, transparent 0 8px, rgba(255, 253, 248, 0.96) 8px 13px),
+    linear-gradient(
+      to right,
+      rgba(125, 103, 76, 0.82) 0%,
+      rgba(198, 159, 99, 0.38) 50%,
+      rgba(190, 82, 30, 0.86) 100%
+    );
   pointer-events: none;
 }
 .recommend-style-axis::before,
 .recommend-style-axis::after {
   content: "";
   position: absolute;
-  top: -4px;
+  top: -3.5px;
   width: 0;
   height: 0;
   border-top: 5px solid transparent;
@@ -1585,12 +1595,12 @@ body.menu-image-modal-open { overflow: hidden; }
 }
 .recommend-style-axis::before {
   left: -2px;
-  border-right: 8px solid rgba(176, 159, 133, 0.5);
+  border-right: 8px solid rgba(125, 103, 76, 0.86);
   transform: translateX(-75%);
 }
 .recommend-style-axis::after {
   right: -2px;
-  border-left: 8px solid rgba(181, 105, 50, 0.58);
+  border-left: 8px solid rgba(190, 82, 30, 0.9);
   transform: translateX(75%);
 }
 .recommend-guide-row,
