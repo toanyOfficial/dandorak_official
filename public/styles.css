@@ -1505,61 +1505,85 @@ body.menu-image-modal-open { overflow: hidden; }
 }
 .recommend-map {
   position: relative;
+  height: 390px;
+  overflow: hidden;
   border: 1px solid rgba(201, 164, 91, 0.32);
   border-radius: 20px;
-  padding: 18px 18px 14px 68px;
   background:
-    linear-gradient(to right, transparent 33.1%, rgba(201, 164, 91, 0.2) 33.3%, transparent 33.5%, transparent 66.4%, rgba(201, 164, 91, 0.2) 66.6%, transparent 66.8%),
+    radial-gradient(circle at 50% 45%, rgba(246, 223, 158, 0.22), transparent 42%),
     linear-gradient(to bottom, rgba(255, 249, 232, 0.84), rgba(255, 255, 255, 0.82));
+}
+.recommend-axis {
+  position: absolute;
+  z-index: 0;
+  background: var(--orange-dark);
+}
+.recommend-axis::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-top: 3px solid var(--orange-dark);
+  border-right: 3px solid var(--orange-dark);
+}
+.recommend-axis-x {
+  left: 8%;
+  right: 5%;
+  bottom: 12%;
+  height: 2px;
+}
+.recommend-axis-x::after {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+.recommend-axis-y {
+  top: 7%;
+  bottom: 12%;
+  left: 8%;
+  width: 2px;
+}
+.recommend-axis-y::after {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(-45deg);
 }
 .recommend-axis-label {
   position: absolute;
-  left: 12px;
-  width: 45px;
+  z-index: 2;
   color: var(--brown);
-  font-size: 0.7rem;
+  font-size: 0.76rem;
   font-weight: 950;
-  line-height: 1.25;
-  text-align: center;
+  line-height: 1;
 }
-.recommend-axis-prestige { top: 62px; }
-.recommend-axis-basic { bottom: 38px; }
-.recommend-style-labels {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-bottom: 8px;
-  color: var(--brown);
-  font-size: 0.84rem;
-  font-weight: 950;
-  text-align: center;
-}
+.recommend-axis-prestige { top: 3%; left: 8%; transform: translateX(-50%); }
+.recommend-axis-basic { bottom: 4%; left: 8%; transform: translateX(-50%); }
+.recommend-axis-neat { bottom: 5%; left: 14%; }
+.recommend-axis-hearty { right: 4%; bottom: 5%; }
 .recommend-plot {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(104px, 1fr));
-  gap: 0;
+  position: absolute;
+  inset: 0;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.recommend-plot::before {
-  content: "";
-  position: absolute;
-  left: 66px;
-  right: 18px;
-  top: 50%;
-  border-top: 1px dashed rgba(168, 79, 22, 0.24);
-}
 .recommend-plot li {
-  position: relative;
+  position: absolute;
+  z-index: 1;
   display: flex;
+  width: 145px;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
-  min-width: 0;
+  gap: 4px;
+  transform: translate(-50%, 50%);
   text-align: center;
 }
+.recommend-point-hansang { left: 26%; bottom: 72%; }
+.recommend-point-featured { left: 53%; bottom: 78%; }
+.recommend-point-premium { left: 79%; bottom: 67%; }
+.recommend-point-jeongchan { left: 20%; bottom: 31%; }
+.recommend-point-dandorak { left: 51%; bottom: 28%; }
+.recommend-point-value { left: 83%; bottom: 34%; }
 .recommend-plot strong {
   min-width: 78px;
   border-radius: 999px;
@@ -1597,15 +1621,9 @@ body.menu-image-modal-open { overflow: hidden; }
     padding: 12px;
   }
   .menu-recommendation-panel { gap: 8px; }
-  .recommend-map {
-    padding: 14px 8px 10px 48px;
-  }
-  .recommend-axis-label { left: 4px; width: 40px; font-size: 0.62rem; }
-  .recommend-axis-prestige { top: 54px; }
-  .recommend-axis-basic { bottom: 32px; }
-  .recommend-style-labels { font-size: 0.74rem; }
-  .recommend-plot { grid-template-rows: repeat(2, minmax(92px, 1fr)); }
-  .recommend-plot::before { left: 46px; right: 8px; }
+  .recommend-map { height: 340px; }
+  .recommend-axis-label { font-size: 0.64rem; }
+  .recommend-plot li { width: 105px; }
   .recommend-plot strong { min-width: 64px; padding: 7px 9px; font-size: 0.82rem; }
   .recommend-plot small { max-width: 12ch; font-size: 0.6rem; }
 }
