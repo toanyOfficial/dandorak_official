@@ -1747,11 +1747,29 @@ body.menu-image-modal-open { overflow: hidden; }
   gap: clamp(10px, 1.8vw, 16px);
   padding: clamp(12px, 2vw, 18px);
 }
+.recommend-group-box:first-child {
+  border-color: rgba(125, 103, 76, 0.42);
+  background: linear-gradient(145deg, rgba(125, 103, 76, 0.18), rgba(255, 255, 255, 0.82) 72%);
+  box-shadow:
+    inset 0 3px 0 rgba(125, 103, 76, 0.12),
+    0 8px 20px rgba(92, 72, 49, 0.08);
+}
+.recommend-group-box:last-child {
+  border-color: rgba(190, 82, 30, 0.42);
+  background: linear-gradient(215deg, rgba(190, 82, 30, 0.18), rgba(255, 255, 255, 0.82) 72%);
+  box-shadow:
+    inset 0 3px 0 rgba(190, 82, 30, 0.12),
+    0 8px 20px rgba(144, 66, 29, 0.08);
+}
+.recommend-group-box:first-child .recommend-category-box {
+  background: linear-gradient(135deg, #8a7660, #65513d);
+}
 .recommend-group-box .recommend-guide-row {
   min-height: 0;
   padding: 0;
   border: 0;
   border-radius: 0;
+  background: transparent;
   gap: clamp(10px, 2vw, 18px);
 }
 .recommend-guide-row-basic { margin-top: 2px; }
