@@ -226,6 +226,20 @@ const renderFloatingNav = () => {
         aria-label="${escapeHtml(category.name)} 카테고리로 이동"
       >${escapeHtml(getCategoryInitial(category))}</button>
     `).join('')}
+    <a
+      class="menu-floating-bubble menu-floating-action menu-floating-order"
+      href="https://dev.webpos.shop"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="새 창에서 주문하기"
+    >주문하기</a>
+    <a
+      class="menu-floating-bubble menu-floating-action menu-floating-kakao"
+      href="http://pf.kakao.com/_IhAtn/chat"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="새 창에서 카카오톡 채널로 문의하기"
+    ><span class="menu-floating-kakao-mark" aria-hidden="true"></span>문의하기</a>
   `;
 
   setupFloatingMenuBounce(floatingNav.querySelector('.menu-floating-recommend'));
@@ -297,7 +311,6 @@ const renderItems = (items) => {
               <p class="menu-category-name">${escapeHtml(item.category_name)}</p>
               <div class="menu-item-title-row">
                 <h3>${escapeHtml(item.short_name)}</h3>
-                ${renderIncludedItems(item.included_items)}
               </div>
               <div class="menu-name-row">
                 <strong>${escapeHtml(item.long_name)}</strong>
