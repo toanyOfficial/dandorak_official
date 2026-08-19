@@ -1577,14 +1577,14 @@ body.menu-image-modal-open { overflow: hidden; }
   left: -6px;
   z-index: 0;
   height: 3px;
-  background:
-    repeating-linear-gradient(to right, transparent 0 8px, rgba(255, 253, 248, 0.96) 8px 13px),
-    linear-gradient(
-      to right,
-      rgba(125, 103, 76, 0.82) 0%,
-      rgba(198, 159, 99, 0.38) 50%,
-      rgba(190, 82, 30, 0.86) 100%
-    );
+  background: linear-gradient(
+    to right,
+    rgba(125, 103, 76, 0.86) 0%,
+    rgba(125, 103, 76, 0.58) 28%,
+    rgba(198, 159, 99, 0.04) 50%,
+    rgba(190, 82, 30, 0.6) 72%,
+    rgba(190, 82, 30, 0.9) 100%
+  );
   transform: translateY(-50%);
   pointer-events: none;
 }
