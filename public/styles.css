@@ -1194,7 +1194,8 @@ body { height: 100%; overflow: hidden; }
 }
 .menu-floating-kakao {
   display: flex;
-  gap: 3px;
+  align-items: center;
+  justify-content: center;
   border-color: #e2c800;
   color: #191919;
   background: #fee500;
