@@ -1572,9 +1572,9 @@ body.menu-image-modal-open { overflow: hidden; }
 }
 .recommend-style-axis {
   position: absolute;
-  top: 50%;
-  right: 4%;
-  left: 4%;
+  top: calc(clamp(10px, 1.5vw, 14px) + clamp(1.24rem, 2.2vw, 1.54rem) + 6px);
+  right: -6px;
+  left: -6px;
   z-index: 0;
   height: 3px;
   background:
@@ -1673,7 +1673,7 @@ body.menu-image-modal-open { overflow: hidden; }
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: stretch;
   gap: clamp(12px, 2.6vw, 24px);
-  overflow: hidden;
+  overflow: visible;
   border-radius: 16px;
   padding: clamp(10px, 1.5vw, 14px) clamp(2px, 1.4vw, 12px);
   background: linear-gradient(
@@ -1732,6 +1732,7 @@ body.menu-image-modal-open { overflow: hidden; }
     padding: 12px;
   }
   .menu-recommendation-panel { gap: 8px; }
+  .recommend-style-axis { top: calc(12.5px + 1.035rem); }
   .recommend-style-grid,
   .recommend-group-grid { gap: 8px; }
   .recommend-guide-row {
