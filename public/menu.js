@@ -297,7 +297,6 @@ const renderItems = (items) => {
               <p class="menu-category-name">${escapeHtml(item.category_name)}</p>
               <div class="menu-item-title-row">
                 <h3>${escapeHtml(item.short_name)}</h3>
-                ${renderIncludedItems(item.included_items)}
               </div>
               <div class="menu-name-row">
                 <strong>${escapeHtml(item.long_name)}</strong>
