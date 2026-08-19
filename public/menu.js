@@ -86,9 +86,24 @@ const renderCategoryRemark = (remark) => {
 const renderMenuPrice = (item) => `
   <p class="menu-price">
     <span>${formatPrice(item.price)}</span>
-    ${renderCategoryRemark(item.category_remark)}
+    ${renderIncludedItems(item.included_items)}
   </p>
 `;
+const renderIncludedItems = (includedItems) => {
+  if (!Array.isArray(includedItems) || !includedItems.length) return '';
+
+  const canChangeDrink = includedItems.some((includedItem) => Number(includedItem.id) === 108);
+
+  return `
+    <small class="menu-included-items">
+      <span class="menu-included-items-row">
+        [${includedItems.map((includedItem) => `<span><i aria-hidden="true">✓</i> ${escapeHtml(includedItem.name)}</span>`).join(' ')}]
+        이 포함되어있습니다.
+      </span>
+      ${canChangeDrink ? '<span class="menu-included-items-row">국 대신 식혜나 생수로 변경 가능합니다.</span>' : ''}
+    </small>
+  `;
+};
 const renderMenuItemPhoto = (item) => `
   <button
     class="menu-photo-placeholder"
