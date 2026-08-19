@@ -1562,6 +1562,32 @@ body.menu-image-modal-open { overflow: hidden; }
   bottom: 0;
   transform: translateY(50%);
 }
+.recommend-style-axis {
+  height: 0;
+  margin: clamp(-9px, -0.9vw, -5px) 4%;
+  border-top: 2px dashed rgba(168, 79, 22, 0.3);
+  pointer-events: none;
+}
+.recommend-style-axis::before,
+.recommend-style-axis::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+.recommend-style-axis::before {
+  left: -2px;
+  border-right: 8px solid rgba(168, 79, 22, 0.38);
+  transform: translateX(-75%);
+}
+.recommend-style-axis::after {
+  right: -2px;
+  border-left: 8px solid rgba(168, 79, 22, 0.38);
+  transform: translateX(75%);
+}
 .recommend-guide-row,
 .recommend-group-box {
   border: 1px solid rgba(201, 164, 91, 0.36);
