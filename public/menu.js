@@ -26,6 +26,7 @@ const getCategoryCardClass = (categoryId) => Number(categoryId) === 7
 
 let categories = [];
 let debounceTimer;
+let pendingCategoryFocus = new URLSearchParams(window.location.search).get('category')?.trim() || '';
 
 const getSelectedCategoryIds = () => [...document.querySelectorAll('input[name="menu-category"]:checked')].map((input) => input.value);
 const getSelectedSort = () => document.querySelector('input[name="menu-sort"]:checked')?.value || 'category';
@@ -325,6 +326,20 @@ const renderItems = (items) => {
   `).join('');
 };
 
+const focusRequestedCategory = () => {
+  if (!pendingCategoryFocus) return;
+
+  const category = categories.find(({ name }) => String(name).trim() === pendingCategoryFocus);
+  const categoryCard = category && document.querySelector(`#menu-category-${category.id}`);
+  const categoryHeader = categoryCard?.querySelector('.menu-category-header');
+  if (!categoryHeader) return;
+
+  pendingCategoryFocus = '';
+  categoryCard.open = true;
+  categoryHeader.focus({ preventScroll: true });
+  categoryCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
 async function loadMenu() {
   const { minPrice, maxPrice } = syncPriceInputs();
   const params = new URLSearchParams({ minPrice, maxPrice, sort: getSelectedSort() });
@@ -346,6 +361,7 @@ async function loadMenu() {
 
     if (!categories.length) renderCategoryFilters(data.categories);
     renderItems(data.items);
+    focusRequestedCategory();
   } catch (error) {
     console.error(error);
     results.innerHTML = `<p class="menu-empty">DB 연결 또는 조회 중 문제가 발생했습니다.<br /><small>${escapeHtml(error.message)}</small></p>`;
