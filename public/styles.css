@@ -1525,6 +1525,10 @@ body.menu-image-modal-open { overflow: hidden; }
 .site-footer-bank dd span {
   white-space: nowrap;
 }
+.site-footer-account-number {
+  -webkit-user-select: all;
+  user-select: all;
+}
 
 @media (max-width: 760px) {
   .site-footer-inner,
