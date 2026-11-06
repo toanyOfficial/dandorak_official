@@ -1514,6 +1514,17 @@ body.menu-image-modal-open { overflow: hidden; }
   font-weight: 850;
   line-height: 1.45;
 }
+.site-footer-bank {
+  grid-column: 1 / -1;
+}
+.site-footer-bank dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+}
+.site-footer-bank dd span {
+  white-space: nowrap;
+}
 
 @media (max-width: 760px) {
   .site-footer-inner,
