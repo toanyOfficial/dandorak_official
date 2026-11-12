@@ -480,6 +480,27 @@ details,
 details { padding: 20px 22px; }
 summary { cursor: pointer; font-weight: 900; line-height: 1.45; }
 details p { margin: 14px 0 0; color: var(--muted); line-height: 1.65; }
+.faq-menu-limits {
+  margin: 14px 0 0;
+  padding: 4px 14px;
+  border-radius: 14px;
+  background: rgba(201, 164, 91, 0.10);
+  color: var(--deep-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+.faq-menu-limits > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+.faq-menu-limits > div + div { border-top: 1px solid rgba(201, 164, 91, 0.20); }
+.faq-menu-limits dt { min-width: 0; overflow-wrap: anywhere; }
+.faq-menu-limits dd { margin: 0; text-align: right; white-space: nowrap; }
+.faq-menu-limits strong { color: var(--gold-light); font-weight: 900; }
+#faq details .faq-menu-limits-note { font-size: 0.8rem; color: var(--deep-muted); }
 .faq-modal-button {
   min-height: 44px;
   margin-top: 16px;

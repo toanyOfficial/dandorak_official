@@ -182,7 +182,7 @@ const faqItems = [
   ['<span class="faq-highlight">계산은 어떻게</span> 하나요?', '현장카드결제와 카드번호 비대면 결제 모두 가능하고 현금결제 시 세금계산서, 현금영수증 모두 가능합니다.'],
   ['주문은 <span class="faq-highlight">며칠 전</span>까지 해야 하나요?', '보통의 경우 전날 오후3시까지만 알려주셔도 되지만 주문이 마감되는 경우가 있으니 일찍 연락 주시는게 좋습니다. 주문 접수 후 상세 조율 및 수정 가능하십니다.'],
   ['<span class="faq-highlight">어떤 반찬</span>이 나오나요? 매일 달라지나요? 커스텀 가능한가요?', '정해진 카테고리에 대해 세부 메뉴는 매일 달라집니다. 주문 규모에 따라 커스텀 가능합니다. 김치류(볶음김치)/나물(브로콜리,애호박)/계란류(스크램블,계란말이,계란찜,계란장)/새콤무침(미역오이무침,오이양배추무침,미나리무생채,도라지무침)/마른반찬(우엉조림,멸치볶음,견과류조림)/보조메인(비엔나,꽃맛살)'],
-  ['도시락 종류를 <span class="faq-highlight">통일</span>해야 하나요?', '네 저희는 단체도시락 전문점이라서 화구 갯수가 적고 화력이 세기 때문에 여러개의 메뉴를 동시에 조리하기가 어렵습니다. 2가지 이하 메뉴로 통일 부탁드립니다.'],
+  ['도시락 종류를 <span class="faq-highlight">통일</span>해야 하나요?', '주문 금액에 따라 선택 가능한 도시락 종류 수가 달라집니다.', 'menuVariety'],
   ['<span class="faq-highlight">보온</span> 배달 되나요?', "네, 전국 어디에서 드시든 취식 시간에 가장 알맞게 드실 수 있도록 배송해드립니다. 단순히 '보온'이 아닙니다. 그냥 보온박스에 담아버리면 샐러드의 숨이 죽고 나물의 맛이 변하는 문제가 있습니다. 저희는 '수제 단체도시락 전문점'으로서, 저희만의 오래된 노하우를 통해 가장 맛있게 드실 수 있도록 잘 가져다 드리겠습니다."],
   ['<span class="faq-highlight">보관</span>해뒀다 먹어도 되나요?', "저희는 공장에서 조리된 완제품을 쓰지 않고 직접 원물을 가공해 사용하는 '수제 도시락'입니다. 그렇기 때문에 가급적 수령 직후, 늦어도 1시간 이내에는 취식하시길 권장드립니다."],
   ['도시락 <span class="faq-highlight">사이즈</span>가 어떻게 되나요?', '보양 : 30x30 / 프리미엄 : 28x24 / 정찬 : 22x22 / 단도락 : 22x19 / 한상 : 28x26 / 푸드박스 : 30x30 (가로x세로 / 단위:cm)', 'sizeInformation'],
@@ -261,6 +261,15 @@ if (faqList) {
     <details ${index === 0 ? 'open' : ''}>
       <summary>${question}</summary>
       <p>${answer}</p>
+      ${action === 'menuVariety' ? `
+        <dl class="faq-menu-limits" aria-label="주문 금액별 선택 가능한 도시락 종류 수">
+          <div><dt>50만 원 미만</dt><dd><strong>1종</strong></dd></div>
+          <div><dt>50만 원 이상 ~ 100만 원 미만</dt><dd><strong>최대 2종</strong></dd></div>
+          <div><dt>100만 원 이상 ~ 500만 원 미만</dt><dd><strong>최대 3종</strong></dd></div>
+          <div><dt>500만 원 이상</dt><dd><strong>최대 4종</strong></dd></div>
+        </dl>
+        <p class="faq-menu-limits-note">위 기준은 주문 총금액을 기준으로 적용됩니다.</p>
+      ` : ''}
       ${action === 'deliveryFee' ? '<button class="faq-modal-button" type="button" data-open-delivery-fee-modal>배송비 기준 자세히 보기</button>' : ''}
       ${action === 'sizeInformation' ? '<button class="faq-modal-button" type="button" data-open-size-information-modal>이미지보기</button>' : ''}
     </details>
