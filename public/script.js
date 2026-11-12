@@ -268,7 +268,6 @@ if (faqList) {
           <div><dt>100만 원 이상 ~ 500만 원 미만</dt><dd><strong>최대 3종</strong></dd></div>
           <div><dt>500만 원 이상</dt><dd><strong>최대 4종</strong></dd></div>
         </dl>
-        <p class="faq-menu-limits-note">위 기준은 주문 총금액을 기준으로 적용됩니다.</p>
       ` : ''}
       ${action === 'deliveryFee' ? '<button class="faq-modal-button" type="button" data-open-delivery-fee-modal>배송비 기준 자세히 보기</button>' : ''}
       ${action === 'sizeInformation' ? '<button class="faq-modal-button" type="button" data-open-size-information-modal>이미지보기</button>' : ''}
