@@ -1,0 +1,28 @@
+name: Sync published FAQ to Kakao operations
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: published-faq-sync
+  cancel-in-progress: false
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate FAQ extraction
+        run: node --test scripts/consultation-faq.test.mjs
+      - name: Notify operations of published FAQ
+        env:
+          OPS_FAQ_SYNC_URL: ${{ secrets.OPS_FAQ_SYNC_URL }}
+          OPS_FAQ_SYNC_SECRET: ${{ secrets.OPS_FAQ_SYNC_SECRET }}
+        run: node scripts/consultation-faq.mjs
