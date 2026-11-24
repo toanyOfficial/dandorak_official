@@ -55,30 +55,109 @@ export function extractFaq(source) {
     const supplements = [['menuVariety', source.match(/<dl class="faq-menu-limits"[\s\S]*?<\/dl>/)?.[0]], ['deliveryFee', source.match(/<div class="delivery-fee-copy">([\s\S]*?)<\/div>/)?.[1]]].filter(([, html]) => html).map(([id, html]) => ({ id, text: plain(html) }));
     return { faqs, supplements };
 }
+const notificationTimeoutMs = 20000;
+const timeoutCodes = new Set(['ETIMEDOUT', 'UND_ERR_CONNECT_TIMEOUT', 'UND_ERR_HEADERS_TIMEOUT', 'UND_ERR_BODY_TIMEOUT']);
+const networkCodes = new Set(['ENOTFOUND', 'EAI_AGAIN', 'ECONNREFUSED', 'ECONNRESET', 'EHOSTUNREACH', 'ENETUNREACH', 'EPIPE', 'UND_ERR_SOCKET', 'CERT_HAS_EXPIRED', 'DEPTH_ZERO_SELF_SIGNED_CERT', 'UNABLE_TO_VERIFY_LEAF_SIGNATURE', 'ERR_TLS_CERT_ALTNAME_INVALID']);
+
+class FaqSyncError extends Error {
+    constructor(code, message) {
+        super(message);
+        this.code = code;
+    }
+}
+
+// Only our own diagnostic messages are safe to log. Fetch/JSON errors can contain
+// credentials, URLs, signatures or response content, even in nested causes.
+export function formatSyncError(error) {
+    if (error instanceof FaqSyncError)
+        return `FAQ synchronization failed [FAQ_SYNC_${error.code}]: ${error.message}`;
+    return 'FAQ synchronization failed [FAQ_SYNC_UNEXPECTED]: Unexpected internal error. Original error details are withheld.';
+}
+
+function transportError(error, signal, status) {
+    const codes = [error?.code, error?.cause?.code];
+    const context = status === undefined ? 'before receiving an HTTP response' : `while reading the response (HTTP ${status})`;
+    if (signal.aborted || error?.name === 'TimeoutError' || codes.some(code => timeoutCodes.has(code)))
+        return new FaqSyncError('TIMEOUT', `Notification timed out ${context}; the request deadline is ${notificationTimeoutMs} ms. Check receiver availability and network connectivity.`);
+    const code = codes.find(code => networkCodes.has(code));
+    return new FaqSyncError('NETWORK', `Network connection failed ${context}${code ? ` (${code})` : ''}. Check DNS, TLS and connectivity from the Actions runner.`);
+}
+
 export async function notifyOps(env = process.env, fetcher = fetch) {
-    const url = env.OPS_FAQ_SYNC_URL, secret = env.OPS_FAQ_SYNC_SECRET?.trim();
+    const url = env.OPS_FAQ_SYNC_URL?.trim(), secret = env.OPS_FAQ_SYNC_SECRET?.trim();
     if (!url || !secret) {
-        console.log('FAQ sync not configured; no notification sent.');
+        const missing = [!url && 'OPS_FAQ_SYNC_URL', !secret && 'OPS_FAQ_SYNC_SECRET'].filter(Boolean);
+        console.log(`FAQ sync not configured; no notification sent. Missing or empty: ${missing.join(', ')}.`);
         return;
     }
-    const target = new URL(url);
+    let target;
+    try {
+        target = new URL(url);
+    }
+    catch {
+        throw new FaqSyncError('URL_CONFIG', 'OPS_FAQ_SYNC_URL must be a valid absolute HTTP(S) URL for the FAQ receiver.');
+    }
     if (target.username || target.password || !['https:', 'http:'].includes(target.protocol))
-        throw new Error('Invalid FAQ sync destination');
-    if (env.GITHUB_REF !== 'refs/heads/main' || !['push', 'workflow_dispatch'].includes(env.GITHUB_EVENT_NAME) || !/^[a-f0-9]{40}$/.test(env.GITHUB_SHA || '') || !/^\d+$/.test(env.GITHUB_RUN_NUMBER || '') || secret.length < 32)
-        throw new Error('Invalid main publication context');
-    const faq = extractFaq(readFileSync(new URL('../public/script.js', import.meta.url), 'utf8'));
+        throw new FaqSyncError('URL_CONFIG', 'OPS_FAQ_SYNC_URL must use HTTP(S) and must not contain a username or password.');
+    if (secret.length < 32)
+        throw new FaqSyncError('SECRET_CONFIG', 'OPS_FAQ_SYNC_SECRET must contain at least 32 characters after trimming and match the receiver key.');
+    if (env.GITHUB_REF !== 'refs/heads/main' || !['push', 'workflow_dispatch'].includes(env.GITHUB_EVENT_NAME) || !/^[a-f0-9]{40}$/.test(env.GITHUB_SHA || '') || !/^\d+$/.test(env.GITHUB_RUN_NUMBER || ''))
+        throw new FaqSyncError('PUBLICATION_CONTEXT', 'Expected a main push or workflow_dispatch with a valid GITHUB_SHA and GITHUB_RUN_NUMBER.');
+    let faq;
+    try {
+        faq = extractFaq(readFileSync(new URL('../public/script.js', import.meta.url), 'utf8'));
+    }
+    catch {
+        throw new FaqSyncError('EXTRACTION', 'Could not read or extract public/script.js. Run the FAQ extraction test.');
+    }
     const body = JSON.stringify({ schema_version: 1, repository: 'toanyOfficial/dandorak_official', ref: env.GITHUB_REF, commit: env.GITHUB_SHA, run_number: Number(env.GITHUB_RUN_NUMBER), sent_at: Date.now(), source_url: 'https://www.dandorak.com/#faq', ...faq });
     const signature = 'sha256=' + createHmac('sha256', secret).update(body).digest('hex');
-    const response = await fetcher(target, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-FAQ-Signature-256': signature }, body, redirect: 'error', signal: AbortSignal.timeout(20000) });
-    if (!response.ok)
-        throw new Error('FAQ notification was not acknowledged (HTTP ' + response.status + ').');
+    const signal = AbortSignal.timeout(notificationTimeoutMs);
+    let response;
+    try {
+        // Inspect redirect status without forwarding the signed payload elsewhere.
+        response = await fetcher(target, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-FAQ-Signature-256': signature }, body, redirect: 'manual', signal });
+    }
+    catch (error) {
+        throw transportError(error, signal);
+    }
+    if (!response.ok) {
+        let hint = 'Check the receiver status.';
+        if (response.status === 401 || response.status === 403)
+            hint = 'Authentication or access was rejected; check that OPS_FAQ_SYNC_SECRET matches the receiver key and that the endpoint permits this request.';
+        else if (response.status >= 300 && response.status < 400)
+            hint = 'Redirects are not followed; set OPS_FAQ_SYNC_URL to the final FAQ receiver endpoint.';
+        throw new FaqSyncError('HTTP', `Receiver returned HTTP ${response.status}. ${hint}`);
+    }
     const reader = response.body?.getReader();
-    if (!reader) throw new Error('Missing FAQ acknowledgment.');
+    const invalidResponse = detail => new FaqSyncError('RESPONSE_FORMAT', `Receiver returned HTTP ${response.status}, but ${detail}`);
+    if (!reader) throw invalidResponse('the acknowledgment body is missing. Expected JSON with accepted: true.');
     const chunks = []; let size = 0;
-    try { while (true) { const part = await reader.read(); if (part.done) break; size += part.value.length; if (size > 4096) throw new Error('Invalid FAQ acknowledgment.'); chunks.push(part.value); } }
+    try {
+        while (true) {
+            let part;
+            try {
+                part = await reader.read();
+            }
+            catch (error) {
+                throw transportError(error, signal, response.status);
+            }
+            if (part.done) break;
+            size += part.value.length;
+            if (size > 4096) throw invalidResponse('the acknowledgment exceeds the 4096-byte limit.');
+            chunks.push(part.value);
+        }
+    }
     finally { await reader.cancel().catch(() => {}); }
-    if (JSON.parse(Buffer.concat(chunks).toString()).accepted !== true) throw new Error('FAQ receiver did not acknowledge publication.');
+    let acknowledgment;
+    try {
+        acknowledgment = JSON.parse(Buffer.concat(chunks).toString());
+    }
+    catch {
+        throw invalidResponse('the acknowledgment is not valid JSON. Expected JSON with accepted: true.');
+    }
+    if (acknowledgment?.accepted !== true) throw invalidResponse('the acknowledgment must contain accepted: true.');
     console.log('Published FAQ notification acknowledged.');
 }
 if (process.argv[1] === fileURLToPath(import.meta.url))
-    notifyOps().catch(() => { console.error('FAQ synchronization failed; check the workflow configuration and receiver status. Secret values are not displayed.'); process.exitCode = 1; });
+    notifyOps().catch(error => { console.error(formatSyncError(error)); process.exitCode = 1; });
